@@ -206,6 +206,7 @@
 
 import React, { useState } from 'react';
 import {
+    Container,
     Box,
     Button,
     FormControl,
@@ -219,7 +220,7 @@ import {
     Switch,
     Typography,
 } from '@mui/material';
-
+import Header from "../screens/header";
 const SettingsScreen = () => {
     const [settings, setSettings] = useState({
         theme: 'light',
@@ -247,7 +248,10 @@ const SettingsScreen = () => {
     };
 
     return (
-        <Box sx={{ padding: 3 }}>
+        <Container maxWidth={false} style={{ padding: '0 ' }}>
+            <Header />
+        <Box sx={{ padding: 3, }}>
+            
             <Typography variant="h4" gutterBottom>
                 Settings
             </Typography>
@@ -329,6 +333,7 @@ const SettingsScreen = () => {
                 </ListItem>
             </List>
         </Box>
+        </Container>
     );
 };
 

@@ -991,14 +991,18 @@ export default function StickyHeadTable() {
   const [positionFilter, setPositionFilter] = React.useState('');
     const [nationalityFilter, setNationalityFilter] = React.useState('');
     const [genderFilter, setGenderFilter] = React.useState('');
+    const [experienceFilter, setExperienceFilter] = React.useState('');
 
 
 
     const filteredRows = rows.filter(row => {
+      const experiences = JSON.parse(row.experience) || []; // Ensure it's an array
+    
       return (
         (positionFilter ? row.postappliedfor === positionFilter : true) &&
         (nationalityFilter ? row.currentNationality === nationalityFilter : true) &&
-        (genderFilter ? row.sex === genderFilter : true)
+        (genderFilter ? row.sex === genderFilter : true) &&
+        (experienceFilter === "yes" ? experiences.some(exp => exp.name !== "") : true)
       );
     });
   
@@ -1120,7 +1124,7 @@ export default function StickyHeadTable() {
         .save();
     };
     
-
+const [data, setData] = React.useState('');
   // insert checkbox end
 
   React.useEffect(() => {
@@ -1130,6 +1134,7 @@ export default function StickyHeadTable() {
         const result = await response.json();
         if (result.status === 'ok') {
           console.log(result.data); // Log the fetched data for debugging
+          setData(result.data);
           const sortedData = result.data
             .filter(item => item.createdAt)
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -1473,6 +1478,7 @@ const handleDeleteImages = async (e) => {
   const handleMenuClick = (event, row) => {
     setAnchorEl(event.currentTarget);
     setSelectedRow(row);
+    console.log(data[1].experience)
   };
 
   const handleMenuClose = () => {
@@ -1530,7 +1536,7 @@ const handleDeleteImages = async (e) => {
                 {/* Add more options as needed */}
               </TextField>
     
-              <TextField
+              {/* <TextField
                 select
                 label="Nationality"
                 value={nationalityFilter}
@@ -1543,10 +1549,9 @@ const handleDeleteImages = async (e) => {
               >
                 <option value=""></option>
                 <option value="ETHIOPIA">Ethiopia</option>
-                {/* Add more options as needed */}
-              </TextField>
+              </TextField> */}
     
-              <TextField
+              {/* <TextField
                 select
                 label="Gender"
                 value={genderFilter}
@@ -1559,7 +1564,44 @@ const handleDeleteImages = async (e) => {
                 <option value=""></option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
+              </TextField> */}
+
+              {/* <TextField
+                select
+                label="Experienced"
+                value={genderFilter}
+                onChange={(e) => setExperienceFilter(e.target.value)}
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+              >
+                <option value=""></option>
+                <option value="Male">Yes</option>
+                <option value="Female">No</option>
+              </TextField> */}
+
+
+              <TextField
+                select
+                label="Experienced"
+                value={experienceFilter}
+                onChange={(e) => setExperienceFilter(e.target.value)}
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+                style={{ marginRight: '16px', width: "130px" }}
+              >
+                <option value=""></option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+                {/* Add more options as needed */}
               </TextField>
+
+              {/* <div>{JSON.parse(data.experience) ?? "kkk"}</div> */}
+              {/* <div>{data[1].experience ? JSON.parse(data[1].experience).map(i =>  <span style={{marginRight: "3px"}}>{i.name}, </span> ) : <div>lllll</div>}</div> */}
+              
             </div>
             
       <TableContainer sx={{ maxHeight: 440 }}>

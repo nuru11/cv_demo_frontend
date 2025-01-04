@@ -110,6 +110,8 @@ import {
   Box,
 } from '@mui/material';
 
+import Header from "../../screens/header"; 
+
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -152,10 +154,12 @@ const Signup = () => {
   };
 
   return (
+    <Container maxWidth={false} style={{ padding: '0 ' }}>
+            <Header />
     <Container maxWidth="xs" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <Box sx={{ width: '100%', padding: 3, boxShadow: 3, borderRadius: 2, bgcolor: 'background.paper' }}>
         <Typography variant="h5" align="center" gutterBottom>
-          Sign Up
+          Add Agent
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
@@ -194,6 +198,7 @@ const Signup = () => {
           </Alert>
         </Snackbar>
       </Box>
+    </Container>
     </Container>
   );
 };
