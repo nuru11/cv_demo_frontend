@@ -986,6 +986,22 @@ export default function StickyHeadTable() {
   const [isAnyChecked, setIsAnyChecked] = React.useState(false);
 
   const selectedRows = rows.filter(row => selected.includes(row.id));
+
+
+  const [positionFilter, setPositionFilter] = React.useState('');
+    const [nationalityFilter, setNationalityFilter] = React.useState('');
+    const [genderFilter, setGenderFilter] = React.useState('');
+
+
+
+    const filteredRows = rows.filter(row => {
+      return (
+        (positionFilter ? row.postappliedfor === positionFilter : true) &&
+        (nationalityFilter ? row.currentNationality === nationalityFilter : true) &&
+        (genderFilter ? row.sex === genderFilter : true)
+      );
+    });
+  
   
 
   const handleSelectAllClick = (event) => {
@@ -1495,6 +1511,57 @@ const handleDeleteImages = async (e) => {
             
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
     <Header /> 
+
+      <div style={{ padding: '16px' }}>
+              <TextField
+                select
+                label="Position"
+                value={positionFilter}
+                onChange={(e) => setPositionFilter(e.target.value)}
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+                style={{ marginRight: '16px' }}
+              >
+                <option value=""></option>
+                <option value="driver">Driver</option>
+                <option value="housemaid">Housemaid</option>
+                {/* Add more options as needed */}
+              </TextField>
+    
+              <TextField
+                select
+                label="Nationality"
+                value={nationalityFilter}
+                onChange={(e) => setNationalityFilter(e.target.value)}
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+                style={{ marginRight: '16px' }}
+              >
+                <option value=""></option>
+                <option value="ETHIOPIA">Ethiopia</option>
+                {/* Add more options as needed */}
+              </TextField>
+    
+              <TextField
+                select
+                label="Gender"
+                value={genderFilter}
+                onChange={(e) => setGenderFilter(e.target.value)}
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+              >
+                <option value=""></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </TextField>
+            </div>
+            
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -1518,8 +1585,7 @@ const handleDeleteImages = async (e) => {
             </TableRow>
           </TableHead>
           <TableBody>
-  {rows
-    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .map((row) => {
       const isSelected = selected.indexOf(row.id) !== -1;
       return (
