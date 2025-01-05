@@ -52,6 +52,8 @@ const Login = () => {
         const token = data.token;
         localStorage.setItem('token', token);
         console.log("Token:", token);
+        localStorage.setItem("userdata", data.agentName)
+        console.log(data.agentName, " kkkkkkkkkkkkkkk")
 
         // Set expiration time for 20 minutes
         const expirationTime = new Date().getTime() + 20 * 60 * 1000;

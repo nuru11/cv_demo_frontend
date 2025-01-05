@@ -1103,6 +1103,9 @@ formData.append("laborId", sponsorInformation.laborId);
 // formData.append("cvcount", JSON.stringify(dummyData.newValue));
 formData.append("cvcount", formatCount(count + 1));
 
+formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "Bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(),  }));
+
+
 
 
 
@@ -1281,6 +1284,9 @@ formData.append("laborId", sponsorInformation.laborId);
 
 // formData.append("cvcount", JSON.stringify(dummyData.newValue));
 formData.append("cvcount", formatCount(count + 1));
+
+formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "Bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(),  }));
+
 
 
 
@@ -2335,6 +2341,8 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
           </Typography>
         )} */}
 
+     
+
 
 <Grid container spacing={2} alignItems="center" sx={{ mt: 2 }}>
                     <Grid item xs={6}>
@@ -2525,7 +2533,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
         </div>
         <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }}>
             <Typography variant="h6" gutterBottom>
-                Select Styles
+                Select Agent
             </Typography>
             <FormControlLabel
                 control={

@@ -1,104 +1,3 @@
-// import React, { useState } from 'react';
-// import {
-//   Container,
-//   TextField,
-//   Button,
-//   Typography,
-//   Snackbar,
-//   Alert,
-// } from '@mui/material';
-
-// const Signup = () => {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [error, setError] = useState('');
-//   const [success, setSuccess] = useState('');
-//   const [openSnackbar, setOpenSnackbar] = useState(false);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setError('');
-//     setSuccess('');
-
-//     try {
-//       const response = await fetch('http://localhost:4000/api/auth/register', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ username, password }),
-//       });
-
-//       if (response.ok) {
-//         setSuccess('User registered successfully!');
-//         setUsername('');
-//         setPassword('');
-//       } else {
-//         const errorData = await response.json();
-//         setError(errorData.message || 'Registration failed');
-//       }
-//     } catch (error) {
-//       setError('An error occurred, please try again.');
-//     } finally {
-//       setOpenSnackbar(true);
-//     }
-//   };
-
-//   const handleCloseSnackbar = () => {
-//     setOpenSnackbar(false);
-//   };
-
-//   return (
-//     <Container maxWidth="xs">
-//       <Typography variant="h5" align="center" gutterBottom>
-//         Signup
-//       </Typography>
-//       <form onSubmit={handleSubmit}>
-//         <TextField
-//           label="Username"
-//           variant="outlined"
-//           fullWidth
-//           margin="normal"
-//           value={username}
-//           onChange={(e) => setUsername(e.target.value)}
-//           required
-//         />
-//         <TextField
-//           label="Password"
-//           type="password"
-//           variant="outlined"
-//           fullWidth
-//           margin="normal"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           required
-//         />
-//         <Button
-//           type="submit"
-//           variant="contained"
-//           color="primary"
-//           fullWidth
-//           style={{ marginTop: '16px' }}
-//         >
-//           Sign Up
-//         </Button>
-//       </form>
-
-//       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-//         <Alert onClose={handleCloseSnackbar} severity={error ? 'error' : 'success'}>
-//           {error || success}
-//         </Alert>
-//       </Snackbar>
-//     </Container>
-//   );
-// };
-
-// export default Signup;
-
-
-
-
-//////////////////////////////////
-
-
 import React, { useState } from 'react';
 import {
   Container,
@@ -108,21 +7,45 @@ import {
   Snackbar,
   Alert,
   Box,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 
 import Header from "../../screens/header"; 
 
+
+
+
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [agentName, setAgentName] = useState('');
+  const [selectedAgent, setSelectedAgent] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
+
+ 
+
+  const agents = ['golden', 'Bela', 'skyway', 'baraka', 'kaan', 'qimam'];
+
+  const handleAgentChange = (event) => {
+    const { value } = event.target;
+    setSelectedAgent(value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
+
+    if (!selectedAgent) {
+      setError('Please select an agent.');
+      setOpenSnackbar(true);
+      return;
+    }
+
+    setAgentName(selectedAgent); // Set agentName to the selected agent
 
     try {
       const response = await fetch('https://testcvapi.ntechagent.com/api/auth/register', {
@@ -131,7 +54,8 @@ const Signup = () => {
         body: JSON.stringify({
           username,
           password,
-          isAdmin: false, // Set isAdmin to false
+          isAdmin: false, 
+          agentName: selectedAgent
         }),
       });
 
@@ -155,50 +79,68 @@ const Signup = () => {
 
   return (
     <Container maxWidth={false} style={{ padding: '0 ' }}>
-            <Header />
-    <Container maxWidth="xs" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <Box sx={{ width: '100%', padding: 3, boxShadow: 3, borderRadius: 2, bgcolor: 'background.paper' }}>
-        <Typography variant="h5" align="center" gutterBottom>
-          Add Agent
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Username"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ marginTop: 2 }}
-          >
-            Sign Up
-          </Button>
-        </form>
+      {/* <div>{isAdmin}  dddddddddd</div> */}
+      <Header />
+      <Container maxWidth="xs" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Box sx={{ width: '100%', padding: 3, boxShadow: 3, borderRadius: 2, bgcolor: 'background.paper' }}>
+          <Typography variant="h5" align="center" gutterBottom>
+            Add Agent
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="Username"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <TextField
+              label="Password"
+              type="password"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+           
+            <Typography variant="subtitle1" gutterBottom>
+              Select an Agent:
+            </Typography>
+            {agents.map((agent) => (
+              <FormControlLabel
+                key={agent}
+                control={
+                  <Checkbox
+                    checked={selectedAgent === agent}
+                    value={agent}
+                    onChange={handleAgentChange}
+                  />
+                }
+                label={agent}
+              />
+            ))}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ marginTop: 2 }}
+            >
+              Sign Up
+            </Button>
+          </form>
 
-        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-          <Alert onClose={handleCloseSnackbar} severity={error ? 'error' : 'success'}>
-            {error || success}
-          </Alert>
-        </Snackbar>
-      </Box>
-    </Container>
+          <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+            <Alert onClose={handleCloseSnackbar} severity={error ? 'error' : 'success'}>
+              {error || success}
+            </Alert>
+          </Snackbar>
+        </Box>
+      </Container>
     </Container>
   );
 };

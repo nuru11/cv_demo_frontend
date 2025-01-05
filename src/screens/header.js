@@ -120,6 +120,7 @@ const Header = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userdata')
         navigate('/login');
     };
 
