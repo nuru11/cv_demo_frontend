@@ -9,6 +9,7 @@ const ProtectedRoute = ({ element, adminOnly }) => {
     if (expirationTime && new Date().getTime() > expirationTime) {
       localStorage.removeItem('token'); // Remove token
       localStorage.removeItem('tokenExpiration'); // Remove expiration
+      localStorage.removeItem("userdata");
       return false; // Token is expired
     }
     return true; // Token is still valid
@@ -26,7 +27,7 @@ const ProtectedRoute = ({ element, adminOnly }) => {
 
   // Check for admin access
   if (adminOnly && !isAdmin) {
-    return <Navigate to="/login" state={{ from: location.pathname }} />; // Redirect to login with state
+    return <Navigate to="/listforagent" state={{ from: location.pathname }} />; // Redirect non-admins to /listforagent
   }
 
   return isAuthenticated && token ? element : <Navigate to="/login" state={{ from: location.pathname }} />; // Redirect to login with state

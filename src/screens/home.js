@@ -47,6 +47,7 @@ import axios from "axios";
 import goldagent from "../images/goldagent.jpeg" 
 import hudud from "../image_placeholder/hudud.jpeg"
 import skywaylogo from "../image_placeholder/skywaylogo.jpeg"
+import demoimage from "../image_placeholder/demoimage.jpg"
 import barakaimg from "../image_placeholder/barakaimg.jpeg"
 import wasitimg from "../image_placeholder/wasitimg.jpeg"
 import myImage from '../images/two.png'; 
@@ -2779,7 +2780,7 @@ src={applicantpersonalimagePreview !== null
     : imagePlaceholder} alt="Full Body" className="full-body-image" />
                             </div>
                             <div>
-                                <img src={ouragentlogo} alt="Agent Logo" className="agent-logo" />
+                                <img src={demoimage} alt="Agent Logo" className="agent-logo" />
                             </div>
                         </div>
                     </div>
@@ -3016,7 +3017,7 @@ src={applicantpersonalimagePreview !== null
     : imagePlaceholder} alt="Full Body" className="full-body-image" />
                             </div>
                             <div>
-                                <img src={ouragentlogo} alt="Agent Logo" className="agent-logo" />
+                                <img src={demoimage} alt="Agent Logo" className="agent-logo" />
                             </div>
                         </div>
                     </div>
@@ -3174,7 +3175,7 @@ src={applicantpersonalimagePreview !== null
 </div>
 
                       <div className="wider-image-parent">
-                      <img src={skywaylogo} alt="Wider" className="wider-image" /></div>  
+                      <img src={demoimage} alt="Wider" className="wider-image" /></div>  
                     </div>
                     <div className="title-parent">
                         <div style={{display: "flex", justifyContent: "space-around", border: "none"}}><div style={{ border: "none"}}>Personal Information</div>  <div style={{ border: "none"}}> ممعلومات شخصية </div></div>
@@ -3491,7 +3492,7 @@ src={applicantpersonalimagePreview !== null
     : imagePlaceholder} alt="Full Body" className="full-body-image" />
                             </div>
                             <div>
-                                <img src={ouragentlogo} alt="Agent Logo" className="agent-logo" />
+                                <img src={demoimage} alt="Agent Logo" className="agent-logo" />
                             </div>
                         </div>
                     </div>

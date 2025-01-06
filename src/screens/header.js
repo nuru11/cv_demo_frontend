@@ -173,6 +173,16 @@ const Header = () => {
                             <Button color="inherit" onClick={() => navigate('/setting')}>Settings</Button>
                         </>
                     )}
+
+                    {!isAdmin() && (
+                        <>
+                            {/* <Button color="inherit" onClick={() => navigate('/')}>Home</Button> */}
+                            {/* <Button color="inherit" onClick={() => navigate('/list')}>Applicants</Button> */}
+                            <Button color="inherit" onClick={() => navigate('/listforagent')}>Applicants</Button>
+                            {/* <Button color="inherit" onClick={() => navigate('/signup')}>Add Agent</Button> */}
+                            {/* <Button color="inherit" onClick={() => navigate('/setting')}>Settings</Button> */}
+                        </>
+                    )}
                     {!isLoggedIn() && (
                         <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
                     )}

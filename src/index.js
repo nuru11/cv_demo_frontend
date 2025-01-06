@@ -45,8 +45,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/listforagent",
-    // element: <ProtectedRoute element={<Listforagent />} />, // Protect this route
-    element: <List />,
+    element: <ProtectedRoute element={<Listforagent />} />, // Protect this route
+    // element: <Listforagent />,
     errorElement: <div>404 Not Found</div>
   },
   {

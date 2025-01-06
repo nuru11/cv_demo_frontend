@@ -52,8 +52,8 @@ const Login = () => {
         const token = data.token;
         localStorage.setItem('token', token);
         console.log("Token:", token);
-        localStorage.setItem("userdata", data.agentName)
-        console.log(data.agentName, " kkkkkkkkkkkkkkk")
+        localStorage.setItem("userdata", data.agentName);
+        console.log(data.agentName, " kkkkkkkkkkkkkkk");
 
         // Set expiration time for 20 minutes
         const expirationTime = new Date().getTime() + 20 * 60 * 1000;
@@ -70,15 +70,13 @@ const Login = () => {
             if (isAdmin) {
               navigate('/'); // Redirect to admin dashboard
             } else {
-              // Redirect to the previous location or a default page
-              const from = location.state?.from || '/list';
-              navigate(from);
+              navigate('/listforagent'); // Redirect non-admins to /listforagent
             }
           } catch (error) {
             console.error("Token decoding failed:", error);
           }
         }
-        
+
         setSuccess('Login successful!');
         setOpenSnackbar(true);
       } else {

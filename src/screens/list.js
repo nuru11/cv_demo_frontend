@@ -264,6 +264,7 @@ const [data, setData] = React.useState('');
         const result = await response.json();
         if (result.status === 'ok') {
           setRows(rows.filter(row => row.id !== id));
+          console.log("aaaaaaaaaaaa ", result)
         } else {
           console.error('Error deleting data:', result.message);
         }
@@ -549,7 +550,12 @@ const handleDeleteImages = async (e) => {
       editData.applicationNo = 'E' + editData.applicationNo; // Prepend 'E' if it doesn't start with 'E'
     }
 
-    console.log(JSON.parse(editData.availablefor).golden = "false" , " jjjjjjjjjj ", checkboxState.golden)
+   console.log(JSON.parse(editData.availablefor).golden)
+
+    // JSON.parse(editData.availablefor).golden = "false"; 
+     editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "Bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(),  })
+
+    console.log(JSON.parse(editData.availablefor), " jjjjjjjjjj ", checkboxState.golden)
 
 
     try {
@@ -609,26 +615,41 @@ const handleDeleteImages = async (e) => {
       console.log('Send option for:', selectedRow);
     }
   };
-  
+
 
 
   const [checkboxState, setCheckboxState] = React.useState({
-  golden:  false,
-  bela: false,
-  skyway: false,
-  baraka: false,
-  kaan: false,
-  qimam: false,
-});
+    golden: false,
+    bela: false,
+    skyway: false,
+    baraka: false,
+    kaan: false,
+    qimam: false,
+  });
 
-const handleCheckboxChange = (event) => {
-  console.log("kkkkkkkkkkaaaaaaaaaaaaa")
-  const { name, checked } = event.target;
-  setCheckboxState((prevState) => ({
-    ...prevState,
-    [name]: checked,
-  }));
-};
+
+  const handleCheckboxChange = (event) => {
+    console.log("kkkkkkkkkkaaaaaaaaaaaaa")
+    // checkboxState.golden = editData.availablefor &&  JSON.parse(editData.availablefor).golden === "true" ? true : false
+    const { name, checked } = event.target;
+    setCheckboxState((prevState) => ({
+      ...prevState,
+      [name]: checked,
+    }));
+  };
+
+
+  // React.useEffect(() => { 
+
+    
+  //  checkboxState.golden = checkboxState.golden === false && editData.availablefor &&  JSON.parse(editData.availablefor).golden === "true" ? true : false
+   
+
+  // }, [open, checkboxState, editData.availablefor]);
+  
+
+
+  
 
   return (
     <>
@@ -846,13 +867,14 @@ const handleCheckboxChange = (event) => {
 
 
       
-      <div>
+      <div style={{background: "#e1e4e8", padding: "10px", marginTop: "5px", border: "1px solid transparent", borderRadius: "5px"}}>
+        <div>Available for</div>
       <FormControlLabel
               control={
                 <Checkbox
                   name="golden"
-                  checked={editData.availablefor &&  JSON.parse(editData.availablefor).golden === "true" ? true : checkboxState.golden}
-                  // checked={checkboxState.golden}
+                  // checked={checkboxState.golden === false && editData.availablefor &&  JSON.parse(editData.availablefor).golden === "true" ? true : checkboxState.golden}
+                  checked={checkboxState.golden}
                   onChange={handleCheckboxChange}
                   // onclick={handleCheckboxChange}
                 />
@@ -863,20 +885,22 @@ const handleCheckboxChange = (event) => {
               control={
                 <Checkbox
                   name="bela"
-                  checked={editData.availablefor && JSON.parse(editData.availablefor).bela === "true" ? true : false}
+                  // checked={editData.availablefor && JSON.parse(editData.availablefor).bela === "true" ? true : false}
+                  checked={checkboxState.bela}
                   onChange={handleCheckboxChange}
                   
                 />
               }
               label="Bela"
             />
-            <div>{checkboxState.golden ? "tt" : "ff"}  ddd</div>
+            {/* <div>{checkboxState.golden === true ? "tt" : "ff"}  ddd</div> */}
             <FormControlLabel
               control={
                 <Checkbox
                   name="skyway"
-                  checked={editData.availablefor && JSON.parse(editData.availablefor).skyway === "true" ? true : false}
-                  onChange={handleInputChange}
+                  // checked={editData.availablefor && JSON.parse(editData.availablefor).skyway === "true" ? true : false}
+                  checked={checkboxState.skyway}
+                  onChange={handleCheckboxChange}
                 />
               }
               label="Skyway"
@@ -885,8 +909,9 @@ const handleCheckboxChange = (event) => {
               control={
                 <Checkbox
                   name="baraka"
-                  checked={editData.availablefor && JSON.parse(editData.availablefor).baraka === "true" ? true : false}
-                  onChange={handleInputChange}
+                  // checked={editData.availablefor && JSON.parse(editData.availablefor).baraka === "true" ? true : false}
+                  checked={checkboxState.baraka}
+                  onChange={handleCheckboxChange}
                 />
               }
               label="Baraka"
@@ -895,8 +920,9 @@ const handleCheckboxChange = (event) => {
               control={
                 <Checkbox
                   name="kaan"
-                  checked={editData.availablefor && JSON.parse(editData.availablefor).kaan === "true" ? true : false}
-                  onChange={handleInputChange}
+                  // checked={editData.availablefor && JSON.parse(editData.availablefor).kaan === "true" ? true : false}
+                  checked={checkboxState.kaan}
+                  onChange={handleCheckboxChange}
                 />
               }
               label="Kaan"
@@ -905,8 +931,9 @@ const handleCheckboxChange = (event) => {
               control={
                 <Checkbox
                   name="qimam"
-                  checked={editData.availablefor && JSON.parse(editData.availablefor).qimam === "true" ? true : false}
-                  onChange={handleInputChange}
+                  // checked={editData.availablefor && JSON.parse(editData.availablefor).qimam === "true" ? true : false}
+                  checked={checkboxState.qimam}
+                  onChange={handleCheckboxChange}
                 />
               }
               label="Qimam"
