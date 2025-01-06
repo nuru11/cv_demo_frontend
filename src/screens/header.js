@@ -207,6 +207,15 @@ const Header = () => {
                                 <MenuItem onClick={() => handleNavigation('/setting')}>Settings</MenuItem>
                             </>
                         )}
+
+                         {!isAdmin() && (
+                            <>
+                                {/* <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem> */}
+                                <MenuItem onClick={() => handleNavigation('/listforagent')}>Applicants</MenuItem>
+                                {/* <MenuItem onClick={() => handleNavigation('/signup')}>Add User</MenuItem> */}
+                                {/* <MenuItem onClick={() => handleNavigation('/setting')}>Settings</MenuItem> */}
+                            </>
+                        )}
                         {!isLoggedIn() && (
                             <MenuItem onClick={() => handleNavigation('/login')}>Login</MenuItem>
                         )}
