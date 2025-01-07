@@ -80,6 +80,8 @@ const DetailPage = () => {
 
   const [base64Image, setBase64Image] = useState(null);
 
+  const [comment, setComment] = useState('');
+
   // const xx = data.experience ? JSON.parse(data.experience) : "";
   
   // Menu state
@@ -447,7 +449,13 @@ const downloadCV = () => {
       }
     }
 
-    const fetchData = async () => {
+    
+
+    fetchData();
+  }, [createdAt]);
+
+
+  const fetchData = async () => {
       try {
         const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images?createdAt=${createdAt}`);
         const result = await response.json();
@@ -472,9 +480,6 @@ const downloadCV = () => {
         setLoading(false);
       }
     };
-
-    fetchData();
-  }, [createdAt]);
 
   const toBase64 = async (url) => {
     const response = await fetch(url);
@@ -566,6 +571,67 @@ const downloadCV = () => {
   
   // Usage
   // const base64Image = toBase64(data.personalImageUrl);
+
+  const agentName = localStorage.getItem('userdata');
+
+  
+
+  // Function to handle comment change
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+
+  const handleAccept = async (applicantId, acceptedby, comment) => {
+    // console.log(agentName, "  nnnnnnnnnnnnnnnnnnnn")
+  try {
+    // Parse acceptedBy if it's a JSON string
+    const acceptedByArray = typeof data.acceptedBy === 'string' ? JSON.parse(data.acceptedBy) : data.acceptedBy;
+
+    console.log("Current acceptedBy data:", acceptedByArray); // Debug log
+
+    const updatedAcceptedBy = acceptedByArray.map(entry => {
+      // Update the "golden" agent's accepted status to true
+      if (entry.agent === agentName) {
+        if(acceptedby !== "no"){
+          return { ...entry, accepted: "true",  }; // Ensure this is the correct structure
+        } else if(comment !== "no"){
+          return { ...entry, comment: comment,  }; // Ensure this is the correct structure
+        }
+        
+      }
+      return entry;
+    });
+
+    console.log("Updated acceptedBy data:", updatedAcceptedBy); // Debug log
+
+    // Send the updated data back to the server
+    const updateResponse = await fetch(`https://testcvapi.ntechagent.com/tget-images/${data.id}`, {
+      method: 'PUT',
+
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ acceptedBy: JSON.stringify(updatedAcceptedBy) }), // Ensure this matches your backend expectations
+    });
+
+    const updateResult = await updateResponse.json();
+
+    if (updateResult.status === 'ok') {
+      console.log(`Accepted applicant with ID: ${applicantId}`);
+      // Optionally, you might want to update local state or notify the user
+
+      setComment("")
+
+      fetchData()
+     
+    } else {
+      console.error('Error updating applicant:', updateResult.message);
+    }
+  } catch (error) {
+    console.error('Error in handleAccept:', error);
+  }
+};
    
   
 
@@ -856,6 +922,78 @@ const downloadCV = () => {
       </Box>
       </Container>}
 
+     
+
+      {!isAdmin &&
+
+      <Container>
+    
+
+    {/* Comment box and buttons at the bottom */}
+   
+    
+    <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }}>
+          <Grid item xs={12}>
+            <TextField
+              label="Comment"
+              multiline
+              rows={4}
+              fullWidth
+              variant="outlined"
+              value={comment} // Bind the value to the state
+              onChange={handleCommentChange} // Update state on change
+            />
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(event) => {
+                event.stopPropagation(); // Prevent row click
+                handleAccept(data.id, "no", comment); // Call the accept function
+              }}
+            >
+              Submit
+            </Button>
+
+
+          </Grid>
+          <Grid item>
+
+
+           
+
+
+            {JSON.parse(data.acceptedBy)?.some(entry => entry.agent === agentName && entry.accepted === "true") ? (
+                      <Typography 
+                      variant="body1" 
+                      style={{ color: 'green', cursor: 'default' }} // Style for the green text
+                    >
+                      Accepted
+                    </Typography>
+                    ) : (
+                     
+            
+                      <Button
+                      variant="contained"
+                      color="success"
+                      onClick={(event) => {
+                         event.stopPropagation(); // Prevent row click
+                         handleAccept(data.id, data.acceptedBy, "no"); // Call the accept function
+                       }}
+                       >
+                       Accept
+                     </Button>
+                    )}
+
+
+
+          </Grid>
+        </Grid>
+  </Container> }
+
+  
+
         {/* Buttons at the bottom with margin */}
         {isAdmin && <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }}>
         {data.personalImageUrl && data.visaNo && data.sponsorName && data.applicationNo && data.name && data.middleName && data.surname && data.religion && data.dateofbirth && data.placeofbirth && data.currentNationality && data.sex && data.martialstatus && data.religion && data.educationattainment && data.postappliedfor && data.visaType && data.passportIssuePlace && data.dateofissue && data.passportnum && data.expireddate && <Grid item>
@@ -900,6 +1038,9 @@ const downloadCV = () => {
             </Button>
           </Grid>
         </Grid>}
+
+
+        
 
         {/* {!isAdmin && <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }}>
 

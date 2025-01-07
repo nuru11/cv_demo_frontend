@@ -1106,6 +1106,8 @@ formData.append("cvcount", formatCount(count + 1));
 
 formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "Bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(),  }));
 
+formData.append("acceptedBy", JSON.stringify([{"agent": "golden", "accepted": "false", "comment": ""}, {"agent": "bela", "accepted": "false", "comment": ""}, {"agent": "skyway", "accepted": "false", "comment": ""}, {"agent": "baraka", "accepted": "false", "comment": ""}, {"agent": "kaan", "accepted": "false", "comment": ""}, {"agent": "qimam", "accepted": "false", "comment": ""}]))
+
 
 
 
@@ -1287,6 +1289,8 @@ formData.append("laborId", sponsorInformation.laborId);
 formData.append("cvcount", formatCount(count + 1));
 
 formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "Bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(),  }));
+
+formData.append("acceptedBy", JSON.stringify([{"agent": "golden", "accepted": "false", "comment": ""}, {"agent": "bela", "accepted": "false", "comment": ""}, {"agent": "skyway", "accepted": "false", "comment": ""}, {"agent": "baraka", "accepted": "false", "comment": ""}, {"agent": "kaan", "accepted": "false", "comment": ""}, {"agent": "qimam", "accepted": "false", "comment": ""}]));
 
 
 

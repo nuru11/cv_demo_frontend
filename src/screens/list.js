@@ -16,6 +16,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography'
 import { useNavigate } from 'react-router-dom';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
@@ -37,11 +38,15 @@ import { useRef } from 'react';
 const columns = [
   { id: 'name', label: 'Name', minWidth: 170 },
   { id: 'surname', label: 'Surname', minWidth: 100 },
-  { id: 'currentNationality', label: 'Nationality', minWidth: 170 },
+  
   { id: 'postappliedfor', label: 'Position', minWidth: 170 },
   
   // { id: 'country', label: 'Country', minWidth: 170 },
   { id: 'createdAt', label: 'Created At', minWidth: 170 },
+
+  // { id: 'currentNationality', label: 'Nationality', minWidth: 170 },
+
+  {id: "status", label: "Status", minWidth: 100},
   
   { id: 'actions', label: 'Actions', minWidth: 100 },
 ];
@@ -592,6 +597,8 @@ const handleDeleteImages = async (e) => {
     setAnchorEl(null);
   };
 
+  const agentName = localStorage.getItem('userdata');
+
   const handleMenuOptionClick = (option, event, row) => {
     event.stopPropagation(); // Prevents navigation when the menu option is clicked
     handleMenuClose();
@@ -810,6 +817,7 @@ const handleDeleteImages = async (e) => {
                     <IconButton onClick={(event) => { event.stopPropagation(); handleMenuClick(event, row); }}>
                       <MoreVertIcon />
                       </IconButton>
+                    
                    <Menu
    anchorEl={anchorEl}
   open={Boolean(anchorEl)}
@@ -820,7 +828,38 @@ const handleDeleteImages = async (e) => {
    <MenuItem onClick={(event) => handleMenuOptionClick('send', event)}>Send</MenuItem>
  </Menu>
                   </>
-                ) : (
+                ) : column.id === "status" ? 
+                <>
+               <TableCell align="center">
+  {JSON.parse(row.acceptedBy)?.some(entry => entry.accepted === "true") ? (
+    // If at least one agent is accepted, display their names
+    JSON.parse(row.acceptedBy)?.map(entry => (
+      entry.accepted === "true" ? (
+        <Typography 
+          key={entry.agent} 
+          variant="body1" 
+          style={{ color: 'green', cursor: 'default' }} 
+        >
+          {entry.agent}: Accepted
+        </Typography>
+      ) : null // Do not render anything for non-accepted agents
+    ))
+  ) : (
+    // If no agents are accepted, display "Live"
+    <Typography 
+      variant="body1" 
+      style={{ color: 'blue', cursor: 'default' }} 
+    >
+      Live
+    </Typography>
+  )}
+</TableCell>
+
+                </>
+
+        :
+                
+                (
                   value
                 )}
               </TableCell>
