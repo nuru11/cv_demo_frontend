@@ -49,6 +49,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+
+import Snackbar from "@mui/material/Snackbar"
 // import Button from '@mui/material/Button';
 
 
@@ -76,6 +78,10 @@ const DetailPage = () => {
   const [rows, setRows] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [editData, setEditData] = React.useState({});
+
+  const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState('');
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
 
   const [base64Image, setBase64Image] = useState(null);
@@ -621,19 +627,28 @@ const downloadCV = () => {
       console.log(`Accepted applicant with ID: ${applicantId}`);
       // Optionally, you might want to update local state or notify the user
 
+      setSuccess(acceptedby !== "no" ? 'Accepted successfully!' : "Comment submitted successfully");
+      setOpenSnackbar(true);
+
       setComment("")
 
       fetchData()
      
     } else {
       console.error('Error updating applicant:', updateResult.message);
+      setError('Request failed');
+        setOpenSnackbar(true);
     }
   } catch (error) {
     console.error('Error in handleAccept:', error);
+    setError('Request failed');
+        setOpenSnackbar(true);
   }
 };
    
-  
+const handleCloseSnackbar = () => {
+  setOpenSnackbar(false);
+};
 
   return (
     <Container maxWidth={false} style={{ padding: '0 ' }}>
@@ -933,45 +948,55 @@ const downloadCV = () => {
    
     
     <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }}>
-          <Grid item xs={12}>
-            <TextField
-              label="Comment"
-              multiline
-              rows={4}
-              fullWidth
-              variant="outlined"
-              value={comment} // Bind the value to the state
-              onChange={handleCommentChange} // Update state on change
-            />
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={(event) => {
-                event.stopPropagation(); // Prevent row click
-                handleAccept(data.id, "no", comment); // Call the accept function
-              }}
-            >
-              Submit
-            </Button>
+        
+        {
+          JSON.parse(data.acceptedBy)?.some(entry => entry.accepted === "true") ?
+         <div></div> :
+         <>
+         <Grid item xs={12}>
+           <TextField
+             label="Comment"
+             multiline
+             rows={4}
+             fullWidth
+             variant="outlined"
+             value={comment} // Bind the value to the state
+             onChange={handleCommentChange} // Update state on change
+           />
+         </Grid>
+         <Grid item>
+           <Button
+             variant="contained"
+             color="primary"
+             onClick={(event) => {
+               event.stopPropagation(); // Prevent row click
+               handleAccept(data.id, "no", comment); // Call the accept function
+             }}
+           >
+             Submit
+           </Button>
 
 
-          </Grid>
+         </Grid>
+         </>
+}
+
+          
           <Grid item>
 
 
            
 
 
-            {JSON.parse(data.acceptedBy)?.some(entry => entry.agent === agentName && entry.accepted === "true") ? (
+            {/* {JSON.parse(data.acceptedBy)?.some(entry => entry.agent === agentName && entry.accepted === "true") ? (
                       <Typography 
                       variant="body1" 
                       style={{ color: 'green', cursor: 'default' }} // Style for the green text
                     >
                       Accepted
                     </Typography>
-                    ) : (
+                    ) :
+                     (
                      
             
                       <Button
@@ -984,13 +1009,82 @@ const downloadCV = () => {
                        >
                        Accept
                      </Button>
-                    )}
+                    )
+                    
+                  } */}
+
+
+{JSON.parse(data.acceptedBy)?.some(entry => entry.agent === agentName && entry.accepted === "true") ? (
+                      <Container style={{ marginTop: '20px' }}>
+                      <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
+                        <Typography variant="h6">You Accepted</Typography>
+                      </Box>
+                    </Container>
+                    ) : JSON.parse(data.acceptedBy)?.some(entry => entry.accepted === "true") ?
+
+                    <Box sx={{ border: '1px solid red', padding: 2, marginTop: 2 }}>
+                    <Typography variant="body1" style={{ color: 'red' }}>
+                      This applicant is reserved.
+                    </Typography>
+                  </Box>
+                     : (
+                     
+            
+                      <Button
+                      variant="contained"
+                      color="success"
+                      onClick={(event) => {
+                         event.stopPropagation(); // Prevent row click
+                         handleAccept(data.id, data.acceptedBy, "no"); // Call the accept function
+                       }}
+                       >
+                       Accept
+                     </Button>
+                    ) 
+                    
+                  }
 
 
 
           </Grid>
         </Grid>
   </Container> }
+
+
+  {isAdmin && JSON.parse(data.acceptedBy)?.some(entry => entry.comment !== "") ? (
+      <>
+        {JSON.parse(data.acceptedBy).map(entry => (
+          entry.comment !== "" && (
+            <Container style={{ marginTop: '20px' }} key={entry.agent}>
+              
+              <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "red" }}>
+              
+                <Typography variant="h6">{entry.agent}`s comment: {entry.comment}</Typography>
+              </Box>
+            </Container>
+          )
+        ))}
+      </>
+    ) : (
+      <div></div>
+    )}
+
+
+{isAdmin && JSON.parse(data.acceptedBy)?.some(entry => entry.accepted === "true") ? (
+    // If at least one agent is accepted, display their names
+    JSON.parse(data.acceptedBy)?.map(entry => (
+      entry.accepted === "true" ? (
+        <Container style={{ marginTop: '20px' }} key={entry.agent}>
+              <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
+                <Typography variant="h6">Accepted By: {entry.agent}</Typography>
+              </Box>
+            </Container>
+      ) : null // Do not render anything for non-accepted agents
+    ))
+  ) : (
+    // If no agents are accepted, display "Live"
+   <div></div>
+  )}
 
   
 
@@ -1085,6 +1179,14 @@ const downloadCV = () => {
       </Dialog>
 
       {/* Display other data as needed */}
+
+
+
+       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                      <Alert onClose={handleCloseSnackbar} severity={error ? 'error' : 'success'}>
+                        {error || success}
+                      </Alert>
+                    </Snackbar>
      
     </Container>
 

@@ -89,6 +89,7 @@ export default function StickyHeadTable() {
     const [nationalityFilter, setNationalityFilter] = React.useState('');
     const [genderFilter, setGenderFilter] = React.useState('');
     const [experienceFilter, setExperienceFilter] = React.useState('');
+    const [acceptedFilter, setAcceptedFilter] = React.useState('');
 
 
     
@@ -102,7 +103,8 @@ export default function StickyHeadTable() {
         (positionFilter ? row.postappliedfor === positionFilter : true) &&
         (nationalityFilter ? row.currentNationality === nationalityFilter : true) &&
         (genderFilter ? row.sex === genderFilter : true) &&
-        (experienceFilter === "yes" ? experiences.some(exp => exp.name !== "") : true)
+        (experienceFilter === "yes" ? experiences.some(exp => exp.name !== "") : true) &&
+        (acceptedFilter === "yes" ? JSON.parse(row.acceptedBy)?.some(acceptedBy => acceptedBy.accepted === "true") : true)
       );
     });
   
@@ -735,6 +737,23 @@ const handleDeleteImages = async (e) => {
                 label="Experienced"
                 value={experienceFilter}
                 onChange={(e) => setExperienceFilter(e.target.value)}
+                SelectProps={{
+                  native: true,
+                }}
+                variant="outlined"
+                style={{ marginRight: '16px', width: "130px" }}
+              >
+                <option value=""></option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+                
+              </TextField>
+
+              <TextField
+                select
+                label="Accepted Applications"
+                value={acceptedFilter}
+                onChange={(e) => setAcceptedFilter(e.target.value)}
                 SelectProps={{
                   native: true,
                 }}

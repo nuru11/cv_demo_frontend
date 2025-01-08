@@ -307,6 +307,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography'
+import Alert from "@mui/material/Alert"
+import Snackbar from "@mui/material/Snackbar"
 import Button from '@mui/material/Button'; // Import Button component
 import { useNavigate } from 'react-router-dom';
 import Header from "../screens/header";
@@ -328,10 +330,18 @@ export default function StickyHeadTable() {
   
   const [positionFilter, setPositionFilter] = React.useState('');
   const [experienceFilter, setExperienceFilter] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState('');
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const [acceptedFilter, setAcceptedFilter] = React.useState('');
 
   const filteredRows = rows.filter(row => {
     const experiences = JSON.parse(row.experience) || [];
     const acceptedByArray = JSON.parse(row.acceptedBy) || [];
+
+    
+     
   
     // Check if there are any accepted entries
     const hasAccepted = acceptedByArray.some(entry => entry.accepted === "true");
@@ -345,7 +355,8 @@ export default function StickyHeadTable() {
       (positionFilter ? row.postappliedfor === positionFilter : true) &&
       (experienceFilter === "yes" ? experiences.some(exp => exp.name !== "") : true) &&
       (positionFilter ? row.postappliedfor === positionFilter : true) &&
-        (experienceFilter === "yes" ? experiences.some(exp => exp.name !== "") : true)
+        (experienceFilter === "yes" ? experiences.some(exp => exp.name !== "") : true) &&
+        (acceptedFilter === "yes" ? JSON.parse(row.acceptedBy)?.some(acceptedBy => acceptedBy.accepted === "true") : true)
     );
   });
 
@@ -418,13 +429,24 @@ export default function StickyHeadTable() {
     if (updateResult.status === 'ok') {
       console.log(`Accepted applicant with ID: ${applicantId}`);
       // Optionally, you might want to update local state or notify the user
+      setSuccess('Accepted successfully!');
+      setOpenSnackbar(true);
       fetchData()
     } else {
       console.error('Error updating applicant:', updateResult.message);
+
+      setError('Request failed');
+        setOpenSnackbar(true);
     }
   } catch (error) {
     console.error('Error in handleAccept:', error);
+    setError('Request failed');
+        setOpenSnackbar(true);
   }
+};
+
+const handleCloseSnackbar = () => {
+  setOpenSnackbar(false);
 };
 
   return (
@@ -464,6 +486,24 @@ export default function StickyHeadTable() {
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </TextField>
+
+          <TextField
+            select
+            label="Accepted Applications"
+            value={acceptedFilter}
+            onChange={(e) => setAcceptedFilter(e.target.value)}
+            SelectProps={{
+              native: true,
+            }}
+            variant="outlined"
+            style={{ marginRight: '16px', width: "130px" }}
+          >
+            <option value=""></option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </TextField>
+
+
         </div>
             
         <TableContainer sx={{ maxHeight: 440 }}>
@@ -542,6 +582,14 @@ Accept
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+
+
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <Alert onClose={handleCloseSnackbar} severity={error ? 'error' : 'success'}>
+                  {error || success}
+                </Alert>
+              </Snackbar>
     </>
   );
 }
