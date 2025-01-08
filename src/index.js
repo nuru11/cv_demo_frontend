@@ -17,6 +17,7 @@ import Setting from "./screens/setting";
 import Testpage from "./screens/test";
 import SignUp from "./screens/auth/signup";
 import Login from "./screens/auth/login";
+import Requestforagent from "./screens/requestforagent"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AgeCal from "./screens/ageCal";
 import ProtectedRoute from './screens/auth/ProtectedRoute'; // Import the ProtectedRoute
@@ -102,6 +103,12 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+    errorElement: <div>404 Not Found</div>
+  },
+
+  {
+    path: '/requestforagent',
+    element: <Requestforagent />,
     errorElement: <div>404 Not Found</div>
   },
   // {

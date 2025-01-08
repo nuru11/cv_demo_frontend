@@ -174,11 +174,12 @@ const Header = () => {
                         </>
                     )}
 
-                    {!isAdmin() && (
+                    {!isAdmin() && isLoggedIn() && (
                         <>
                             {/* <Button color="inherit" onClick={() => navigate('/')}>Home</Button> */}
                             {/* <Button color="inherit" onClick={() => navigate('/list')}>Applicants</Button> */}
                             <Button color="inherit" onClick={() => navigate('/listforagent')}>Applicants</Button>
+                            <Button color="inherit" onClick={() => navigate('/requestforagent')}>Add Request</Button>
                             {/* <Button color="inherit" onClick={() => navigate('/signup')}>Add Agent</Button> */}
                             {/* <Button color="inherit" onClick={() => navigate('/setting')}>Settings</Button> */}
                         </>
@@ -208,10 +209,11 @@ const Header = () => {
                             </>
                         )}
 
-                         {!isAdmin() && (
+                         {!isAdmin() && isLoggedIn() && (
                             <>
                                 {/* <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem> */}
                                 <MenuItem onClick={() => handleNavigation('/listforagent')}>Applicants</MenuItem>
+                                <MenuItem onClick={() => handleNavigation('/requestforagent')}>Add Request</MenuItem>
                                 {/* <MenuItem onClick={() => handleNavigation('/signup')}>Add User</MenuItem> */}
                                 {/* <MenuItem onClick={() => handleNavigation('/setting')}>Settings</MenuItem> */}
                             </>

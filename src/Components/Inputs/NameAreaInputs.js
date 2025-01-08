@@ -181,7 +181,7 @@ class NameArea extends Component {
         <option value="" style={{ color: '#AFAFAF' }}></option>
         <option value="PRIMARY_SCHOOL">Primary School</option>
         <option value="Secondary_SCHOOL">Secondary School</option>
-        <option value="High_SCHOOL">High School</option>
+        {/* <option value="High_SCHOOL">High School</option> */}
         <option value="HIGH_SCHOOL">High School</option>
         <option value="BACHELORS">Bachelor's Degree</option>
         <option value="MASTERS">Master's Degree</option>
