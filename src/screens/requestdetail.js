@@ -64,7 +64,7 @@ const DetailPage = () => {
         <Typography variant="h4" gutterBottom>
           Worker Details
         </Typography>
-        <Card variant="outlined" sx={{ borderRadius: 2, boxShadow: 3, background: "" }}>
+        <Card variant="outlined" sx={{ borderRadius: 2, boxShadow: 3, background: "", marginBottom: "10px" }}>
           <CardContent>
             <Typography variant="h5" gutterBottom>
               Agent: {data.agent}
