@@ -75,12 +75,12 @@ const router = createBrowserRouter([
   //   element: <ProtectedRoute element={<InputDesigntest />} />,
   //   errorElement: <div>404 Not Found</div>
   // },
-  // {
-  //   path: '/age',
-  //   element: <ProtectedRoute element={<AgeCal />} />,
-  //   // element: <AgeCal />,
-  //   errorElement: <div>404 Not Found</div>
-  // },
+  {
+    path: '/age',
+    element: <ProtectedRoute element={<AgeCal />} />,
+    // element: <AgeCal />,
+    errorElement: <div>404 Not Found</div>
+  },
   // {
   //   path: '/pdf',
   //   element: <ProtectedRoute element={<TestpdfDesign />} />,

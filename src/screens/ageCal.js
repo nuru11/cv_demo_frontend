@@ -2428,7 +2428,6 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-
 import React, { useRef, useState } from 'react';
 import html2pdf from 'html2pdf.js';
 
@@ -2443,7 +2442,7 @@ const App = () => {
     const element = pdfRef.current;
     const opt = {
       margin: 1,
-      filename: 'uaaaser-data.pdf',
+      filename: `${name}-CV.pdf`, // Custom filename based on user's name
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
@@ -2476,7 +2475,7 @@ const App = () => {
       </div>
       <button onClick={handleDownloadPdf}>Download PDF</button>
 
-      <div ref={pdfRef} style={{ display: '' }}>
+      <div ref={pdfRef} style={{ display: 'none' }}>
         <h2>User Information</h2>
         <p><strong>Name:</strong> {name}</p>
         <p><strong>Email:</strong> {email}</p>
@@ -2486,10 +2485,10 @@ const App = () => {
       {/* Display the PDF if it exists */}
       {pdfUrl && (
         <div style={{ marginTop: '20px' }}>
-          <h2>Generated PDF:</h2>
-          <embed src={pdfUrl} type="application/pdf" width="600" height="400" />
+          <h2>{name} CV:</h2> {/* PDF Viewer Name */}
+          <embed src={pdfUrl} type="application/pdf" width="100%" height="600" />
           {/* Alternatively, you could use <iframe> */}
-          {/* <iframe src={pdfUrl} width="600" height="400" /> */}
+          {/* <iframe src={pdfUrl} width="100%" height="600" /> */}
         </div>
       )}
     </div>

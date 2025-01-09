@@ -453,6 +453,43 @@ const downloadCV = () => {
         await Promise.all(downloadPromises);
     }
 
+
+    const onlyfordownloadcv = async () => {
+
+    
+
+
+      const pdfElements = [
+        { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Bela Hodod`}.pdf`, margin: 0.5 , format: "letter" },
+        {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Golden`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleThree ? 'cvBarakaContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: "a4" },
+        {elementId: styles.styleQimam ? 'QimamAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
+        // {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf", margin: 0.5, format: "letter"}
+          
+          
+      ];
+  
+      const downloadPromises = pdfElements.map(({ elementId, filename, margin, format }) => {
+          const element = document.getElementById(elementId);
+          const options = {
+              margin: margin,
+              marginBottom: 0,
+              filename: filename,
+              image: { type: 'jpeg', quality: 0.98 },
+              html2canvas: { scale: 2, useCORS: true },
+              // jsPDF: { unit: 'in', format: [8.5, 10.99],  /*format: 'letter',*/ orientation: 'portrait' }
+              jsPDF: { unit: 'in', format: format, orientation: 'portrait' }
+          };
+  
+          return  html2pdf().from(element).set(options).save() 
+      });
+  
+      // Wait for all downloads to complete
+      await Promise.all(downloadPromises);
+  }
+
  
     const url = window.location.href;
   const createdAt = url.split('_')[1]; // This gets the timestamp after the underscore
@@ -1103,6 +1140,12 @@ const handleCloseSnackbar = () => {
   <Grid item >
   <Button variant="contained" color="primary" onClick={downloadMultipleCVs}>
     View CV
+  </Button>
+</Grid>
+
+<Grid item >
+  <Button variant="contained" color="primary" onClick={onlyfordownloadcv}>
+    Download CV
   </Button>
 </Grid>
 
