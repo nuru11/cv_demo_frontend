@@ -102,15 +102,23 @@ const DetailPage = () => {
               </Grid>
             </Grid>}
 
-            {data.babySitting !== "false" && 
-            data.cleaning !== "false" && 
-            data.washing !== "false" && 
-            data.cooking !== "false" && 
-            data.elderCare !== "false" && 
-            data.ironingClothes !== "false" && 
+            {/* {data.babySitting === "false" && 
+            data.cleaning === "false" && 
+            data.washing === "false" && 
+            data.cooking === "false" && 
+            data.elderCare === "false" && 
+            data.ironingClothes === "false" && 
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
               Services Required
-            </Typography>}
+            </Typography>} */}
+            {
+            [data.babySitting, data.cleaning, data.washing, data.cooking, data.elderCare, data.ironingClothes].some(entry => entry === "true") ?
+            <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+              Services Required
+            </Typography> :
+            <div></div>
+
+            }
             <Grid container spacing={2}>
               {data.babySitting === "true" && (
                 <Grid item xs={12} sm={6}>

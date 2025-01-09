@@ -2336,86 +2336,164 @@
 ////////////////////////////////////////////////////////////////
 
 
-import React from 'react';
-import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
+// import React from 'react';
+// import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
 
-// Create styles
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  header: {
-    fontSize: 20,
-    color: '#2ca2d4',
-    marginBottom: 20,
-  },
-  section: {
-    marginBottom: 10,
-  },
-  borderBox: {
-    border: '1px solid black',
-    padding: 5,
-  },
-  image: {
-    width: '100%',
-    marginBottom: 10,
-  },
-  title: {
-    color: '#2ca2d4',
-  },
-  titleAr: {
-    color: '#AB1319',
-  },
-});
+// // Create styles
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 20,
+//   },
+//   header: {
+//     fontSize: 20,
+//     color: '#2ca2d4',
+//     marginBottom: 20,
+//   },
+//   section: {
+//     marginBottom: 10,
+//   },
+//   borderBox: {
+//     border: '1px solid black',
+//     padding: 5,
+//   },
+//   image: {
+//     width: '100%',
+//     marginBottom: 10,
+//   },
+//   title: {
+//     color: '#2ca2d4',
+//   },
+//   titleAr: {
+//     color: '#AB1319',
+//   },
+// });
 
-// Create Document Component
-const MyDocument = ({ personalInfo, salaries, sponsorInformation, applicantpersonalimagePreview }) => (
-  <Document>
-    <Page size="A4" style={styles.container}>
-      <View style={styles.section}>
-        <Text style={styles.header}>APPLICATION FOR EMPLOYMENT</Text>
+// // Create Document Component
+// const MyDocument = ({ personalInfo, salaries, sponsorInformation, applicantpersonalimagePreview }) => (
+//   <Document>
+//     <Page size="A4" style={styles.container}>
+//       <View style={styles.section}>
+//         <Text style={styles.header}>APPLICATION FOR EMPLOYMENT</Text>
         
-        {/* Date Applied */}
-        <View style={styles.borderBox}>
-          <Text style={styles.title}>DATE APPLIED</Text>
-          <Text>{`${new Date().toLocaleString('default', { month: 'long' })} ${new Date().getDate()}, ${new Date().getFullYear()}`}</Text>
-        </View>
+//         {/* Date Applied */}
+//         <View style={styles.borderBox}>
+//           <Text style={styles.title}>DATE APPLIED</Text>
+//           <Text>{`${new Date().toLocaleString('default', { month: 'long' })} ${new Date().getDate()}, ${new Date().getFullYear()}`}</Text>
+//         </View>
 
-        {/* Position Applied For */}
-        <View style={styles.borderBox}>
-          <Text style={styles.title}>POSITION APPLIED FOR</Text>
-          <Text>no</Text>
-        </View>
+//         {/* Position Applied For */}
+//         <View style={styles.borderBox}>
+//           <Text style={styles.title}>POSITION APPLIED FOR</Text>
+//           <Text>no</Text>
+//         </View>
 
-        {/* Monthly Salary */}
-        <View style={styles.borderBox}>
-          <Text style={styles.title}>MONTHLY SALARY</Text>
-          <Text>1200 sar</Text>
-        </View>
+//         {/* Monthly Salary */}
+//         <View style={styles.borderBox}>
+//           <Text style={styles.title}>MONTHLY SALARY</Text>
+//           <Text>1200 sar</Text>
+//         </View>
 
-        {/* Contract Period */}
-        <View style={styles.borderBox}>
-          <Text style={styles.title}>CONTRACT PERIOD</Text>
-          <Text>2</Text>
-        </View>
+//         {/* Contract Period */}
+//         <View style={styles.borderBox}>
+//           <Text style={styles.title}>CONTRACT PERIOD</Text>
+//           <Text>2</Text>
+//         </View>
 
-        {/* Applicant Image */}
-        {/* <Image
-          style={styles.image}
-          src={applicantpersonalimagePreview || 'path/to/placeholder.png'} // Replace with your placeholder path
-        /> */}
-      </View>
+//         {/* Applicant Image */}
+//         {/* <Image
+//           style={styles.image}
+//           src={applicantpersonalimagePreview || 'path/to/placeholder.png'} // Replace with your placeholder path
+//         /> */}
+//       </View>
 
-      {/* Full Name Section */}
-      <View style={styles.section}>
-        <Text style={styles.borderBox}>FULL NAME</Text>
-        <Text style={styles.borderBox}>nuru ibrahim ali</Text>
-      </View>
+//       {/* Full Name Section */}
+//       <View style={styles.section}>
+//         <Text style={styles.borderBox}>FULL NAME</Text>
+//         <Text style={styles.borderBox}>nuru ibrahim ali</Text>
+//       </View>
 
-      {/* Additional Sections */}
-      {/* Add more sections as needed following the same pattern */}
-    </Page>
-  </Document>
-);
+//       {/* Additional Sections */}
+//       {/* Add more sections as needed following the same pattern */}
+//     </Page>
+//   </Document>
+// );
 
-export default MyDocument;
+// export default MyDocument;
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
+import React, { useRef, useState } from 'react';
+import html2pdf from 'html2pdf.js';
+
+const App = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [age, setAge] = useState('');
+  const [pdfUrl, setPdfUrl] = useState(null); // State to hold PDF URL
+  const pdfRef = useRef();
+
+  const handleDownloadPdf = () => {
+    const element = pdfRef.current;
+    const opt = {
+      margin: 1,
+      filename: 'uaaaser-data.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    };
+
+    html2pdf()
+      .from(element)
+      .set(opt)
+      .output('blob') // Get the PDF as a Blob
+      .then((blob) => {
+        const url = URL.createObjectURL(blob); // Create a URL for the blob
+        setPdfUrl(url); // Set the PDF URL in state
+      });
+  };
+
+  return (
+    <div style={{ padding: '20px' }}>
+      <h1>User Information</h1>
+      <div>
+        <label>Name:</label>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      </div>
+      <div>
+        <label>Email:</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      </div>
+      <div>
+        <label>Age:</label>
+        <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+      </div>
+      <button onClick={handleDownloadPdf}>Download PDF</button>
+
+      <div ref={pdfRef} style={{ display: '' }}>
+        <h2>User Information</h2>
+        <p><strong>Name:</strong> {name}</p>
+        <p><strong>Email:</strong> {email}</p>
+        <p><strong>Age:</strong> {age}</p>
+      </div>
+
+      {/* Display the PDF if it exists */}
+      {pdfUrl && (
+        <div style={{ marginTop: '20px' }}>
+          <h2>Generated PDF:</h2>
+          <embed src={pdfUrl} type="application/pdf" width="600" height="400" />
+          {/* Alternatively, you could use <iframe> */}
+          {/* <iframe src={pdfUrl} width="600" height="400" /> */}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
