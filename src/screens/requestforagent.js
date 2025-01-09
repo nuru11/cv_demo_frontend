@@ -22,11 +22,12 @@ const MyForm = () => {
   const [customAge, setCustomAge] = useState('');
   const [maritalStatus, setMaritalStatus] = useState('any');
   const [educationAttainment, setEducationAttainment] = useState('any');
-  const [position, setPosition] = useState('housemaid');
+  const [position, setPosition] = useState('Housemaid');
   const [customPosition, setCustomPosition] = useState('');
   const [arabicDegree, setArabicDegree] = useState('any');
   const [englishDegree, setEnglishDegree] = useState('any');
   const [experienced, setExperienced] = useState('any');
+  const [message, setMessage] = useState('');
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -79,6 +80,8 @@ const MyForm = () => {
       cooking: services.cooking,
       elderCare: services.elderCare,
       ironingClothes: services.ironingClothes,
+
+      message
     };
 
     try {
@@ -98,6 +101,28 @@ const MyForm = () => {
       console.log('Data posted successfully:', data);
       setSuccess('Data posted successfully!');
       setOpenSnackbar(true);
+      setMessage("")
+
+
+      setAge("any")
+      // setCustomAge("")
+      setMaritalStatus("any")
+      setEducationAttainment("any")
+      setPosition('housemaid')
+      setArabicDegree("any")
+      setEnglishDegree("any")
+      setExperienced("any")
+
+      services.babySitting = "false"
+      services.cleaning = "false"
+      services.washing = "false"
+      services.cooking = "false"
+      services.elderCare = "false"
+      services.ironingClothes = "false"
+
+
+
+
       // Optionally, reset the form or show a success message
     } catch (error) {
       console.error('Error posting data:', error);
@@ -160,8 +185,8 @@ const MyForm = () => {
         <FormControl fullWidth margin="normal">
           <InputLabel>Position</InputLabel>
           <Select value={position} onChange={handlePositionChange}>
-            <MenuItem value="housemaid">Housemaid</MenuItem>
-            <MenuItem value="driver">Driver</MenuItem>
+            <MenuItem value="Housemaid">Housemaid</MenuItem>
+            <MenuItem value="Driver">Driver</MenuItem>
             <MenuItem value="other">Other</MenuItem>
           </Select>
         </FormControl>
@@ -208,10 +233,20 @@ const MyForm = () => {
           <InputLabel>Experienced</InputLabel>
           <Select value={experienced} onChange={(e) => setExperienced(e.target.value)}>
             <MenuItem value="any">Any</MenuItem>
-            <MenuItem value="yes">Yes</MenuItem>
-            <MenuItem value="no">No</MenuItem>
+            <MenuItem value="Yes">Yes</MenuItem>
+            <MenuItem value="NO">No</MenuItem>
           </Select>
         </FormControl>
+
+        <TextField
+          fullWidth
+          margin="normal"
+          label="Message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          multiline
+          rows={4}
+        />
 
         <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, marginTop: 3 }}>
           <Typography variant="h6">Services Required</Typography>

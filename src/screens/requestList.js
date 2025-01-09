@@ -50,7 +50,6 @@ export default function StickyHeadTable() {
   const [positionFilter, setPositionFilter] = React.useState('');
     const [nationalityFilter, setNationalityFilter] = React.useState('');
     const [genderFilter, setGenderFilter] = React.useState('');
-    const [acceptedFilter, setAcceptedFilter] = React.useState('');
     const [experiencedFilter, setExperiencedFilter] = React.useState("")
 
 
@@ -62,12 +61,13 @@ export default function StickyHeadTable() {
       // const experiences = JSON.parse(row.experience) || []; // Ensure it's an array
     
       return (
-        (positionFilter ? row.position === positionFilter : true) &&
+        (positionFilter ? row.position.toLowerCase() === positionFilter : true) &&
         (nationalityFilter ? row.currentNationality === nationalityFilter : true) &&
         (genderFilter ? row.sex === genderFilter : true) &&
-        (experiencedFilter === "yes" ? row.experienced === "yes" : true) &&
+        (experiencedFilter === "yes" ? row.experienced.toLowerCase() === "yes" :  experiencedFilter === "no" ? row.experienced.toLowerCase() === "no" : true)
+        // ( experiencedFilter === "no" ? row.experienced === "yes" : true)
         
-        (acceptedFilter === "yes" ? JSON.parse(row.acceptedBy)?.some(acceptedBy => acceptedBy.accepted === "true") : true)
+        // (acceptedFilter === "yes" ? JSON.parse(row.acceptedBy)?.some(acceptedBy => acceptedBy.accepted === "true") : true)
       );
     });
   
@@ -115,7 +115,7 @@ const [data, setData] = React.useState('');
 
   const handleDelete = async (id) => {
 
-    const confirmDelete = window.confirm(`Are you sure you want to delete this itemaaaa? ${id}`);
+    const confirmDelete = window.confirm(`Are you sure you want to delete this item?`);
     if (confirmDelete) {
       try {
         const response = await fetch(`https://testcvapi.ntechagent.com/api/agentsrequest/${id}`, {
