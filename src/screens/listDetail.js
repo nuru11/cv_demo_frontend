@@ -668,22 +668,31 @@ const handleCloseSnackbar = () => {
       <Header />
 
       <Container>
-        {!isAdmin && JSON.parse(data.acceptedBy)?.some(entry => entry.agent === agentName && entry.accepted === "true") ? (
-                      <Container style={{ marginTop: '20px' }}>
-                      <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
-                        <Typography variant="h6">You Accepted</Typography>
-                      </Box>
-                    </Container>
-                    ) : !isAdmin  JSON.parse(data.acceptedBy)?.some(entry => entry.accepted === "true") ?
+      {!isAdmin && (() => {
+  const acceptedEntries = JSON.parse(data.acceptedBy) || [];
+  const isAgentAccepted = acceptedEntries.some(entry => entry.agent === agentName && entry.accepted === "true");
+  const isAnyAccepted = acceptedEntries.some(entry => entry.accepted === "true");
 
-                    <Box sx={{ border: '1px solid red', padding: 2, marginTop: 2 }}>
-                    <Typography variant="body1" style={{ color: 'red' }}>
-                      This applicant is reserved.
-                    </Typography>
-                  </Box>
-                     : <div></div>
-                    
-                  }
+  if (isAgentAccepted) {
+    return (
+      <Container style={{ marginTop: '20px' }}>
+        <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
+          <Typography variant="h6">You Accepted</Typography>
+        </Box>
+      </Container>
+    );
+  } else if (isAnyAccepted) {
+    return (
+      <Box sx={{ border: '1px solid red', padding: 2, marginTop: 2 }}>
+        <Typography variant="body1" style={{ color: 'red' }}>
+          This applicant is reserved.
+        </Typography>
+      </Box>
+    );
+  } else {
+    return <div></div>;
+  }
+})()}
         <Typography variant="h4" gutterBottom>
           Details for <span style={{ color: "green",  }}>{data.name} {data.surname}</span>
         </Typography>
