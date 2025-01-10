@@ -225,18 +225,35 @@ export default function StickyHeadTable() {
         })
         .save();
     };
+
+    const isAdmin = () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+          try {
+              const payload = JSON.parse(atob(token.split('.')[1]));
+              return payload.isAdmin || false;
+          } catch (error) {
+              console.error("Failed to decode token:", error);
+              return false;
+          }
+      }
+      return false;
+  };
     
 const [data, setData] = React.useState('');
   // insert checkbox end
 
+  const a = false
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://testcvapi.ntechagent.com/tt');
+        const response = await fetch(`https://testcvapi.ntechagent.com/tt?agentname=${agentName}`);
         const result = await response.json();
         if (result.status === 'ok') {
           console.log(result.data); // Log the fetched data for debugging
           setData(result.data);
+          console.log(result, " nnnnnnnnnnnnnnnnnn")
           const sortedData = result.data
             .filter(item => item.createdAt)
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -265,7 +282,7 @@ const [data, setData] = React.useState('');
     const confirmDelete = window.confirm('Are you sure you want to delete this item?');
     if (confirmDelete) {
       try {
-        const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${id}`, {
+        const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${id}?agentname=${agentName}`, {
           method: 'DELETE',
         });
         const result = await response.json();
@@ -367,7 +384,7 @@ const handleDeleteImages = async (e) => {
   if (confirmDelete) {
 
   try {
-    const response = await fetch('https://testcvapi.ntechagent.com/deletemultipeapplicants', {
+    const response = await fetch(`https://testcvapi.ntechagent.com/deletemultipeapplicants?agentname=${agentName}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -566,7 +583,7 @@ const handleDeleteImages = async (e) => {
 
 
     try {
-      const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}`, {
+      const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}?agentname=${agentName}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

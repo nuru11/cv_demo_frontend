@@ -103,6 +103,9 @@ const handleToggleChange = (event) => {
     setToggleState(event.target.checked);
 };
 
+
+const agentName = localStorage.getItem('userdata');
+
     const [passportData, setPassportData] = useState({
         name: '',
         surname: '',
@@ -937,7 +940,7 @@ useEffect(() => {
       const [dataa, setDataa] = useState();
       const fetchDataa = async () => {
         try {
-          const response = await fetch('https://testcvapi.ntechagent.com/tt');
+          const response = await fetch(`https://testcvapi.ntechagent.com/tt?agentname=${agentName}`);
           const result = await response.json();
           if (result.status === 'ok') {
             console.log(result.data); // Log the fetched data for debugging
@@ -1114,31 +1117,39 @@ formData.append("acceptedBy", JSON.stringify([{"agent": "golden", "accepted": "f
 
 
 try {
-  const result = await axios.post(
-      "https://testcvapi.ntechagent.com/tupload-image",
+    const response = await axios.post(
+      `https://testcvapi.ntechagent.com/tupload-image?agentname=${agentName}`,
       formData,
       {
-          headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data" },
       }
-  );
-  // toast.success("Form submitted successfully!");
-  document.getElementById("nameInput").value = ""; // Reset the name input field
-  fetchCount();
-} catch (error) {
-  console.error("Submission failed:", error);
-  // toast.error("Submission failed. Please try again.");
-} finally {
-  await fetchDataa();
-  fetchCount();
-  setIsSubmitting(false); // Reset the flag after the operation is completed
-}
+    );
+  
+    // Check if the response indicates success
+    if (response.status === 200) {
+        toast.dismiss();
+        
+      toast.success("Form submitted successfully!");
+      document.getElementById("nameInput").value = ""; // Reset the name input field
+    } else {
+      toast.error("Submission failed. Please try again."); // Handle unexpected response
+    }
+  
+    fetchCount(); // Call fetchCount after submission attempt
+  } catch (error) {
+    console.error("Submission failed:", error);
+    // toast.error("Submission failed. Please try again."); // Notify user on error
+  } finally {
+    await fetchDataa(); // Fetch data after submission attempt
+    setIsSubmitting(false); // Reset the flag after the operation is completed
+    fetchCount(); // Call fetchCount again if needed
+  }
         
         // Reset file name and name input after submission
         // setPFileName("No file chosen after");
         // setImageforpersonalimage(null);
         // setImageforfullbodyimage(null);
-        toast.success("Form submitted successfully!");
-        document.getElementById("nameInput").value = ""; // Reset the name input field
+        // Reset the name input field
     };
 
    
@@ -1147,6 +1158,9 @@ try {
 
     const submitanyway = async (e) => {
       e.preventDefault();
+
+      setShowsubmitModal(false);
+      
           
       await fetchDataa();
 
@@ -1297,31 +1311,42 @@ formData.append("acceptedBy", JSON.stringify([{"agent": "golden", "accepted": "f
 
 
 try {
-  const result = await axios.post(
-      "https://testcvapi.ntechagent.com/tupload-image",
+    const response = await axios.post(
+      `https://testcvapi.ntechagent.com/tupload-image?agentname=${agentName}`,
       formData,
       {
-          headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data" },
       }
-  );
-  // toast.success("Form submitted successfully!");
-  // document.getElementById("nameInput").value = ""; // Reset the name input field
-  fetchCount();
-} catch (error) {
-  console.error("Submission failed:", error);
-  // toast.error("Submission failed. Please try again.");
-} finally {
-  await fetchDataa();
-  setIsSubmitting(false); // Reset the flag after the operation is completed
-  fetchCount();
-}
+    );
+  
+    // Check if the response indicates success
+    if (response.status === 200) { // Use response.status for axios
+        toast.dismiss();
+        setShowsubmitModal(false);
+      toast.success("Form submitted successfully!");
+      document.getElementById("nameInput").value = ""; // Reset the name input field
+    } else {
+      toast.error("Submission failed. Please try again."); // Handle unexpected response
+      setShowsubmitModal(false);
+    }
+  
+    fetchCount(); // Call fetchCount after successful submission
+  } catch (error) {
+    console.error("Submission failed:", error);
+    // toast.error("Submission failed. Please try again."); // Notify user on error
+    
+  } finally {
+    await fetchDataa(); // Fetch data after submission attempt
+    setIsSubmitting(false); // Reset the flag after the operation is completed
+    fetchCount(); // Call fetchCount again if needed
+  }
         
         
         // setImageforpersonalimage(null);
         // setImageforfullbodyimage(null);
         // setApplicantfullbodyimageimagePreview(null)
-        toast.success("Form submitted successfully!");
-        setShowsubmitModal(false);
+        
+        
         // document.getElementById("nameInput").value = ""; // Reset the name input field
     };
 
@@ -1573,33 +1598,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
         }
     };
 
-    const postDummyData = async () => {
-        const dummyData = {
-            name: "John Doeee",
-            des: personalInfo.name ?? "nooooooooooooooo",
-         
-        };
-
-        try {
-            const response = await fetch('https://testcvapi.ntechagent.com/cv-builder-1', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dummyData),
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                console.log('Data posted successfully:', result);
-                fetchData(); // Fetch updated data after posting
-            } else {
-                console.error('Error posting data:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error posting data:', error);
-        }
-    };
+   
 
     const deleteItemsByName = async () => {
         try {

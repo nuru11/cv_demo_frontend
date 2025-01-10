@@ -102,8 +102,9 @@ const DetailPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(agentName, " aaaaaaaaaaaa")
       try {
-        const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images/${id}`);
+        const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images/${id}?agentname=${agentName}`);
         const result = await response.json();
         if (result.status === 'ok') {
           setData(result.data); // Ensure this is an array
@@ -143,7 +144,7 @@ const DetailPage = () => {
 
 
     try {
-      const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}`, {
+      const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}?agentname=${agentName}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -513,7 +514,7 @@ const downloadCV = () => {
 
   const fetchData = async () => {
       try {
-        const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images?createdAt=${createdAt}`);
+        const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images?createdAt=${createdAt}&agentname=${agentName}`);
         const result = await response.json();
         if (result.status === 'ok') {
           console.log('Fetched dataaaaaaa:', result.data); // Log the fetched data
@@ -662,7 +663,7 @@ const downloadCV = () => {
     console.log("Updated acceptedBy data:", updatedAcceptedBy); // Debug log
 
     // Send the updated data back to the server
-    const updateResponse = await fetch(`https://testcvapi.ntechagent.com/tget-images/${data.id}`, {
+    const updateResponse = await fetch(`https://testcvapi.ntechagent.com/tget-images/${data.id}?agentname=${agentName}`, {
       method: 'PUT',
 
       headers: {

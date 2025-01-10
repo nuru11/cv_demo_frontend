@@ -416,7 +416,7 @@ export default function StickyHeadTable() {
     console.log("Updated acceptedBy data:", updatedAcceptedBy); // Debug log
 
     // Send the updated data back to the server
-    const updateResponse = await fetch(`https://testcvapi.ntechagent.com/tget-images/${applicantId}`, {
+    const updateResponse = await fetch(`https://testcvapi.ntechagent.com/edit_for_agent/${applicantId}?agentname=${agentName}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

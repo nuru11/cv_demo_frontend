@@ -17,6 +17,7 @@ import Header from "../../screens/header";
 
 
 const Signup = () => {
+  const agentName2 = localStorage.getItem('userdata');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [agentName, setAgentName] = useState('');
@@ -48,7 +49,7 @@ const Signup = () => {
     setAgentName(selectedAgent); // Set agentName to the selected agent
 
     try {
-      const response = await fetch('https://testcvapi.ntechagent.com/api/auth/register', {
+      const response = await fetch(`https://testcvapi.ntechagent.com/api/auth/register?agentname=${agentName2}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

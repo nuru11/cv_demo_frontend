@@ -53,7 +53,7 @@ export default function StickyHeadTable() {
     const [experiencedFilter, setExperiencedFilter] = React.useState("")
 
 
-    
+    const agentName = localStorage.getItem('userdata');
 
 
 
@@ -84,7 +84,7 @@ const [data, setData] = React.useState('');
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://testcvapi.ntechagent.com/api/agentsrequestget');
+        const response = await fetch(`https://testcvapi.ntechagent.com/api/agentsrequestget?agentname=${agentName}`);
         const result = await response.json();
         if (result.status === 'ok') {
           console.log(result.data, "aaaaa"); // Log the fetched data for debugging
@@ -118,7 +118,7 @@ const [data, setData] = React.useState('');
     const confirmDelete = window.confirm(`Are you sure you want to delete this item?`);
     if (confirmDelete) {
       try {
-        const response = await fetch(`https://testcvapi.ntechagent.com/api/agentsrequest/${id}`, {
+        const response = await fetch(`https://testcvapi.ntechagent.com/api/agentsrequest/${id}?agentname=${agentName}`, {
           method: 'DELETE',
         });
         const result = await response.json();

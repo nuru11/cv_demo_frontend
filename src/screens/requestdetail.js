@@ -14,11 +14,12 @@ import { useParams } from 'react-router-dom';
 import Header from "../screens/header";
 
 const DetailPage = () => {
+  const agentName = localStorage.getItem('userdata');
   const id = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const API_URL = `https://testcvapi.ntechagent.com/api/agentsrequest/${id.id}`;
+  const API_URL = `https://testcvapi.ntechagent.com/api/agentsrequest/${id.id}?agentname=${agentName}`;
 
   useEffect(() => {
     const fetchData = async () => {

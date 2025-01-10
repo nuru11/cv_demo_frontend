@@ -62,6 +62,8 @@ const MyForm = () => {
     setSuccess('');
   };
 
+  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     
@@ -85,7 +87,7 @@ const MyForm = () => {
     };
 
     try {
-      const response = await fetch('https://testcvapi.ntechagent.com/api/agentsrequestpost', {
+      const response = await fetch(`https://testcvapi.ntechagent.com/api/agentsrequestpost?agentname=${agentName}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
