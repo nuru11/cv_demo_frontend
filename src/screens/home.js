@@ -1625,6 +1625,8 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
 
    const downloadMultipleCVs = async () => {
 
+    const isSmallDevice = window.innerWidth < 768;
+
     const { name, placeOfBirth, nationality, maritalStatus, religion } = personalInfo;
 
     if (!name || !placeOfBirth || !nationality || !maritalStatus || !religion) {
@@ -1670,7 +1672,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
             { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Bela Hodod`}.pdf`, margin: 0.5, format: "letter" },
             { elementId: styles.styleThree ? 'cvContent3' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
             { elementId: styles.styleFour ? 'cvContent4' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: "a4" },
+            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4" },
             {elementId: styles.QimamCvStyle ? "QimamAsiaCv" : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
            // { elementId: styles.styleFive ? 'cvContent5' : "", filename: 'Al Wasit.pdf' },
            // Add more elements as needed
@@ -1769,13 +1771,15 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
 
     const downloadcvanyway = async () => {
         setShowModal(false);
+
+        const isSmallDevice = window.innerWidth < 768;
         const pdfElements = [
             
             {  elementId: styles.styleOne ? 'cvContent2' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Golden`}.pdf`, margin: 0.5, format: "letter"  },
             { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Bela Hodod`}.pdf`, margin: 0.5, format: "letter" },
             { elementId: styles.styleThree ? 'cvContent3' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
             { elementId: styles.styleFour ? 'cvContent4' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} KaanAlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: "a4" },
+            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} KaanAlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format:isSmallDevice ? [9.5, 12] : "a4" },
             {elementId: styles.QimamCvStyle ? "QimamAsiaCv" : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
            // { elementId: styles.styleFive ? 'cvContent5' : "", filename: 'Al Wasit.pdf' },
            // Add more elements as needed

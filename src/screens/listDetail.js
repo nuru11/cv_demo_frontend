@@ -411,7 +411,7 @@ const downloadCV = () => {
 
   const downloadMultipleCVs = async () => {
 
-    
+    const isSmallDevice = window.innerWidth < 768;
 
 
         const pdfElements = [
@@ -419,7 +419,7 @@ const downloadCV = () => {
           {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Golden`}.pdf`, margin: 0.5, format: "letter" },
           { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
           { elementId: styles.styleThree ? 'cvBarakaContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
-          { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: "a4" },
+          { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4" },
           {elementId: styles.styleQimam ? 'QimamAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
           // {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf", margin: 0.5, format: "letter"}
             
@@ -457,14 +457,14 @@ const downloadCV = () => {
     const onlyfordownloadcv = async () => {
 
     
-
+      const isSmallDevice = window.innerWidth < 768;
 
       const pdfElements = [
         { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Bela Hodod`}.pdf`, margin: 0.5 , format: "letter" },
         {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Golden`}.pdf`, margin: 0.5, format: "letter" },
         { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
         { elementId: styles.styleThree ? 'cvBarakaContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
-        { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: "a4" },
+        { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4"},
         {elementId: styles.styleQimam ? 'QimamAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
         // {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf", margin: 0.5, format: "letter"}
           
