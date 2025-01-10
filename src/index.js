@@ -42,8 +42,8 @@ const router = createBrowserRouter([
   // },
   {
     path: "/list",
-    // element: <ProtectedRoute element={<List />} adminOnly={true} />, // Protect this route
-    element: <List />,
+    element: <ProtectedRoute element={<List />} adminOnly={true} />, // Protect this route
+    // element: <List />,
     errorElement: <div>404 Not Found</div>
   },
   {
@@ -98,8 +98,8 @@ const router = createBrowserRouter([
   // },
   {
     path: '/signup',
-    // element: <ProtectedRoute element={<SignUp />} adminOnly={true} />, // Protect signup for admin only
-    element: <SignUp />,
+    element: <ProtectedRoute element={<SignUp />} adminOnly={true} />, // Protect signup for admin only
+    // element: <SignUp />,
     errorElement: <div>404 Not Found</div>
   },
   {
@@ -118,14 +118,14 @@ const router = createBrowserRouter([
   {
     path: '/requestlist',
     // element: <RequesList />,
-    element: <ProtectedRoute element={<RequesList />}  />,
+    element: <ProtectedRoute element={<RequesList />} adminOnly={true} />,
     errorElement: <div>404 Not Found</div>
   },
 
   {
     path: '/agentsrequestdetail/:id',
     // element: <Agentrequestdetail />,
-    element: <ProtectedRoute element={<Agentrequestdetail />}  />,
+    element: <ProtectedRoute element={<Agentrequestdetail />} adminOnly={true} />,
     errorElement: <div>404 Not Found</div>
   },
   // {
