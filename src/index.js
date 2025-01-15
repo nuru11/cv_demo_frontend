@@ -24,6 +24,7 @@ import ProtectedRoute from './screens/auth/ProtectedRoute'; // Import the Protec
 import Listforagent from "./screens/listforagent"
 import RequesList from "./screens/requestList"
 import Agentrequestdetail from "./screens/requestdetail"
+import ApplicantsVideos from "./screens/applicantsvideos"
 
 
 import TestMysql from "./screens/testmysql";
@@ -54,8 +55,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/list/:listid",
-    // element: <ProtectedRoute element={<ListDetail />} /> // Protect this route
-    element: <ListDetail />
+    element: <ProtectedRoute element={<ListDetail />} /> // Protect this route
+    // element: <ListDetail />
   },
   // {
   //   path: "/uploadpdf",
@@ -77,8 +78,8 @@ const router = createBrowserRouter([
   // },
   // {
   //   path: '/age',
-  //   element: <ProtectedRoute element={<AgeCal />} />,
-  //   // element: <AgeCal />,
+  //   // element: <ProtectedRoute element={<AgeCal />} />,
+  //   element: <AgeCal />,
   //   errorElement: <div>404 Not Found</div>
   // },
   // {
@@ -126,6 +127,13 @@ const router = createBrowserRouter([
     path: '/agentsrequestdetail/:id',
     // element: <Agentrequestdetail />,
     element: <ProtectedRoute element={<Agentrequestdetail />} adminOnly={true} />,
+    errorElement: <div>404 Not Found</div>
+  },
+
+  {
+    path: '/applicantsvideos',
+    // element: <Agentrequestdetail />,
+    element: <ProtectedRoute element={<ApplicantsVideos />}  />,
     errorElement: <div>404 Not Found</div>
   },
   // {

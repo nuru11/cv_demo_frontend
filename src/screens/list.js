@@ -577,7 +577,7 @@ const handleDeleteImages = async (e) => {
    console.log(JSON.parse(editData.availablefor).golden)
 
     // JSON.parse(editData.availablefor).golden = "false"; 
-     editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(),  })
+     editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(), "admin": "true"  })
 
     console.log(JSON.parse(editData.availablefor), " jjjjjjjjjj ", checkboxState.golden)
 
