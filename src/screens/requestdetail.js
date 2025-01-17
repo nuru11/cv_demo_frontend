@@ -48,6 +48,9 @@ const DetailPage = () => {
     );
   }
 
+  const widthforphone = window.innerWidth * 0.85;
+  const widthforipad = window.innerWidth * 0.9;
+
   if (error) {
     return (
       <Container maxWidth="md" sx={{ mt: 4 }}>
@@ -95,8 +98,10 @@ const DetailPage = () => {
                   wordWrap: "break-word", 
                   overflowWrap: "break-word", 
                   overflow: "hidden", 
-                  maxWidth: "100%", 
-                  whiteSpace: "pre-wrap"
+                  maxWidth: window.innerWidth <= 768 ? widthforphone : window.innerWidth <= 1024 ? widthforipad : "100%", 
+                  // maxWidth: swidth,
+                  whiteSpace: "pre-wrap",
+                  // background: window.innerWidth <= 768 ? "red" : window.innerWidth <= 1024 ? "green" : "yellow",
                 }}>
                   {data.message}
                 </div>
