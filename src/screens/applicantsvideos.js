@@ -172,7 +172,6 @@
 
 //////////////////////////////////////////////////////////////////
 
-
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -189,20 +188,17 @@ import {
   Box,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'; // Import a play icon
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import thumbnail from "../image_placeholder/skywayimg.jpeg";
 import Header from "../screens/header";
 
 const VideoScreen = () => {
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rows, setRows] = React.useState([]);
+  const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState(null);
   const videoRef = useRef(null);
   const agentName = localStorage.getItem('userdata');
   const navigate = useNavigate();
-
-  const [data, setData] = React.useState('');
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -214,8 +210,6 @@ const VideoScreen = () => {
             .filter(item => item.createdAt)
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setRows(sortedData);
-        } else {
-          console.error('Error fetching data:', result.message);
         }
       } catch (error) {
         console.error('Fetch error:', error);
@@ -223,7 +217,7 @@ const VideoScreen = () => {
     };
 
     fetchData();
-  }, []);
+  }, [agentName]);
 
   const handleClickOpen = (index) => {
     setSelectedVideoIndex(index);
@@ -238,60 +232,83 @@ const VideoScreen = () => {
     }
   };
 
-  const handleNext = () => {
-    if (selectedVideoIndex !== null && selectedVideoIndex < rows.length - 1) {
-      setSelectedVideoIndex(selectedVideoIndex + 1);
-    }
-  };
-
   const handleRowClick = (id) => {
     navigate(`/list/${id}`);
   };
+
+  const filteredRows = rows.filter(video => {
+    const acceptedByArray = JSON.parse(video.acceptedBy) || [];
+    const isAcceptedByCurrentAgent = acceptedByArray.some(entry => entry.agent === agentName && entry.accepted === "true");
+    const isAcceptedByAnyAgent = acceptedByArray.some(entry => entry.accepted === "true");
+
+    return (isAcceptedByCurrentAgent || !isAcceptedByAnyAgent) && video.video;
+  });
 
   return (
     <Container maxWidth={false} style={{ padding: '0' }}>
       <Header />
       <div>
         <Grid container spacing={2}>
-          {rows.filter(video => video.video).map((video, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card>
-                <Box position="relative">
-                  <CardMedia
-                    component="img"
-                    height="440"
-                    image={video.personalimage ? `https://testcvapi.ntechagent.com/applicantimagetest/${video.personalimage}` : thumbnail}
-                    alt={video.name}
-                    onClick={() => handleClickOpen(index)}
-                    style={{
-                      cursor: 'pointer',
-                      width: '100%',
-                      height: '440px',
-                      objectFit: 'contain',
-                    }}
-                  />
-                  <IconButton
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      color: 'white',
-                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                    }}
-                    onClick={() => handleClickOpen(index)}
-                  >
-                    <PlayArrowIcon fontSize="large" />
-                  </IconButton>
-                </Box>
-                <CardContent>
-                  <Typography variant="h6" noWrap>
-                    {video.name}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+          {filteredRows.map((video, index) => {
+            const acceptedByArray = JSON.parse(video.acceptedBy) || [];
+            const isAcceptedByCurrentAgent = acceptedByArray.some(entry => entry.agent === agentName && entry.accepted === "true");
+
+            return (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card style={{margin: "10px"}}>
+                  <Box position="relative">
+                    <CardMedia
+                      component="img"
+                      height="440"
+                      image={video.personalimage ? `https://testcvapi.ntechagent.com/applicantimagetest/${video.personalimage}` : thumbnail}
+                      alt={video.name}
+                      onClick={() => handleClickOpen(index)}
+                      style={{
+                        cursor: 'pointer',
+                        width: '100%',
+                        height: '440px',
+                        objectFit: 'contain',
+                      }}
+                    />
+                    <IconButton
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        color: 'white',
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      }}
+                      onClick={() => handleClickOpen(index)}
+                    >
+                      <PlayArrowIcon fontSize="large" />
+                    </IconButton>
+                    {isAcceptedByCurrentAgent && (
+                      <Typography
+                        variant="caption"
+                        style={{
+                          position: 'absolute',
+                          top: 16,
+                          left: 16,
+                          backgroundColor: 'rgba(0, 128, 0, 0.7)',
+                          color: 'white',
+                          padding: '4px 8px',
+                          borderRadius: '4px',
+                        }}
+                      >
+                        You Accept
+                      </Typography>
+                    )}
+                  </Box>
+                  <CardContent>
+                    <Typography variant="h6" noWrap>
+                      {video.name}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
 
         <Dialog 
@@ -299,7 +316,6 @@ const VideoScreen = () => {
           onClose={handleClose} 
           fullWidth 
           maxWidth="sm" 
-          PaperProps={{ style: { width: '300px', minHeight: "10vh", margin: 0, padding: 0 } }} 
         >
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 0 }}>
             <IconButton
@@ -311,7 +327,7 @@ const VideoScreen = () => {
             >
               <CloseIcon />
             </IconButton>
-            {selectedVideoIndex !== null && rows[selectedVideoIndex].video && (
+            {selectedVideoIndex !== null && filteredRows[selectedVideoIndex].video && (
               <>
                 <video
                   ref={videoRef}
@@ -323,20 +339,15 @@ const VideoScreen = () => {
                     maxHeight: '80vh',
                     objectFit: 'cover',
                   }}
-                  src={`https://testcvapi.ntechagent.com/applicantimagetest/${rows[selectedVideoIndex].video}`}
+                  src={`https://testcvapi.ntechagent.com/applicantimagetest/${filteredRows[selectedVideoIndex].video}`}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px', marginBottom: "16px", width: "100%", padding: "10px" }}>
                   <Button onClick={(event) => { 
                     event.stopPropagation();
-                    handleRowClick(rows[selectedVideoIndex].name + "-" + rows[selectedVideoIndex].middleName + "-" + rows[selectedVideoIndex].surname + "_" + rows[selectedVideoIndex].createdAt);
+                    handleRowClick(filteredRows[selectedVideoIndex].name + "-" + filteredRows[selectedVideoIndex].middleName + "-" + filteredRows[selectedVideoIndex].surname + "_" + filteredRows[selectedVideoIndex].createdAt);
                   }} color="primary" variant="contained">
                     Details
                   </Button>
-                  {selectedVideoIndex < rows.length - 1 && (
-                    <Button onClick={handleNext} color="secondary" variant="contained">
-                      Next
-                    </Button>
-                  )}
                 </div>
               </>
             )}

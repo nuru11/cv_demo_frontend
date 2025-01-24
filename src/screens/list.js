@@ -592,13 +592,10 @@ const handleDeleteImages = async (e) => {
 
     // JSON.parse(editData.availablefor).golden = "false"; 
      editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(), "admin": "true"  })
-<<<<<<< HEAD
 
      editData.status = statusCheckedBox
 
      
-=======
->>>>>>> d6228ccda95e6cc43fcc363758ed63907ea78fb1
 
     console.log(JSON.parse(editData.availablefor), " jjjjjjjjjj ", checkboxState.golden)
 
@@ -614,9 +611,9 @@ const handleDeleteImages = async (e) => {
       const result = await response.json();
       if (result.status === 'ok') {
         setRows(rows.map(row => (row.id === editData.id ? result.data : row)));
-        handleClose();
-      } else {
-        console.error('Error updating data:', result.message);
+
+        handleClose()
+       
       }
     } catch (error) {
       console.error('Update error:', error);
@@ -1190,9 +1187,9 @@ const handleDeleteImages = async (e) => {
         />
       ))}
 
-      <div>{editData.name}</div>
+      {/* <div>{editData.name}</div>
       <div>{editData.status}  nnn</div>
-      <div>{statusCheckedBox}</div>
+      <div>{statusCheckedBox}</div> */}
 </div>
      
       
