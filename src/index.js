@@ -22,6 +22,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AgeCal from "./screens/ageCal";
 import ProtectedRoute from './screens/auth/ProtectedRoute'; // Import the ProtectedRoute
 import Listforagent from "./screens/listforagent"
+import RequesList from "./screens/requestList"
+import Agentrequestdetail from "./screens/requestdetail"
+import ApplicantsVideos from "./screens/applicantsvideos"
 
 
 import TestMysql from "./screens/testmysql";
@@ -52,52 +55,52 @@ const router = createBrowserRouter([
   },
   {
     path: "/list/:listid",
-    // element: <ProtectedRoute element={<ListDetail />} /> // Protect this route
-    element: <ListDetail />
+    element: <ProtectedRoute element={<ListDetail />} /> // Protect this route
+    // element: <ListDetail />
   },
-  {
-    path: "/uploadpdf",
-    element: <ProtectedRoute element={<UploadPdf />} adminOnly={true} /> // Protect this route
-  },
-  {
-    path: "/imageuploader",
-    element: <ProtectedRoute element={<ImageUploader />} adminOnly={true} /> // Protect this route
-  },
-  {
-    path: '/testpdfgen',
-    element: <ProtectedRoute element={<TestpdfGen />} />,
-    errorElement: <div>404 Not Found</div>
-  },
-  {
-    path: '/inputdesign',
-    element: <ProtectedRoute element={<InputDesigntest />} />,
-    errorElement: <div>404 Not Found</div>
-  },
-  {
-    path: '/age',
-    element: <ProtectedRoute element={<AgeCal />} />,
-    // element: <AgeCal />,
-    errorElement: <div>404 Not Found</div>
-  },
-  {
-    path: '/pdf',
-    element: <ProtectedRoute element={<TestpdfDesign />} />,
-    errorElement: <div>404 Not Found</div>
-  },
+  // {
+  //   path: "/uploadpdf",
+  //   element: <ProtectedRoute element={<UploadPdf />} adminOnly={true} /> // Protect this route
+  // },
+  // {
+  //   path: "/imageuploader",
+  //   element: <ProtectedRoute element={<ImageUploader />} adminOnly={true} /> // Protect this route
+  // },
+  // {
+  //   path: '/testpdfgen',
+  //   element: <ProtectedRoute element={<TestpdfGen />} />,
+  //   errorElement: <div>404 Not Found</div>
+  // },
+  // {
+  //   path: '/inputdesign',
+  //   element: <ProtectedRoute element={<InputDesigntest />} />,
+  //   errorElement: <div>404 Not Found</div>
+  // },
+  // {
+  //   path: '/age',
+  //   // element: <ProtectedRoute element={<AgeCal />} />,
+  //   element: <AgeCal />,
+  //   errorElement: <div>404 Not Found</div>
+  // },
+  // {
+  //   path: '/pdf',
+  //   element: <ProtectedRoute element={<TestpdfDesign />} />,
+  //   errorElement: <div>404 Not Found</div>
+  // },
   {
     path: '/setting',
     element: <ProtectedRoute element={<Setting />} adminOnly={true} />,
     errorElement: <div>404 Not Found</div>
   },
-  {
-    path: '/test',
-    element: <ProtectedRoute element={<Testpage />} />,
-    errorElement: <div>404 Not Found</div>
-  },
+  // {
+  //   path: '/test',
+  //   element: <ProtectedRoute element={<Testpage />} />,
+  //   errorElement: <div>404 Not Found</div>
+  // },
   {
     path: '/signup',
-    // element: <ProtectedRoute element={<SignUp />} adminOnly={true} />, // Protect signup for admin only
-    element: <SignUp />,
+    element: <ProtectedRoute element={<SignUp />} adminOnly={true} />, // Protect signup for admin only
+    // element: <SignUp />,
     errorElement: <div>404 Not Found</div>
   },
   {
@@ -108,7 +111,29 @@ const router = createBrowserRouter([
 
   {
     path: '/requestforagent',
-    element: <Requestforagent />,
+    // element: <Requestforagent />,
+    element: <ProtectedRoute element={<Requestforagent />}/>,
+    errorElement: <div>404 Not Found</div>
+  },
+
+  {
+    path: '/requestlist',
+    // element: <RequesList />,
+    element: <ProtectedRoute element={<RequesList />} adminOnly={true} />,
+    errorElement: <div>404 Not Found</div>
+  },
+
+  {
+    path: '/agentsrequestdetail/:id',
+    // element: <Agentrequestdetail />,
+    element: <ProtectedRoute element={<Agentrequestdetail />} adminOnly={true} />,
+    errorElement: <div>404 Not Found</div>
+  },
+
+  {
+    path: '/applicantsvideos',
+    // element: <Agentrequestdetail />,
+    element: <ProtectedRoute element={<ApplicantsVideos />}  />,
     errorElement: <div>404 Not Found</div>
   },
   // {

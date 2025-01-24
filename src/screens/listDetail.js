@@ -83,10 +83,15 @@ const DetailPage = () => {
   const [success, setSuccess] = React.useState('');
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
+  const [pdfUrl, setPdfUrl] = useState(null); // State to hold PDF URL
+    const pdfRef2 = useRef();
+
 
   const [base64Image, setBase64Image] = useState(null);
 
   const [comment, setComment] = useState('');
+
+  const agentName = localStorage.getItem('userdata');
 
   // const xx = data.experience ? JSON.parse(data.experience) : "";
   
@@ -97,8 +102,9 @@ const DetailPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(agentName, " aaaaaaaaaaaa")
       try {
-        const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images/${id}`);
+        const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images/${id}?agentname=${agentName}`);
         const result = await response.json();
         if (result.status === 'ok') {
           setData(result.data); // Ensure this is an array
@@ -138,7 +144,7 @@ const DetailPage = () => {
 
 
     try {
-      const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}`, {
+      const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}?agentname=${agentName}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -190,14 +196,14 @@ const DetailPage = () => {
   };
 
   const [styles, setStyles] = useState({
-    styleOne: false,
-    styleTwo: false,
-    styleThree: false,
-    styleFour: false,
-    styleFive: false,
+    styleOne: agentName === "golden" ? true : false,
+    styleTwo: agentName === "bela" ? true : false,
+    styleThree: agentName === "skyway" ? true : false,
+    styleFour: agentName === "baraka" ? true : false,
+    styleFive:  false,
 
-    styleKaan: false,
-    styleQimam: false,
+    styleKaan: agentName === "kaan" ? true : false,
+    styleQimam: agentName === "qimam" ? true : false,
 
     // styleFive: false,
     all: false,
@@ -406,7 +412,7 @@ const downloadCV = () => {
 
   const downloadMultipleCVs = async () => {
 
-    
+    const isSmallDevice = window.innerWidth < 768;
 
 
         const pdfElements = [
@@ -414,9 +420,9 @@ const downloadCV = () => {
           {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Golden`}.pdf`, margin: 0.5, format: "letter" },
           { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
           { elementId: styles.styleThree ? 'cvBarakaContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
-          { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: "a4" },
+          { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4" },
           {elementId: styles.styleQimam ? 'QimamAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
-          {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf", margin: 0.5, format: "letter"}
+          // {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf", margin: 0.5, format: "letter"}
             
             
         ];
@@ -433,7 +439,15 @@ const downloadCV = () => {
                 jsPDF: { unit: 'in', format: format, orientation: 'portrait' }
             };
     
-            return html2pdf().from(element).set(options).save();
+            return agentName !== "admin" ? html2pdf()
+                  .from(element)
+                  .set(options)
+                  .output('blob') // Get the PDF as a Blob
+                  .then((blob) => {
+                    const url = URL.createObjectURL(blob); // Create a URL for the blob
+                    setPdfUrl(url); // Set the PDF URL in state
+                  }) 
+                  : html2pdf().from(element).set(options).save() 
         });
     
         // Wait for all downloads to complete
@@ -441,6 +455,43 @@ const downloadCV = () => {
     }
 
 
+    const onlyfordownloadcv = async () => {
+
+    
+      const isSmallDevice = window.innerWidth < 768;
+
+      const pdfElements = [
+        { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Bela Hodod`}.pdf`, margin: 0.5 , format: "letter" },
+        {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Golden`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleThree ? 'cvBarakaContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4"},
+        {elementId: styles.styleQimam ? 'QimamAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
+        // {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf", margin: 0.5, format: "letter"}
+          
+          
+      ];
+  
+      const downloadPromises = pdfElements.map(({ elementId, filename, margin, format }) => {
+          const element = document.getElementById(elementId);
+          const options = {
+              margin: margin,
+              marginBottom: 0,
+              filename: filename,
+              image: { type: 'jpeg', quality: 0.98 },
+              html2canvas: { scale: 2, useCORS: true },
+              // jsPDF: { unit: 'in', format: [8.5, 10.99],  /*format: 'letter',*/ orientation: 'portrait' }
+              jsPDF: { unit: 'in', format: format, orientation: 'portrait' }
+          };
+  
+          return  html2pdf().from(element).set(options).save() 
+      });
+  
+      // Wait for all downloads to complete
+      await Promise.all(downloadPromises);
+  }
+
+ 
     const url = window.location.href;
   const createdAt = url.split('_')[1]; // This gets the timestamp after the underscore
 
@@ -463,7 +514,7 @@ const downloadCV = () => {
 
   const fetchData = async () => {
       try {
-        const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images?createdAt=${createdAt}`);
+        const response = await fetch(`https://testcvapi.ntechagent.com/detail/tget-images?createdAt=${createdAt}&agentname=${agentName}`);
         const result = await response.json();
         if (result.status === 'ok') {
           console.log('Fetched dataaaaaaa:', result.data); // Log the fetched data
@@ -578,7 +629,7 @@ const downloadCV = () => {
   // Usage
   // const base64Image = toBase64(data.personalImageUrl);
 
-  const agentName = localStorage.getItem('userdata');
+  
 
   
 
@@ -612,7 +663,7 @@ const downloadCV = () => {
     console.log("Updated acceptedBy data:", updatedAcceptedBy); // Debug log
 
     // Send the updated data back to the server
-    const updateResponse = await fetch(`https://testcvapi.ntechagent.com/tget-images/${data.id}`, {
+    const updateResponse = await fetch(`https://testcvapi.ntechagent.com/tget-images/${data.id}?agentname=${agentName}`, {
       method: 'PUT',
 
       headers: {
@@ -655,6 +706,40 @@ const handleCloseSnackbar = () => {
       <Header />
 
       <Container>
+      {!isAdmin && (() => {
+  const acceptedEntries = JSON.parse(data.acceptedBy) || [];
+  const isAgentAccepted = acceptedEntries.some(entry => entry.agent === agentName && entry.accepted === "true");
+  const isAnyAccepted = acceptedEntries.some(entry => entry.accepted === "true");
+
+  if (isAgentAccepted) {
+    return (
+      <>
+      <Container style={{ marginTop: '20px' }}>
+        <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
+          <Typography variant="h6">You Accepted</Typography>
+        </Box>
+      </Container>
+
+      <Container style={{ marginTop: '20px', marginBottom: "20px" }}>
+        <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
+          <Typography variant="h6">Status: {data.status}</Typography>
+        </Box>
+      </Container>
+
+      </>
+    );
+  } else if (isAnyAccepted) {
+    return (
+      <Box sx={{ border: '1px solid red', padding: 2, marginTop: 2, marginBottom: 2 }}>
+        <Typography variant="body1" style={{ color: 'red' }}>
+          This applicant is reserved.
+        </Typography>
+      </Box>
+    );
+  } else {
+    return <div></div>;
+  }
+})()}
         <Typography variant="h4" gutterBottom>
           Details for <span style={{ color: "green",  }}>{data.name} {data.surname}</span>
         </Typography>
@@ -1014,35 +1099,7 @@ const handleCloseSnackbar = () => {
                   } */}
 
 
-{JSON.parse(data.acceptedBy)?.some(entry => entry.agent === agentName && entry.accepted === "true") ? (
-                      <Container style={{ marginTop: '20px' }}>
-                      <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
-                        <Typography variant="h6">You Accepted</Typography>
-                      </Box>
-                    </Container>
-                    ) : JSON.parse(data.acceptedBy)?.some(entry => entry.accepted === "true") ?
 
-                    <Box sx={{ border: '1px solid red', padding: 2, marginTop: 2 }}>
-                    <Typography variant="body1" style={{ color: 'red' }}>
-                      This applicant is reserved.
-                    </Typography>
-                  </Box>
-                     : (
-                     
-            
-                      <Button
-                      variant="contained"
-                      color="success"
-                      onClick={(event) => {
-                         event.stopPropagation(); // Prevent row click
-                         handleAccept(data.id, data.acceptedBy, "no"); // Call the accept function
-                       }}
-                       >
-                       Accept
-                     </Button>
-                    ) 
-                    
-                  }
 
 
 
@@ -1087,6 +1144,33 @@ const handleCloseSnackbar = () => {
   )}
 
   
+{!isAdmin &&
+  
+  <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }}>
+  <Grid item >
+  <Button variant="contained" color="primary" onClick={downloadMultipleCVs}>
+    View CV
+  </Button>
+</Grid>
+
+<Grid item >
+  <Button variant="contained" color="primary" onClick={onlyfordownloadcv}>
+    Download CV
+  </Button>
+</Grid>
+
+{JSON.parse(data.acceptedBy)?.every(entry => entry.accepted === "false") && <Grid item >
+  <Button variant="contained" color="primary" style={{background:"green"}} onClick={(event) => {
+                        event.stopPropagation(); // Prevent row click
+                        handleAccept(data.id, data.acceptedBy, "no"); // Call the accept function
+                      }}>
+    Accept
+  </Button>
+</Grid>}
+
+</Grid>
+
+}
 
         {/* Buttons at the bottom with margin */}
         {isAdmin && <Grid container spacing={2} style={{ marginTop: '20px', marginBottom: '20px' }}>
@@ -1187,6 +1271,16 @@ const handleCloseSnackbar = () => {
                         {error || success}
                       </Alert>
                     </Snackbar>
+
+
+                    {pdfUrl && (
+        <div style={{ marginTop: '20px' }}>
+          <h2>{data.name} {data.surname} CV:</h2>
+          <embed src={pdfUrl} type="application/pdf" width="100%" height="1500" />
+          {/* Alternatively, you could use <iframe> */}
+          {/* <iframe src={pdfUrl} width="600" height="400" /> */}
+        </div>
+      )}
      
     </Container>
 
