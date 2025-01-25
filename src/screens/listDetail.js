@@ -713,15 +713,24 @@ const handleCloseSnackbar = () => {
 
   if (isAgentAccepted) {
     return (
+      <>
       <Container style={{ marginTop: '20px' }}>
         <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
           <Typography variant="h6">You Accepted</Typography>
         </Box>
       </Container>
+
+      <Container style={{ marginTop: '20px', marginBottom: "20px" }}>
+        <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
+          <Typography variant="h6">Status: {data.status}</Typography>
+        </Box>
+      </Container>
+
+      </>
     );
   } else if (isAnyAccepted) {
     return (
-      <Box sx={{ border: '1px solid red', padding: 2, marginTop: 2 }}>
+      <Box sx={{ border: '1px solid red', padding: 2, marginTop: 2, marginBottom: 2 }}>
         <Typography variant="body1" style={{ color: 'red' }}>
           This applicant is reserved.
         </Typography>

@@ -317,7 +317,9 @@ const columns = [
   { id: 'name', label: 'Name', minWidth: 170 },
   { id: 'surname', label: 'Surname', minWidth: 100 },
   { id: 'currentNationality', label: 'Nationality', minWidth: 170 },
+  
   { id: 'postappliedfor', label: 'Position', minWidth: 170 },
+  { id: 'status', label: 'Status', minWidth: 170 },
 ];
 
 export default function StickyHeadTable() {
