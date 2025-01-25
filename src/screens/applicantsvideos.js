@@ -304,19 +304,6 @@ const VideoScreen = () => {
                     <Typography variant="h6" noWrap>
                       {video.name}
                     </Typography>
-<<<<<<< HEAD
-                    <Typography variant="h6" noWrap>
-                      age: {video.age}
-                    </Typography>
-                    <Typography variant="h6" noWrap>
-  {JSON.parse(video.experience)[0].name ? (
-    <span style={{ color: 'green' }}>{JSON.parse(video.experience)[0].name} Experienced</span>
-  ) : (
-    <span style={{ color: 'orange' }}>First Time</span>
-  )}
-</Typography>
-=======
->>>>>>> 697c76f35e333a60824ea17f536d6081b8f91049
                   </CardContent>
                 </Card>
               </Grid>
