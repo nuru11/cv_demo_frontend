@@ -2404,7 +2404,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
     {/* <SkillsInput callback={updateText} info={skillInfo} newField={addRecord} /> */}
     {/* <ReferenceInput callback={updateText} info={referenceInfo} newField={addRecord} /> */}
     {/* <DocumentStyle /> */}
-    <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }}>
+    <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }} translate='no'>
             <Typography variant="h6" gutterBottom>
                 Select EXPERIANCE
             </Typography>
@@ -2541,7 +2541,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
             </Grid>
            
         </div>
-        <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }}>
+        <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }} translate='no'>
             <Typography variant="h6" gutterBottom>
                 Select Agent
             </Typography>
@@ -2669,7 +2669,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
 
     
     {/* Hidden content for PDF generation */}
-    <div style={{ display: 'none' }}>
+    <div style={{ display: 'none' }} translate='no'>
         <div id="cvContent1">
         <div className="container">
                 {/* Page 1 */}
@@ -2907,7 +2907,7 @@ src={applicantpassportimagePreview !== null
        {/*  next content 2 */}
 
 
-       <div id="cvContent2">
+       <div id="cvContent2" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -3144,7 +3144,7 @@ src={applicantpassportimagePreview !== null
         {/* next content 3 */}
 
 
-        <div id="cvContent3">
+        <div id="cvContent3" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -3382,7 +3382,7 @@ src={applicantpassportimagePreview !== null
         {/* next content 4 */}
 
 
-        <div id="cvContent4">
+        <div id="cvContent4" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -3618,7 +3618,7 @@ src={applicantpassportimagePreview !== null
 
         {/* kaan agent cv */}
 
-        <div id="KaanAlRiyadhCv">
+        <div id="KaanAlRiyadhCv" translate='no'>
             <div  style={{ pageBreakAfter: 'always' }}>
                 {/* First Table */}
                 <div style={{ background: "" }}>
@@ -4083,9 +4083,9 @@ src={applicantpassportimagePreview !== null
                         
                         </div>
 
-                        <div>0582894204 & 0550507629&</div>
+                        <div>0500000000 & 0500000000&</div>
 
-                        <div>0550507629 & 0595855829</div>
+                        <div>0500000000 & 0500000000</div>
 
                     </div>
 
@@ -4170,7 +4170,7 @@ src={applicantpassportimagePreview !== null
         {/* qimam cv */}
 
 
-        <div id="QimamAsiaCv" style={{ display: '' }}>
+        <div id="QimamAsiaCv" style={{ display: '' }} translate='no'>
                
 
                <div >
@@ -4272,6 +4272,7 @@ src={applicantpassportimagePreview !== null
 
 
                 <div className="table-main-parent" style={{background: "", height: "100%"}}>
+                    
                     <div class="table-parent"  style={{background: "", height: "100%"}}>
 
 

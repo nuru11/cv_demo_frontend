@@ -889,7 +889,7 @@ const handleCloseSnackbar = () => {
             <Grid item xs={12} md={6} key={index}>
               <label htmlFor={item.htmlFor}>
                 <Typography variant="body1">
-                  <strong>{item.label}:</strong> <label id={item.id}>{item.value}</label>
+                  <strong>{item.label}:</strong> <label id={item.id} translate='no'>{item.value}</label>
                   {item.id === "applicantNo" && isAdmin ? <Button variant="contained" color="primary" onClick={() => handleEdit(data)}>
         Add 
       </Button> : ""}
@@ -903,7 +903,7 @@ const handleCloseSnackbar = () => {
           <Grid item xs={12}>
             <Typography variant="h6">Experience:</Typography>
             {data.experience && JSON.parse(data.experience).map(exp => (
-              <Typography key={exp.id} variant="body2">
+              <Typography key={exp.id} variant="body2" translate='no'>
                 {!exp.name && !exp.link && !exp.overview ? "No Experience" : ""}
                 {exp.name ? exp.name + " -" : ""} {exp.link ? exp.link + " -" : ""}  {exp.overview ? exp.overview + " Years": ""} 
               </Typography>
@@ -933,7 +933,7 @@ const handleCloseSnackbar = () => {
 
       {isAdmin && <Container margin={100} >
 
-    <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }}>
+    <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }} translate='no'>
           <Typography variant="h6" gutterBottom>
               Select Styles
           </Typography>
@@ -1116,7 +1116,7 @@ const handleCloseSnackbar = () => {
               
               <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "red" }}>
               
-                <Typography variant="h6">{entry.agent}`s comment: {entry.comment}</Typography>
+                <Typography variant="h6" translate='no'>{entry.agent}`s comment: {entry.comment}</Typography>
               </Box>
             </Container>
           )
@@ -1133,7 +1133,7 @@ const handleCloseSnackbar = () => {
       entry.accepted === "true" ? (
         <Container style={{ marginTop: '20px' }} key={entry.agent}>
               <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 2, color: "green" }}>
-                <Typography variant="h6">Accepted By: {entry.agent}</Typography>
+                <Typography variant="h6" translate='no'>Accepted By: {entry.agent}</Typography>
               </Box>
             </Container>
       ) : null // Do not render anything for non-accepted agents
@@ -1186,7 +1186,7 @@ const handleCloseSnackbar = () => {
             </Button>
           </Grid>
           <Grid item>
-            <Button variant="contained" color="secondary" onClick={handleCopyLink}>
+            <Button variant="contained" color="secondary" onClick={handleCopyLink} >
               Copy Link
             </Button>
           </Grid>
@@ -1237,7 +1237,7 @@ const handleCloseSnackbar = () => {
       <Container>
      
 
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} >
         <DialogTitle>Edit Entry</DialogTitle>
         <DialogContent>
          
@@ -1289,13 +1289,13 @@ const handleCloseSnackbar = () => {
 
 
 
-       <div style={{ display: 'none' }}>
+       <div style={{ display: 'none' }} translate='no'>
 
 
         {/* next content */}
 
 
-        <div id="cvContent1">
+        <div id="cvContent1" >
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -1319,7 +1319,7 @@ const handleCloseSnackbar = () => {
       />
     ))}
 </div> */}
-                <div style={{ pageBreakAfter: 'always' }}> 
+                <div style={{ pageBreakAfter: 'always' }} > 
                     <div className="header">
                     
 <div className="personal-image-parent">
@@ -1534,7 +1534,7 @@ src={data.passportImageUrl || imagePlaceholder}
 
 
 
-<div id="cvContent2">
+<div id="cvContent2" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -1772,7 +1772,7 @@ src={data.passportImageUrl || imagePlaceholder}
 {/* next content */}
 
 
-<div id="cvBarakaContent">
+<div id="cvBarakaContent" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -2011,7 +2011,7 @@ src={data.passportImageUrl || imagePlaceholder}
 
 
 
-<div id="cvAssawsanahContent">
+<div id="cvAssawsanahContent" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -2250,7 +2250,7 @@ src={data.passportImageUrl || imagePlaceholder}
         {/* Kann cv */}
 
 
-        <div id="KaanAlRiyadhCv">
+        <div id="KaanAlRiyadhCv"  translate='no'>
             <div  style={{ pageBreakAfter: 'always' }}>
                 {/* First Table */}
                 <div style={{ background: "" }}>
@@ -2713,9 +2713,9 @@ src={data.passportImageUrl || imagePlaceholder}
                         
                         </div>
 
-                        <div>0582894204 & 0550507629&</div>
+                        <div>0500000000 & 0500000000&</div>
 
-                        <div>0550507629 & 0595855829</div>
+                        <div>0500000000 & 0500000000</div>
 
                     </div>
 
@@ -2795,7 +2795,7 @@ src={data.passportImageUrl || imagePlaceholder}
         {/* Qimam cv  */}
 
 
-        <div id="QimamAsiaCv" style={{ display: '' }}>
+        <div id="QimamAsiaCv" style={{ display: '' }} translate='no'>
                
 
                <div >
@@ -3154,7 +3154,7 @@ src={data.passportImageUrl || imagePlaceholder}
 
 
 
-      <div style={{ display: 'none' }}>
+      <div style={{ display: 'none' }} translate='no'>
                 <div className="embassy-cv-main-parent" id="embassycvContent" ref={pdfRef} style={{ minHeight: "auto", backround: "red"}} >
                     <div className='embassy-header'>
                         <div className='embassy-header-first-child' style={{ display: 'flex', flexDirection: 'column', }}>

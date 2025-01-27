@@ -933,13 +933,13 @@ const handleDeleteImages = async (e) => {
 
                               
               {columns.map((column) => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
+                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }} >
+                  {column.label} 
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody translate='no'>
   {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .map((row) => {
       const isSelected = selected.indexOf(row.id) !== -1;
@@ -1071,7 +1071,7 @@ const handleDeleteImages = async (e) => {
 
 
       
-      <div style={{background: "#e1e4e8", padding: "10px", marginTop: "5px", border: "1px solid transparent", borderRadius: "5px"}}>
+      <div style={{background: "#e1e4e8", padding: "10px", marginTop: "5px", border: "1px solid transparent", borderRadius: "5px"}} translate='no'>
         <div>Available for</div>
 
         {checkboxOptions.map(option => (
