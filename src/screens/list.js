@@ -306,7 +306,21 @@ const [data, setData] = React.useState('');
 
   const handleClose = () => {
     setOpen(false);
-    checkboxState.golden = false
+
+    const newState = { ...initialStatusCheckboxState };
+  
+  if (editData?.status) {
+    const matchedOption = statusCheckboxOptions.find(option => option.label === editData.status);
+    if (matchedOption) {
+      newState[matchedOption.name] = true; // Check the corresponding checkbox
+    }
+  }
+
+  setCheckboxState(initialCheckboxState);
+
+  setStatusCheckboxState(newState); // Update state
+  
+    
   };
 
   const handleInputChange = (e) => {
@@ -579,6 +593,10 @@ const handleDeleteImages = async (e) => {
     // JSON.parse(editData.availablefor).golden = "false"; 
      editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(), "admin": "true"  })
 
+     editData.status = statusCheckedBox
+
+     
+
     console.log(JSON.parse(editData.availablefor), " jjjjjjjjjj ", checkboxState.golden)
 
 
@@ -593,9 +611,9 @@ const handleDeleteImages = async (e) => {
       const result = await response.json();
       if (result.status === 'ok') {
         setRows(rows.map(row => (row.id === editData.id ? result.data : row)));
-        handleClose();
-      } else {
-        console.error('Error updating data:', result.message);
+
+        handleClose()
+       
       }
     } catch (error) {
       console.error('Update error:', error);
@@ -642,16 +660,41 @@ const handleDeleteImages = async (e) => {
     }
   };
 
+  React.useEffect(() => {
+    const parsedData = editData.availablefor ? JSON.parse(editData.availablefor) : {};
+    
+    setCheckboxState({
+      golden: parsedData.golden === "true",
+      bela: parsedData.bela === "true",
+      skyway: parsedData.skyway === "true",
+      baraka: parsedData.baraka === "true",
+      kaan: parsedData.kaan === "true",
+      qimam: parsedData.qimam === "true",
+    });
+  }, [editData.availablefor]);
 
 
-  const [checkboxState, setCheckboxState] = React.useState({
-    golden: false,
-    bela: false,
-    skyway: false,
-    baraka: false,
-    kaan: false,
-    qimam: false,
-  });
+
+  // const [checkboxState, setCheckboxState] = React.useState({
+  //   golden: editData.availablefor && JSON.parse(editData.availablefor).golden === "true",
+  //   bela: editData.availablefor && JSON.parse(editData.availablefor).bela === "true",
+  //   skyway: false,
+  //   baraka: false,
+  //   kaan: false,
+  //   qimam: false,
+  // });
+
+
+  const initialCheckboxState = {
+    golden: editData.availablefor && JSON.parse(editData.availablefor).golden === "true",
+    bela: editData.availablefor && JSON.parse(editData.availablefor).bela === "true",
+    skyway: editData.availablefor && JSON.parse(editData.availablefor).skyway === "true",
+    baraka: editData.availablefor && JSON.parse(editData.availablefor).baraka === "true",
+    kaan: editData.availablefor && JSON.parse(editData.availablefor).kaan === "true",
+    qimam: editData.availablefor && JSON.parse(editData.availablefor).qimam === "true",
+  };
+  
+  const [checkboxState, setCheckboxState] = React.useState(initialCheckboxState);
 
 
   const handleCheckboxChange = (event) => {
@@ -675,12 +718,98 @@ const handleDeleteImages = async (e) => {
   
 
 
+  const checkboxOptions = [
+    { name: "golden", label: "Golden" },
+    { name: "bela", label: "Bela" },
+    { name: "skyway", label: "Skyway" },
+    { name: "baraka", label: "Baraka" },
+    { name: "kaan", label: "Kaan" },
+    { name: "qimam", label: "Qimam" },
+  ];
+
+
+
+  const initialStatusCheckboxState = {
+    medicalExamination: false,
+    visaProcessing: false,
+    flightBooking: false,
+    documentSubmission: false,
+    interviewScheduled: false,
+    departureConfirmation: false,
+    arrivalInSaudi: false,
+  };
+  
+  const [statusCheckboxState, setStatusCheckboxState] = React.useState(initialStatusCheckboxState);
+
+  React.useEffect(() => {
+    const newState = { ...initialStatusCheckboxState }; // Copy the initial state
+  
+    // Check which status matches editData.status
+    if (editData?.status) {
+      const matchedOption = statusCheckboxOptions.find(option => option.label === editData.status);
+      if (matchedOption) {
+        newState[matchedOption.name] = true; // Set the corresponding checkbox to true
+      }
+    }
+  
+    setStatusCheckboxState(newState); // Update state
+  }, [editData.status]);
+
+  // // const [checkboxState, setCheckboxState] = React.useState(initialCheckboxState);
+  // const [statusCheckboxState, setStatusCheckboxState] = React.useState(initialStatusCheckboxState);
+  
+  const [statusCheckedBox, setStatusCheckedBox] = React.useState("")
+
+  const handleStatusCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+  
+    // Find the label for the current checkbox
+    const option = statusCheckboxOptions.find(option => option.name === name);
+  
+    if (checked) {
+      // Log the label of the checkbox that was checked
+      console.log(`${option.label} checkbox has been checked`);
+      setStatusCheckedBox(option.label)
+  
+      // If the current checkbox is checked, set all others to false
+      setStatusCheckboxState({
+        medicalExamination: false,
+        visaProcessing: false,
+        flightBooking: false,
+        documentSubmission: false,
+        interviewScheduled: false,
+        departureConfirmation: false,
+        arrivalInSaudi: false,
+        [name]: true, // Keep the current checkbox checked
+      });
+    } else {
+      // If unchecked, just update the specific checkbox
+      setStatusCheckboxState((prevState) => ({
+        ...prevState,
+        [name]: checked,
+      }));
+    }
+  };
+
+
+  const statusCheckboxOptions = [
+    { name: "medicalExamination", label: "Medical Examination" },
+    { name: "visaProcessing", label: "Visa Processing" },
+    { name: "flightBooking", label: "Flight Booking" },
+    { name: "documentSubmission", label: "Document Submission" },
+    { name: "interviewScheduled", label: "Interview Scheduled" },
+    { name: "departureConfirmation", label: "Departure Confirmation" },
+    { name: "arrivalInSaudi", label: "Arrival in Saudi Arabia" },
+    // Add more statuses as needed
+  ];
+  
   
 
   return (
     <>
     
-            
+
+    {/* <div>{statusCheckedBox}</div> */}
             
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
     <Header /> 
@@ -944,7 +1073,21 @@ const handleDeleteImages = async (e) => {
       
       <div style={{background: "#e1e4e8", padding: "10px", marginTop: "5px", border: "1px solid transparent", borderRadius: "5px"}}>
         <div>Available for</div>
-      <FormControlLabel
+
+        {checkboxOptions.map(option => (
+    <FormControlLabel
+      key={option.name}
+      control={
+        <Checkbox
+          name={option.name}
+          checked={checkboxState[option.name]}
+          onChange={handleCheckboxChange}
+        />
+      }
+      label={option.label}
+    />
+  ))}
+      {/* <FormControlLabel
               control={
                 <Checkbox
                   name="golden"
@@ -955,7 +1098,18 @@ const handleDeleteImages = async (e) => {
                 />
               }
               label="Golden"
-            />
+            /> */}
+{/* 
+<FormControlLabel
+  control={
+    <Checkbox
+      name="golden"
+      checked={checkboxState.golden}
+      onChange={handleCheckboxChange}
+    />
+  }
+  label="Golden"
+/>
             <FormControlLabel
               control={
                 <Checkbox
@@ -968,7 +1122,7 @@ const handleDeleteImages = async (e) => {
               }
               label="Bela"
             />
-            {/* <div>{checkboxState.golden === true ? "tt" : "ff"}  ddd</div> */}
+           
             <FormControlLabel
               control={
                 <Checkbox
@@ -1012,8 +1166,31 @@ const handleDeleteImages = async (e) => {
                 />
               }
               label="Qimam"
-            />
+            /> */}
           </div>
+
+
+
+          <div style={{ padding: '20px', background: "#f5f5f5", marginTop: '20px', borderRadius: '5px' }}>
+  <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>Applicant Status</div>
+  {statusCheckboxOptions.map(option => (
+        <FormControlLabel
+          key={option.name}
+          control={
+            <Checkbox
+              name={option.name}
+              checked={statusCheckboxState[option.name]}
+              onChange={handleStatusCheckboxChange}
+            />
+          }
+          label={option.label}
+        />
+      ))}
+
+      {/* <div>{editData.name}</div>
+      <div>{editData.status}  nnn</div>
+      <div>{statusCheckedBox}</div> */}
+</div>
      
       
     </div>
