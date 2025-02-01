@@ -103,6 +103,9 @@ const handleToggleChange = (event) => {
     setToggleState(event.target.checked);
 };
 
+
+const agentName = localStorage.getItem('userdata');
+
     const [passportData, setPassportData] = useState({
         name: '',
         surname: '',
@@ -937,7 +940,7 @@ useEffect(() => {
       const [dataa, setDataa] = useState();
       const fetchDataa = async () => {
         try {
-          const response = await fetch('https://testcvapi.ntechagent.com/tt');
+          const response = await fetch(`https://testcvapi.ntechagent.com/tt?agentname=${agentName}`);
           const result = await response.json();
           if (result.status === 'ok') {
             console.log(result.data); // Log the fetched data for debugging
@@ -1104,41 +1107,49 @@ formData.append("laborId", sponsorInformation.laborId);
 // formData.append("cvcount", JSON.stringify(dummyData.newValue));
 formData.append("cvcount", formatCount(count + 1));
 
-formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "Bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(),  }));
+formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(), "admin": "true"  }));
 
 formData.append("acceptedBy", JSON.stringify([{"agent": "golden", "accepted": "false", "comment": ""}, {"agent": "bela", "accepted": "false", "comment": ""}, {"agent": "skyway", "accepted": "false", "comment": ""}, {"agent": "baraka", "accepted": "false", "comment": ""}, {"agent": "kaan", "accepted": "false", "comment": ""}, {"agent": "qimam", "accepted": "false", "comment": ""}]))
 
-
+formData.append("status", "Interview Scheduled");
 
 
 
 
 try {
-  const result = await axios.post(
-      "https://testcvapi.ntechagent.com/tupload-image",
+    const response = await axios.post(
+      `https://testcvapi.ntechagent.com/tupload-image?agentname=${agentName}`,
       formData,
       {
-          headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data" },
       }
-  );
-  // toast.success("Form submitted successfully!");
-  document.getElementById("nameInput").value = ""; // Reset the name input field
-  fetchCount();
-} catch (error) {
-  console.error("Submission failed:", error);
-  // toast.error("Submission failed. Please try again.");
-} finally {
-  await fetchDataa();
-  fetchCount();
-  setIsSubmitting(false); // Reset the flag after the operation is completed
-}
+    );
+  
+    // Check if the response indicates success
+    if (response.status === 200) {
+        toast.dismiss();
+        
+      toast.success("Form submitted successfully!");
+      document.getElementById("nameInput").value = ""; // Reset the name input field
+    } else {
+      toast.error("Submission failed. Please try again."); // Handle unexpected response
+    }
+  
+    fetchCount(); // Call fetchCount after submission attempt
+  } catch (error) {
+    console.error("Submission failed:", error);
+    // toast.error("Submission failed. Please try again."); // Notify user on error
+  } finally {
+    await fetchDataa(); // Fetch data after submission attempt
+    setIsSubmitting(false); // Reset the flag after the operation is completed
+    fetchCount(); // Call fetchCount again if needed
+  }
         
         // Reset file name and name input after submission
         // setPFileName("No file chosen after");
         // setImageforpersonalimage(null);
         // setImageforfullbodyimage(null);
-        toast.success("Form submitted successfully!");
-        document.getElementById("nameInput").value = ""; // Reset the name input field
+        // Reset the name input field
     };
 
    
@@ -1147,6 +1158,9 @@ try {
 
     const submitanyway = async (e) => {
       e.preventDefault();
+
+      setShowsubmitModal(false);
+      
           
       await fetchDataa();
 
@@ -1288,40 +1302,53 @@ formData.append("laborId", sponsorInformation.laborId);
 // formData.append("cvcount", JSON.stringify(dummyData.newValue));
 formData.append("cvcount", formatCount(count + 1));
 
-formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "Bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(),  }));
+formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(), "admin": "true"  }));
 
 formData.append("acceptedBy", JSON.stringify([{"agent": "golden", "accepted": "false", "comment": ""}, {"agent": "bela", "accepted": "false", "comment": ""}, {"agent": "skyway", "accepted": "false", "comment": ""}, {"agent": "baraka", "accepted": "false", "comment": ""}, {"agent": "kaan", "accepted": "false", "comment": ""}, {"agent": "qimam", "accepted": "false", "comment": ""}]));
+
+formData.append("status", "Interview Scheduled");
 
 
 
 
 
 try {
-  const result = await axios.post(
-      "https://testcvapi.ntechagent.com/tupload-image",
+    const response = await axios.post(
+      `https://testcvapi.ntechagent.com/tupload-image?agentname=${agentName}`,
       formData,
       {
-          headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data" },
       }
-  );
-  // toast.success("Form submitted successfully!");
-  // document.getElementById("nameInput").value = ""; // Reset the name input field
-  fetchCount();
-} catch (error) {
-  console.error("Submission failed:", error);
-  // toast.error("Submission failed. Please try again.");
-} finally {
-  await fetchDataa();
-  setIsSubmitting(false); // Reset the flag after the operation is completed
-  fetchCount();
-}
+    );
+  
+    // Check if the response indicates success
+    if (response.status === 200) { // Use response.status for axios
+        toast.dismiss();
+        setShowsubmitModal(false);
+      toast.success("Form submitted successfully!");
+      document.getElementById("nameInput").value = ""; // Reset the name input field
+    } else {
+      toast.error("Submission failed. Please try again."); // Handle unexpected response
+      setShowsubmitModal(false);
+    }
+  
+    fetchCount(); // Call fetchCount after successful submission
+  } catch (error) {
+    console.error("Submission failed:", error);
+    // toast.error("Submission failed. Please try again."); // Notify user on error
+    
+  } finally {
+    await fetchDataa(); // Fetch data after submission attempt
+    setIsSubmitting(false); // Reset the flag after the operation is completed
+    fetchCount(); // Call fetchCount again if needed
+  }
         
         
         // setImageforpersonalimage(null);
         // setImageforfullbodyimage(null);
         // setApplicantfullbodyimageimagePreview(null)
-        toast.success("Form submitted successfully!");
-        setShowsubmitModal(false);
+        
+        
         // document.getElementById("nameInput").value = ""; // Reset the name input field
     };
 
@@ -1573,33 +1600,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
         }
     };
 
-    const postDummyData = async () => {
-        const dummyData = {
-            name: "John Doeee",
-            des: personalInfo.name ?? "nooooooooooooooo",
-         
-        };
-
-        try {
-            const response = await fetch('https://testcvapi.ntechagent.com/cv-builder-1', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dummyData),
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                console.log('Data posted successfully:', result);
-                fetchData(); // Fetch updated data after posting
-            } else {
-                console.error('Error posting data:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error posting data:', error);
-        }
-    };
+   
 
     const deleteItemsByName = async () => {
         try {
@@ -1624,6 +1625,8 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
     
 
    const downloadMultipleCVs = async () => {
+
+    const isSmallDevice = window.innerWidth < 768;
 
     const { name, placeOfBirth, nationality, maritalStatus, religion } = personalInfo;
 
@@ -1670,7 +1673,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
             { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Bela Hodod`}.pdf`, margin: 0.5, format: "letter" },
             { elementId: styles.styleThree ? 'cvContent3' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
             { elementId: styles.styleFour ? 'cvContent4' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: "a4" },
+            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4" },
             {elementId: styles.QimamCvStyle ? "QimamAsiaCv" : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
            // { elementId: styles.styleFive ? 'cvContent5' : "", filename: 'Al Wasit.pdf' },
            // Add more elements as needed
@@ -1769,13 +1772,15 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
 
     const downloadcvanyway = async () => {
         setShowModal(false);
+
+        const isSmallDevice = window.innerWidth < 768;
         const pdfElements = [
             
             {  elementId: styles.styleOne ? 'cvContent2' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Golden`}.pdf`, margin: 0.5, format: "letter"  },
             { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Bela Hodod`}.pdf`, margin: 0.5, format: "letter" },
             { elementId: styles.styleThree ? 'cvContent3' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
             { elementId: styles.styleFour ? 'cvContent4' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} KaanAlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: "a4" },
+            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} KaanAlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format:isSmallDevice ? [9.5, 12] : "a4" },
             {elementId: styles.QimamCvStyle ? "QimamAsiaCv" : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
            // { elementId: styles.styleFive ? 'cvContent5' : "", filename: 'Al Wasit.pdf' },
            // Add more elements as needed
@@ -2399,7 +2404,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
     {/* <SkillsInput callback={updateText} info={skillInfo} newField={addRecord} /> */}
     {/* <ReferenceInput callback={updateText} info={referenceInfo} newField={addRecord} /> */}
     {/* <DocumentStyle /> */}
-    <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }}>
+    <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }} translate='no'>
             <Typography variant="h6" gutterBottom>
                 Select EXPERIANCE
             </Typography>
@@ -2536,7 +2541,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
             </Grid>
            
         </div>
-        <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }}>
+        <Box sx={{ boxShadow: 3, borderRadius: 2, mt: 4, p: 3 }} translate='no'>
             <Typography variant="h6" gutterBottom>
                 Select Agent
             </Typography>
@@ -2664,7 +2669,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
 
     
     {/* Hidden content for PDF generation */}
-    <div style={{ display: 'none' }}>
+    <div style={{ display: 'none' }} translate='no'>
         <div id="cvContent1">
         <div className="container">
                 {/* Page 1 */}
@@ -2902,7 +2907,7 @@ src={applicantpassportimagePreview !== null
        {/*  next content 2 */}
 
 
-       <div id="cvContent2">
+       <div id="cvContent2" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -3139,7 +3144,7 @@ src={applicantpassportimagePreview !== null
         {/* next content 3 */}
 
 
-        <div id="cvContent3">
+        <div id="cvContent3" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -3377,7 +3382,7 @@ src={applicantpassportimagePreview !== null
         {/* next content 4 */}
 
 
-        <div id="cvContent4">
+        <div id="cvContent4" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -3613,7 +3618,7 @@ src={applicantpassportimagePreview !== null
 
         {/* kaan agent cv */}
 
-        <div id="KaanAlRiyadhCv">
+        <div id="KaanAlRiyadhCv" translate='no'>
             <div  style={{ pageBreakAfter: 'always' }}>
                 {/* First Table */}
                 <div style={{ background: "" }}>
@@ -4078,9 +4083,9 @@ src={applicantpassportimagePreview !== null
                         
                         </div>
 
-                        <div>0582894204 & 0550507629&</div>
+                        <div>0500000000 & 0500000000&</div>
 
-                        <div>0550507629 & 0595855829</div>
+                        <div>0500000000 & 0500000000</div>
 
                     </div>
 
@@ -4165,7 +4170,7 @@ src={applicantpassportimagePreview !== null
         {/* qimam cv */}
 
 
-        <div id="QimamAsiaCv" style={{ display: '' }}>
+        <div id="QimamAsiaCv" style={{ display: '' }} translate='no'>
                
 
                <div >
@@ -4267,6 +4272,7 @@ src={applicantpassportimagePreview !== null
 
 
                 <div className="table-main-parent" style={{background: "", height: "100%"}}>
+                    
                     <div class="table-parent"  style={{background: "", height: "100%"}}>
 
 
