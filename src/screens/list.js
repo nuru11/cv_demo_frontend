@@ -98,8 +98,11 @@ export default function StickyHeadTable() {
 
     const filteredRows = rows.filter(row => {
       const experiences = JSON.parse(row.experience) || []; // Ensure it's an array
+
+      const hideDoneApplicants = row.finished 
     
       return (
+        !hideDoneApplicants &&
         (positionFilter ? row.postappliedfor === positionFilter : true) &&
         (nationalityFilter ? row.currentNationality === nationalityFilter : true) &&
         (genderFilter ? row.sex === genderFilter : true) &&
@@ -593,7 +596,7 @@ const handleDeleteImages = async (e) => {
     // JSON.parse(editData.availablefor).golden = "false"; 
      editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(), "admin": "true"  })
 
-     editData.status = statusCheckedBox
+     editData.status = statusCheckedBox ? statusCheckedBox : editData.status
 
      
 
@@ -619,6 +622,41 @@ const handleDeleteImages = async (e) => {
       console.error('Update error:', error);
     }
   };
+
+
+
+  const handleSubmitfordonebutton = async () => {
+
+
+    editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(), "admin": "true"  })
+
+    editData.status = statusCheckedBox ? statusCheckedBox : editData.status
+
+ 
+
+    editData.finished = true
+
+
+    try {
+      const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}?agentname=${agentName}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editData),
+      });
+      const result = await response.json();
+      if (result.status === 'ok') {
+        setRows(rows.map(row => (row.id === editData.id ? result.data : row)));
+
+        handleClose()
+       
+      }
+    } catch (error) {
+      console.error('Update error:', error);
+    }
+  };
+
 
   const handleRowClick = (id) => {
     navigate(`/list/${id}`);
@@ -802,6 +840,19 @@ const handleDeleteImages = async (e) => {
     { name: "arrivalInSaudi", label: "Arrival in Saudi Arabia" },
     // Add more statuses as needed
   ];
+
+
+
+  /////////////////////// Done function
+
+  const handleDone = async (id) => {
+    console.log("kkkk")
+  }
+
+
+
+
+  ////////////////////// Done funtion end
   
   
 
@@ -1065,6 +1116,7 @@ const handleDeleteImages = async (e) => {
       {/* Edit Modal */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit Entry</DialogTitle>
+        <button onClick={handleSubmitfordonebutton} style={{margin: "50px", background: "green"}}>Done</button>
         <DialogContent sx={{ maxHeight: '400px', overflowY: 'auto' }}>
         <div style={{ padding: '20px' }}>
       <button onClick={handlePaste}>Paste Data from Mosand</button>
@@ -1679,38 +1731,7 @@ const handleDeleteImages = async (e) => {
   </div>
 
   <div style={{ background: "", display: "flex", justifyContent: "center" }}>
-    {/* <table style={{ 
-      maxWidth: '97%', 
-      minWidth: '97%', 
-      background: '', 
-      borderCollapse: 'collapse',  // Ensures borders are collapsed
-      marginTop: "10px"
-    }}>
-      <thead>
-        <tr>
-          <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left', fontSize: "12px" }}>SNo</th>
-          <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left', fontSize: "12px" }}>Applicant Name</th>
-          <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left', fontSize: "12px" }}>Passport #</th>
-          <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left', fontSize: "12px" }}>Sponsor ID</th>
-          <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left', fontSize: "12px" }}>Visa No.</th>
-          <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left', fontSize: "12px" }}>Application No</th>
-          <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left', fontSize: "12px" }}>Bar Code</th>
-        </tr>
-      </thead>
-      <tbody>
-        {selectedRows.map((row, index) => (
-          <tr key={row.id}>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12" }}>{index + 1}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12" }}>{row.name}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12" }}>{row.passportnum}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12" }}>{row.sponsorId}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12" }}>{row.visaNo}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12" }}>{row.applicationNo}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12" }}>hhhhhhhhhhhh</td>
-          </tr>
-        ))}
-      </tbody>
-    </table> */}
+   
 
 
 
@@ -1766,27 +1787,13 @@ const handleDeleteImages = async (e) => {
         </tr>
     </thead>
     <tbody>
-        {/* <tr>
-            <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>{}</td>
-            <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>{}</td>
-            <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>{}</td>
-            <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>{}</td>
-            <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>CV{}</td>
-            <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>CV{}</td>
-            <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>CV{}</td>
-        </tr> */}
+       
 
         {selectedRows.map((row, index) => ( 
             
             <tr >
 
-{/* <td style={{ border: '1px solid black', padding: '8px', fontSize: "12" }}>{index + 1}</td> */}
-            {/* <td style={{ border: '1px solid black', padding: '8px', fontSize: "12px" }}>{row.name}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12px" }}>{row.passportnum}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12px" }}>{row.sponsorId}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12px" }}>{row.visaNo}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12px" }}>{row.applicationNo}</td>
-            <td style={{ border: '1px solid black', padding: '8px', fontSize: "12px" }}>hhhhhhhhhhhh</td> */}
+
 
 
             <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>{index + 1}</td>

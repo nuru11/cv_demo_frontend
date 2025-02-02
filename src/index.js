@@ -174,6 +174,7 @@ import Listforagent from "./screens/listforagent"
 import RequesList from "./screens/requestList"
 import Agentrequestdetail from "./screens/requestdetail"
 import ApplicantsVideos from "./screens/applicantsvideos"
+import ReportList from "./screens/reportlist"
 
 
 const router = createBrowserRouter([
@@ -237,6 +238,12 @@ const router = createBrowserRouter([
   {
     path: '/applicantsvideos',
     element: <ProtectedRoute element={<ApplicantsVideos />}  />,
+    errorElement: <div>404 Not Found</div>
+  },
+
+  {
+    path: '/reportlist',
+    element: <ProtectedRoute element={<ReportList />} adminOnly={true} />,
     errorElement: <div>404 Not Found</div>
   },
 ]);
