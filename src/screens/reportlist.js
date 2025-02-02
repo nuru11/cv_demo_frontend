@@ -419,7 +419,7 @@ const handleDeleteImages = async (e) => {
   };
   
 
-  const chunks = chunkArray(selectedRows, 3);
+  const chunks = chunkArray(selectedRows, 16);
 
 // Helper function to split an array into chunks of a given size.
 
@@ -668,7 +668,7 @@ const handleDeleteImages = async (e) => {
     Get chunks of 3 applicants each.
     You can create the chunks array once outside of the render if you prefer.
   */}
-  {chunkArray(selectedRows, 3).map((chunk, chunkIndex, allChunks) => (
+  {chunkArray(selectedRows, 30).map((chunk, chunkIndex, allChunks) => (
     <div
       key={chunkIndex}
       style={{
@@ -693,7 +693,7 @@ const handleDeleteImages = async (e) => {
             <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px' }}>Sponsor ID</th>
             <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px' }}>Visa No.</th>
             <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px' }}>Application No</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px' }}>Bar Code</th>
+            {/* <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px' }}>Bar Code</th> */}
           </tr>
         </thead>
         <tbody>
@@ -712,12 +712,12 @@ const handleDeleteImages = async (e) => {
                 {row.sponsorId}
               </td>
               <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>
-                {row.visaNo}
+                {row.updatedAt}
               </td>
               <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>
                 {row.applicationNo}
               </td>
-              <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>
+              {/* <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>
                 <Barcode
                   displayValue={false}
                   value={row.applicationNo && row.applicationNo.length === 10 ? row.applicationNo : "E333777777"}
@@ -725,7 +725,7 @@ const handleDeleteImages = async (e) => {
                   width={1.7}
                   marginBottom={1}
                 />
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>

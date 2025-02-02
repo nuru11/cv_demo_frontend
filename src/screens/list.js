@@ -636,6 +636,8 @@ const handleDeleteImages = async (e) => {
 
     editData.finished = true
 
+    editData.doneDate = `${dayName}, ${monthName} ${dayNumber}, ${year}`
+
 
     try {
       const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}?agentname=${agentName}`, {
