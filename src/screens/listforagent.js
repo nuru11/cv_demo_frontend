@@ -429,12 +429,13 @@ export default function StickyHeadTable() {
       const updateResult = await updateResponse.json();
   
       // Check for status and message correctly
-      if (updateResult.status === 'error' && updateResult.message.includes('Cannot accept')) {
+      if (updateResult.status === 'error' && updateResult.message.includes('Cannot accept') && updateResult.status !== 'ok') {
         console.log("llllllllllllllllllllllllllllllllllll", updateResult.message)
         console.error('Cannot accept: Some agents have already accepted this application.');
         setError('This applicant is reserved.');
         setOpenSnackbar(true);
         fetchData();
+        updateResult.message = ""
       } else if (updateResult.status === 'ok') {
         console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", updateResult.message)
         console.log(`Accepted applicant with ID: ${applicantId}`);
@@ -451,10 +452,14 @@ export default function StickyHeadTable() {
       setError('Request failed');
       setOpenSnackbar(true);
     }
+
+    
   };
 
 const handleCloseSnackbar = () => {
   setOpenSnackbar(false);
+
+  setError('')
 };
 
   return (
