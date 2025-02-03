@@ -712,7 +712,7 @@ const handleDeleteImages = async (e) => {
                 {row.sponsorId}
               </td>
               <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>
-                {row.updatedAt}
+                {row.doneDate}
               </td>
               <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>
                 {row.applicationNo}

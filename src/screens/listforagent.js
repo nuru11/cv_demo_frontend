@@ -369,7 +369,15 @@ export default function StickyHeadTable() {
       if (result.status === 'ok') {
         // setData(result.data);
         const sortedData = result.data
-          .filter(item => item.createdAt)
+        .filter(item => {
+          const acceptedByArray = JSON.parse(item.acceptedBy || '[]');
+          // Check if the current agent has accepted this applicant
+          const hasAccepted = acceptedByArray.some(entry => entry.accepted === "true");
+          const isAcceptedByCurrentAgent = acceptedByArray.some(entry => entry.agent === agentName && entry.accepted === "true");
+
+          // Show if accepted by the current agent or not accepted by anyone
+          return isAcceptedByCurrentAgent || !hasAccepted;
+        })
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setRows(sortedData);
       } else {
@@ -400,52 +408,50 @@ export default function StickyHeadTable() {
   
  
   const handleAccept = async (applicantId, acceptedby) => {
-    // console.log(agentName, "  nnnnnnnnnnnnnnnnnnnn")
-  try {
-    // Parse acceptedBy if it's a JSON string
-    const acceptedByArray = typeof acceptedby === 'string' ? JSON.parse(acceptedby) : acceptedby;
-
-    console.log("Current acceptedBy data:", acceptedByArray); // Debug log
-
-    const updatedAcceptedBy = acceptedByArray.map(entry => {
-      // Update the "golden" agent's accepted status to true
-      if (entry.agent === agentName) {
-        return { ...entry, accepted: "true" }; // Ensure this is the correct structure
+    try {
+      const acceptedByArray = typeof acceptedby === 'string' ? JSON.parse(acceptedby) : acceptedby;
+  
+      const updatedAcceptedBy = acceptedByArray.map(entry => {
+        if (entry.agent === agentName) {
+          return { ...entry, accepted: "true" };
+        }
+        return entry;
+      });
+  
+      const updateResponse = await fetch(`https://testcvapi.ntechagent.com/edit_for_agent/${applicantId}?agentname=${agentName}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ acceptedBy: JSON.stringify(updatedAcceptedBy) }),
+      });
+  
+      const updateResult = await updateResponse.json();
+  
+      // Check for status and message correctly
+      if (updateResult.status === 'error' && updateResult.message.includes('Cannot accept')) {
+        console.log("llllllllllllllllllllllllllllllllllll", updateResult.message)
+        console.error('Cannot accept: Some agents have already accepted this application.');
+        setError('This applicant is reserved.');
+        setOpenSnackbar(true);
+        fetchData();
+      } else if (updateResult.status === 'ok') {
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", updateResult.message)
+        console.log(`Accepted applicant with ID: ${applicantId}`);
+        setSuccess('Accepted successfully!');
+        setOpenSnackbar(true);
+        fetchData();
+      } else {
+        console.error('Error updating applicant:', updateResult.message);
+        setError(`Request failed: ${updateResult.message}`);
+        setOpenSnackbar(true);
       }
-      return entry;
-    });
-
-    console.log("Updated acceptedBy data:", updatedAcceptedBy); // Debug log
-
-    // Send the updated data back to the server
-    const updateResponse = await fetch(`https://testcvapi.ntechagent.com/edit_for_agent/${applicantId}?agentname=${agentName}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ acceptedBy: JSON.stringify(updatedAcceptedBy) }), // Ensure this matches your backend expectations
-    });
-
-    const updateResult = await updateResponse.json();
-
-    if (updateResult.status === 'ok') {
-      console.log(`Accepted applicant with ID: ${applicantId}`);
-      // Optionally, you might want to update local state or notify the user
-      setSuccess('Accepted successfully!');
-      setOpenSnackbar(true);
-      fetchData()
-    } else {
-      console.error('Error updating applicant:', updateResult.message);
-
+    } catch (error) {
+      console.error('Error in handleAccept:', error);
       setError('Request failed');
-        setOpenSnackbar(true);
+      setOpenSnackbar(true);
     }
-  } catch (error) {
-    console.error('Error in handleAccept:', error);
-    setError('Request failed');
-        setOpenSnackbar(true);
-  }
-};
+  };
 
 const handleCloseSnackbar = () => {
   setOpenSnackbar(false);

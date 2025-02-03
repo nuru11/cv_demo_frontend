@@ -258,7 +258,7 @@ const [data, setData] = React.useState('');
           setData(result.data);
           console.log(result, " nnnnnnnnnnnnnnnnnn")
           const sortedData = result.data
-            .filter(item => item.createdAt)
+            .filter(item => item.createdAt).filter(item => item.finished !== true)
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setRows(sortedData);
         } else {
@@ -638,6 +638,8 @@ const handleDeleteImages = async (e) => {
 
     editData.doneDate = `${dayName}, ${monthName} ${dayNumber}, ${year}`
 
+    
+
 
     try {
       const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}?agentname=${agentName}`, {
@@ -650,6 +652,8 @@ const handleDeleteImages = async (e) => {
       const result = await response.json();
       if (result.status === 'ok') {
         setRows(rows.map(row => (row.id === editData.id ? result.data : row)));
+
+        setRows(rows.filter(row => row.id !== editData.id));
 
         handleClose()
        
