@@ -3758,175 +3758,292 @@
 
 //////////////////////////////////////////////////////////////////
 
-	import React, { useState, useRef } from 'react';
-	import { useNavigate } from 'react-router-dom';
+	// import React, { useState, useRef } from 'react';
+	// import { useNavigate } from 'react-router-dom';
 
-	import {
-	Grid,
-	Card,
-	CardMedia,
-	CardContent,
-	Typography,
-	Dialog,
-	DialogContent,
-	IconButton,
-	Button,
-	Container
-	} from '@mui/material';
-	import CloseIcon from '@mui/icons-material/Close';
-	import thumbnail from "../image_placeholder/skywayimg.jpeg";
-	import video from "../images/testvideo.mp4"
-	import video2 from "../images/videotest2.mp4"
-	import video3 from "../images/videotest3.mp4"
+	// import {
+	// Grid,
+	// Card,
+	// CardMedia,
+	// CardContent,
+	// Typography,
+	// Dialog,
+	// DialogContent,
+	// IconButton,
+	// Button,
+	// Container
+	// } from '@mui/material';
+	// import CloseIcon from '@mui/icons-material/Close';
+	// import thumbnail from "../image_placeholder/skywayimg.jpeg";
+	// import video from "../images/testvideo.mp4"
+	// import video2 from "../images/videotest2.mp4"
+	// import video3 from "../images/videotest3.mp4"
 
-	import Header from "../screens/header";
-
-
-	const VideoScreen = () => {
-		const [rowsPerPage, setRowsPerPage] = React.useState(10);
-		const [rows, setRows] = React.useState([]);
-		const [open, setOpen] = useState(false);
-		const [selectedVideoIndex, setSelectedVideoIndex] = useState(null);
-		const videoRef = useRef(null);
-		const agentName = localStorage.getItem('userdata');
-		const navigate = useNavigate();
+	// import Header from "../screens/header";
 
 
-		const [data, setData] = React.useState('');
-		// insert checkbox end
+	// const VideoScreen = () => {
+	// 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+	// 	const [rows, setRows] = React.useState([]);
+	// 	const [open, setOpen] = useState(false);
+	// 	const [selectedVideoIndex, setSelectedVideoIndex] = useState(null);
+	// 	const videoRef = useRef(null);
+	// 	const agentName = localStorage.getItem('userdata');
+	// 	const navigate = useNavigate();
+
+
+	// 	const [data, setData] = React.useState('');
+	// 	// insert checkbox end
 		
-		const a = false
+	// 	const a = false
 		
-		React.useEffect(() => {
-			const fetchData = async () => {
-			try {
-				const response = await fetch(`https://testcvapi.ntechagent.com/detail/get_applicant_for_agent?agentname=${agentName}`);
-				const result = await response.json();
-				if (result.status === 'ok') {
-				console.log(result.data); // Log the fetched data for debugging
-				setData(result.data);
-				console.log(result, " nnnnnnnnnnnnnnnnnn")
-				const sortedData = result.data
-					.filter(item => item.createdAt)
-					.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-				setRows(sortedData);
-				} else {
-				console.error('Error fetching data:', result.message);
-				}
-			} catch (error) {
-				console.error('Fetch error:', error);
-			}
-			};
+	// 	React.useEffect(() => {
+	// 		const fetchData = async () => {
+	// 		try {
+	// 			const response = await fetch(`https://testcvapi.ntechagent.com/detail/get_applicant_for_agent?agentname=${agentName}`);
+	// 			const result = await response.json();
+	// 			if (result.status === 'ok') {
+	// 			console.log(result.data); // Log the fetched data for debugging
+	// 			setData(result.data);
+	// 			console.log(result, " nnnnnnnnnnnnnnnnnn")
+	// 			const sortedData = result.data
+	// 				.filter(item => item.createdAt)
+	// 				.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+	// 			setRows(sortedData);
+	// 			} else {
+	// 			console.error('Error fetching data:', result.message);
+	// 			}
+	// 		} catch (error) {
+	// 			console.error('Fetch error:', error);
+	// 		}
+	// 		};
 		
-			fetchData();
-		}, []);
+	// 		fetchData();
+	// 	}, []);
 	
-		const handleClickOpen = (index) => {
-		setSelectedVideoIndex(index);
-		setOpen(true);
-		};
+	// 	const handleClickOpen = (index) => {
+	// 	setSelectedVideoIndex(index);
+	// 	setOpen(true);
+	// 	};
 	
-		const handleClose = () => {
-		setOpen(false);
-		setSelectedVideoIndex(null);
-		if (videoRef.current) {
-			videoRef.current.pause(); // Pause the video when closing
-		}
-		};
+	// 	const handleClose = () => {
+	// 	setOpen(false);
+	// 	setSelectedVideoIndex(null);
+	// 	if (videoRef.current) {
+	// 		videoRef.current.pause(); // Pause the video when closing
+	// 	}
+	// 	};
 	
-		const handleNext = () => {
-		if (selectedVideoIndex !== null && selectedVideoIndex < rows.length - 1) {
-			setSelectedVideoIndex(selectedVideoIndex + 1);
-		}
-		};
+	// 	const handleNext = () => {
+	// 	if (selectedVideoIndex !== null && selectedVideoIndex < rows.length - 1) {
+	// 		setSelectedVideoIndex(selectedVideoIndex + 1);
+	// 	}
+	// 	};
 
-		const handleRowClick = (id) => {
-			navigate(`/list/${id}`);
-		};
+	// 	const handleRowClick = (id) => {
+	// 		navigate(`/list/${id}`);
+	// 	};
 	
-		return (
-			<Container maxWidth={false} style={{ padding: '0 ' }}>
-				<Header />
-		<div>
-			<Grid container spacing={2}>
-			{rows.filter(video => video.video).map((video, index) => (
-	<Grid item xs={12} sm={6} md={4} key={index}>
-		<Card>
-		<CardMedia
-			component="img"
-			height="440"
-			image={video.personalimage ? `https://testcvapi.ntechagent.com/applicantimagetest/${video.personalimage}` : thumbnail}
-			alt={video.name}
-			onClick={() => handleClickOpen(index)}
-			style={{
-			cursor: 'pointer',
-			width: '100%',          // Ensure it takes the full width of the card
-			height: '440px',       // Maintain your specified height
-			objectFit: 'contain',  // Maintain aspect ratio while fitting within the dimensions
-			}}
-		/>
-		<CardContent>
-			<Typography variant="h6" noWrap>
-			{video.name}
-			</Typography>
-		</CardContent>
-		</Card>
-	</Grid>
-	))}
-			</Grid>
+	// 	return (
+	// 		<Container maxWidth={false} style={{ padding: '0 ' }}>
+	// 			<Header />
+	// 	<div>
+	// 		<Grid container spacing={2}>
+	// 		{rows.filter(video => video.video).map((video, index) => (
+	// <Grid item xs={12} sm={6} md={4} key={index}>
+	// 	<Card>
+	// 	<CardMedia
+	// 		component="img"
+	// 		height="440"
+	// 		image={video.personalimage ? `https://testcvapi.ntechagent.com/applicantimagetest/${video.personalimage}` : thumbnail}
+	// 		alt={video.name}
+	// 		onClick={() => handleClickOpen(index)}
+	// 		style={{
+	// 		cursor: 'pointer',
+	// 		width: '100%',          // Ensure it takes the full width of the card
+	// 		height: '440px',       // Maintain your specified height
+	// 		objectFit: 'contain',  // Maintain aspect ratio while fitting within the dimensions
+	// 		}}
+	// 	/>
+	// 	<CardContent>
+	// 		<Typography variant="h6" noWrap>
+	// 		{video.name}
+	// 		</Typography>
+	// 	</CardContent>
+	// 	</Card>
+	// </Grid>
+	// ))}
+	// 		</Grid>
 	
-			<Dialog 
-	open={open} 
-	onClose={handleClose} 
-	fullWidth 
-	maxWidth="sm" 
-	PaperProps={{ style: { width: '300px', minHeight: "10vh", margin: 0, padding: 0 } }} 
-	>
-	<DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 0 }}>
-		<IconButton
-		edge="end"
-		color="inherit"
-		onClick={handleClose}
-		aria-label="close"
-		sx={{ position: 'absolute', right: 8, top: 8 }}
-		>
-		<CloseIcon />
-		</IconButton>
-		{selectedVideoIndex !== null && rows[selectedVideoIndex].video && (
-		<>
-			<video
-			ref={videoRef}
-			controls
-			autoPlay
-			style={{
-				width: '100%',          // Full width of the container
-				height: 'auto',        // Adjust height based on aspect ratio
-				maxHeight: '80vh',     // Maximum height
-				objectFit: 'cover',    // Maintain aspect ratio
-			}}
-			src={`https://testcvapi.ntechagent.com/applicantimagetest/${rows[selectedVideoIndex].video}`}
-			/>
-			<div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px', marginBottom: "16px", background: "", width: "100%", padding: "10px" }}>
-			<Button onClick={(event) => { 
-		event.stopPropagation(); // Prevent row click from toggling checkbox
-		handleRowClick(rows[selectedVideoIndex].name + "-" + rows[selectedVideoIndex].middleName + "-" + rows[selectedVideoIndex].surname + "_" + rows[selectedVideoIndex].createdAt);
-		}} color="primary" variant="contained">
-				Details
-			</Button>
+	// 		<Dialog 
+	// open={open} 
+	// onClose={handleClose} 
+	// fullWidth 
+	// maxWidth="sm" 
+	// PaperProps={{ style: { width: '300px', minHeight: "10vh", margin: 0, padding: 0 } }} 
+	// >
+	// <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 0 }}>
+	// 	<IconButton
+	// 	edge="end"
+	// 	color="inherit"
+	// 	onClick={handleClose}
+	// 	aria-label="close"
+	// 	sx={{ position: 'absolute', right: 8, top: 8 }}
+	// 	>
+	// 	<CloseIcon />
+	// 	</IconButton>
+	// 	{selectedVideoIndex !== null && rows[selectedVideoIndex].video && (
+	// 	<>
+	// 		<video
+	// 		ref={videoRef}
+	// 		controls
+	// 		autoPlay
+	// 		style={{
+	// 			width: '100%',          // Full width of the container
+	// 			height: 'auto',        // Adjust height based on aspect ratio
+	// 			maxHeight: '80vh',     // Maximum height
+	// 			objectFit: 'cover',    // Maintain aspect ratio
+	// 		}}
+	// 		src={`https://testcvapi.ntechagent.com/applicantimagetest/${rows[selectedVideoIndex].video}`}
+	// 		/>
+	// 		<div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px', marginBottom: "16px", background: "", width: "100%", padding: "10px" }}>
+	// 		<Button onClick={(event) => { 
+	// 	event.stopPropagation(); // Prevent row click from toggling checkbox
+	// 	handleRowClick(rows[selectedVideoIndex].name + "-" + rows[selectedVideoIndex].middleName + "-" + rows[selectedVideoIndex].surname + "_" + rows[selectedVideoIndex].createdAt);
+	// 	}} color="primary" variant="contained">
+	// 			Details
+	// 		</Button>
 			
-			{selectedVideoIndex < rows.length - 1 && (
-				<Button onClick={handleNext} color="secondary" variant="contained">
-				Next
-				</Button>
-			)}
-			</div>
-		</>
-		)}
-	</DialogContent>
-	</Dialog>
-		</div>
-		</Container>
-		);
-	};
+	// 		{selectedVideoIndex < rows.length - 1 && (
+	// 			<Button onClick={handleNext} color="secondary" variant="contained">
+	// 			Next
+	// 			</Button>
+	// 		)}
+	// 		</div>
+	// 	</>
+	// 	)}
+	// </DialogContent>
+	// </Dialog>
+	// 	</div>
+	// 	</Container>
+	// 	);
+	// };
 	
-	export default VideoScreen;
+	// export default VideoScreen;
+
+
+	////////////////////////////////////////////////////////////////////////
+
+	import React from "react";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+
+const generatePDF = () => {
+  const doc = new jsPDF();
+
+  doc.text("LMIS REPORT", 14, 15);
+
+  const tableColumn = ["NO", "NAME", "EP NUMBER", "LABOUR ID"];
+  const tableRows = [];
+
+  // Expanded fake data
+  const dummyData = [
+    ["Alex Johnson", "EP1234567", "EF123456"],
+    ["Maria Gonzalez", "EP2345678", "EF234567"],
+    ["James Smith", "EP3456789", "EF345678"],
+    ["Emma Davis", "EP4567890", "EF456789"],
+    ["Liam Brown", "EP5678901", "EF567890"],
+    ["Olivia Wilson", "EP6789012", "EF678901"],
+    ["Noah Martinez", "EP7890123", "EF789012"],
+    ["Ava Anderson", "EP8901234", "EF890123"],
+    ["William Thomas", "EP9012345", "EF901234"],
+    ["Sophia Taylor", "EP0123456", "EF012345"],
+    ["Mason Harris", "EP1123456", "EF112345"],
+    ["Isabella Clark", "EP2123456", "EF212345"],
+    ["Ethan Lewis", "EP3123456", "EF312345"],
+    ["Mia Walker", "EP4123456", "EF412345"],
+    ["Benjamin Hall", "EP5123456", "EF512345"],
+    ["Charlotte Allen", "EP6123456", "EF612345"],
+    ["Lucas Young", "EP7123456", "EF712345"],
+    ["Amelia King", "EP8123456", "EF812345"],
+    ["Henry Wright", "EP9123456", "EF912345"],
+    ["Ella Scott", "EP1012345", "EF101234"],
+    ["David Adams", "EP1112345", "EF111234"],
+    ["Grace Mitchell", "EP1212345", "EF121234"],
+    ["Samuel Carter", "EP1312345", "EF131234"],
+    ["Chloe Perez", "EP1412345", "EF141234"],
+    ["Daniel Roberts", "EP1512345", "EF151234"],
+    ["Lily White", "EP1612345", "EF161234"],
+    ["Michael Clark", "EP1712345", "EF171234"],
+    ["Zoe Harris", "EP1812345", "EF181234"],
+    ["Nathan Thompson", "EP1912345", "EF191234"],
+    ["Ella Martinez", "EP2012345", "EF201234"],
+
+
+	["Alex Johnson", "EP1234567", "EF123456"],
+    ["Maria Gonzalez", "EP2345678", "EF234567"],
+    ["James Smith", "EP3456789", "EF345678"],
+    ["Emma Davis", "EP4567890", "EF456789"],
+    ["Liam Brown", "EP5678901", "EF567890"],
+    ["Olivia Wilson", "EP6789012", "EF678901"],
+    ["Noah Martinez", "EP7890123", "EF789012"],
+    ["Ava Anderson", "EP8901234", "EF890123"],
+    ["William Thomas", "EP9012345", "EF901234"],
+    ["Sophia Taylor", "EP0123456", "EF012345"],
+    ["Mason Harris", "EP1123456", "EF112345"],
+    ["Isabella Clark", "EP2123456", "EF212345"],
+    ["Ethan Lewis", "EP3123456", "EF312345"],
+    ["Mia Walker", "EP4123456", "EF412345"],
+    ["Benjamin Hall", "EP5123456", "EF512345"],
+    ["Charlotte Allen", "EP6123456", "EF612345"],
+    ["Lucas Young", "EP7123456", "EF712345"],
+    ["Amelia King", "EP8123456", "EF812345"],
+    ["Henry Wright", "EP9123456", "EF912345"],
+    ["Ella Scott", "EP1012345", "EF101234"],
+    ["David Adams", "EP1112345", "EF111234"],
+    ["Grace Mitchell", "EP1212345", "EF121234"],
+    ["Samuel Carter", "EP1312345", "EF131234"],
+    ["Chloe Perez", "EP1412345", "EF141234"],
+    ["Daniel Roberts", "EP1512345", "EF151234"],
+    ["Lily White", "EP1612345", "EF161234"],
+    ["Michael Clark", "EP1712345", "EF171234"],
+    ["Zoe Harris", "EP1812345", "EF181234"],
+    ["Nathan Thompson", "EP1912345", "EF191234"],
+    ["Ella Martinez", "EP2012345", "EF201234"],
+    ["Jack Robinson", "EP2112345", "EF211234"],
+    ["Sophia Green", "EP2212345", "EF221234"],
+    ["William Parker", "EP2312345", "EF231234"],
+    ["Emma Carter", "EP2412345", "EF241234"],
+    ["Jacob Foster", "EP2512345", "EF251234"],
+    ["Madison Bell", "EP2612345", "EF261234"],
+    ["Joshua Murphy", "EP2712345", "EF271234"],
+    // ["Avery Turner", "EP2812345", "EF281234"],
+    // ["Logan Reed", "EP2912345", "EF291234"],
+    // ["Scarlett Hughes", "EP3012345", "EF301234"],
+  ];
+
+  dummyData.forEach((item, index) => {
+    tableRows.push([index + 1, ...item]);
+  });
+
+  doc.autoTable({
+    head: [tableColumn],
+    body: tableRows,
+    startY: 25,
+  });
+
+  doc.save("LMIS_REPORT.pdf");
+};
+
+const DownloadPage = () => {
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Download LMIS Report</h1>
+      <button onClick={generatePDF} style={{ padding: "10px 20px", fontSize: "16px" }}>
+        Download PDF
+      </button>
+    </div>
+  );
+};
+
+export default DownloadPage;

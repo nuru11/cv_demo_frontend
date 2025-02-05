@@ -976,6 +976,10 @@ useEffect(() => {
           if (personalInfo.applicationNo && !personalInfo.applicationNo.startsWith('E')) {
               personalInfo.applicationNo = 'E' + personalInfo.applicationNo; // Prepend 'E' if it doesn't start with 'E'
           }
+
+          if (personalInfo.laborId && !personalInfo.laborId.startsWith('E')) {
+            personalInfo.laborId = 'E' + personalInfo.laborId; // Prepend 'E' if it doesn't start with 'E'
+        }
       
           const { name, placeOfBirth, nationality, maritalStatus, religion, passportNo } = personalInfo;
       
@@ -1172,6 +1176,10 @@ try {
       if (personalInfo.applicationNo && !personalInfo.applicationNo.startsWith('E')) {
           personalInfo.applicationNo = 'E' + personalInfo.applicationNo; // Prepend 'E' if it doesn't start with 'E'
       }
+
+      if (personalInfo.laborId && !personalInfo.laborId.startsWith('E')) {
+        personalInfo.laborId = 'E' + personalInfo.laborId; // Prepend 'E' if it doesn't start with 'E'
+    }
   
       const { name, placeOfBirth, nationality, maritalStatus, religion, passportNo } = personalInfo;
   

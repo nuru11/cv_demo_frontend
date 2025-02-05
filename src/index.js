@@ -177,6 +177,8 @@ import ApplicantsVideos from "./screens/applicantsvideos"
 import ReportList from "./screens/reportlist"
 
 
+import AgeCal from "./screens/ageCal";
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -246,6 +248,13 @@ const router = createBrowserRouter([
     element: <ProtectedRoute element={<ReportList />} adminOnly={true} />,
     errorElement: <div>404 Not Found</div>
   },
+
+  {
+        path: '/age',
+        // element: <ProtectedRoute element={<AgeCal />} />,
+        element: <AgeCal />,
+        errorElement: <div>404 Not Found</div>
+      },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

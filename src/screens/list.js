@@ -591,6 +591,10 @@ const handleDeleteImages = async (e) => {
       editData.applicationNo = 'E' + editData.applicationNo; // Prepend 'E' if it doesn't start with 'E'
     }
 
+    if (editData.laborId && !editData.laborId.startsWith('E')) {
+      editData.laborId = 'E' + editData.laborId; // Prepend 'E' if it doesn't start with 'E'
+    }
+
    console.log(JSON.parse(editData.availablefor).golden)
 
     // JSON.parse(editData.availablefor).golden = "false"; 
@@ -626,6 +630,14 @@ const handleDeleteImages = async (e) => {
 
 
   const handleSubmitfordonebutton = async () => {
+
+    if (editData.applicationNo && !editData.applicationNo.startsWith('E')) {
+      editData.applicationNo = 'E' + editData.applicationNo; // Prepend 'E' if it doesn't start with 'E'
+    }
+
+    if (editData.laborId && !editData.laborId.startsWith('E')) {
+      editData.laborId = 'E' + editData.laborId; // Prepend 'E' if it doesn't start with 'E'
+    }
 
 
     editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(), "admin": "true"  })
@@ -1124,6 +1136,39 @@ const handleDeleteImages = async (e) => {
         <DialogTitle>Edit Entry</DialogTitle>
         <button onClick={handleSubmitfordonebutton} style={{margin: "50px", background: "green"}}>Done</button>
         <DialogContent sx={{ maxHeight: '400px', overflowY: 'auto' }}>
+
+        <TextField
+            margin="dense"
+            name="laborId"
+            label="Labor Id"
+            fullWidth
+            variant="outlined"
+            value={editData.laborId || ''}
+            onChange={handleInputChange}
+          />
+
+
+<TextField
+            margin="dense"
+            name="passportnum"
+            label="Passport Number"
+            fullWidth
+            variant="outlined"
+            value={editData.passportnum || ''}
+            onChange={handleInputChange}
+          />
+
+<TextField
+            margin="dense"
+            name="applicationNo"
+            label="ApplicantId Number"
+            fullWidth
+            variant="outlined"
+            value={editData.applicationNo || ''}
+            onChange={handleInputChange}
+          />
+
+          
         <div style={{ padding: '20px' }}>
       <button onClick={handlePaste}>Paste Data from Mosand</button>
 
@@ -1227,6 +1272,8 @@ const handleDeleteImages = async (e) => {
             /> */}
           </div>
 
+          
+
 
 
           <div style={{ padding: '20px', background: "#f5f5f5", marginTop: '20px', borderRadius: '5px' }}>
@@ -1281,6 +1328,17 @@ const handleDeleteImages = async (e) => {
             fullWidth
             variant="outlined"
             value={editData.surname || ''}
+            onChange={handleInputChange}
+          />
+
+
+<TextField
+            margin="dense"
+            name="laborId"
+            label="Labor Id"
+            fullWidth
+            variant="outlined"
+            value={editData.laborId || ''}
             onChange={handleInputChange}
           />
 
@@ -1694,15 +1752,7 @@ const handleDeleteImages = async (e) => {
             value={editData.currentNationality || ''}
             onChange={handleInputChange}
           />
-          <TextField
-            margin="dense"
-            name="laborId"
-            label="Labor Id"
-            fullWidth
-            variant="outlined"
-            value={editData.laborId || ''}
-            onChange={handleInputChange}
-          />
+         
           
          
        

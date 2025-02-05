@@ -19,14 +19,16 @@ import Header from "../screens/header"
 import Checkbox from '@mui/material/Checkbox';
 import html2pdf from 'html2pdf.js';
 import embassylistpdftopimage from "../../src/image_placeholder/embassylistpdftopimage.jpeg"
-import Barcode from 'react-barcode';
 import { useRef } from 'react';
+
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 // insert checkbox and embassy_list pdf end
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'surname', label: 'Surname', minWidth: 100 },
+  
   
   { id: 'postappliedfor', label: 'Position', minWidth: 170 },
   
@@ -35,13 +37,61 @@ const columns = [
 
   // { id: 'currentNationality', label: 'Nationality', minWidth: 170 },
 
-  {id: "status", label: "Status", minWidth: 100},
+  {id: "laborId", label: "Labour Id", minWidth: 100},
+
+  { id: 'doneDate', label: 'Done Date', minWidth: 100 },
   
   { id: 'actions', label: 'Actions', minWidth: 100 },
 ];
 
+
+const today = new Date();
+  // Format the date as MM/DD/YYYY
+  const formattedTodayDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+
+
+
+
+const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+ 
+   // Get the required date parts
+   const dayName = dayNames[today.getDay()];
+   const monthName = monthNames[today.getMonth()];
+   const dayNumber = today.getDate();
+   const year = today.getFullYear();
+
 export default function StickyHeadTable() {
 
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.text(`PENDING LMIS CONTRACTS`, 14, 15);
+  
+    const tableColumn = ["NO", "NAME", "EP NUMBER", "LABOUR ID"];
+    const tableRows = selectedRows.map((row, index) => [
+      index + 1,
+      row.name, // Name column
+      row.passportnum,
+      row.laborId,
+    ]);
+  
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 25,
+      styles: {
+        fontSize: 10, // Default font size for all cells
+      },
+      columnStyles: {
+        1: { fontStyle: 'bold', fontSize: 12, color: "black" }, // Apply bold and larger font size to the "NAME" column (index 1)
+        2: { fontStyle: 'bold', fontSize: 12 },
+        3: { fontStyle: 'bold', fontSize: 12 },
+      },
+    });
+  
+    doc.save(`LMIS REPORT ${formattedTodayDate}.pdf`);
+  };
  
     
   const navigate = useNavigate();
@@ -50,9 +100,7 @@ export default function StickyHeadTable() {
   const [rows, setRows] = React.useState([]);
   const [editData, setEditData] = React.useState({});
   
-  // Menu state
   
-  // inser checkbox and embassy_list cv
 
   const [selected, setSelected] = React.useState([]); // State for selected rows
   const [isAnyChecked, setIsAnyChecked] = React.useState(false);
@@ -156,7 +204,7 @@ export default function StickyHeadTable() {
     const isMobile = window.innerWidth <= 768;
     const config = {
       filename: 'Embassy_list.pdf',
-      margin: [1, 0.2, 0, 0.2],
+      margin: 1,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: isMobile ? 1 : 2, logging: true, dpi: 300, letterRendering: true },
       jsPDF: { unit: 'mm', format: isMobile ? 'A4' : 'letter', orientation: 'Portrait' }
@@ -168,31 +216,8 @@ export default function StickyHeadTable() {
       .toPdf()
       .get('pdf')
       .then((pdf) => {
-          const totalPages = pdf.internal.getNumberOfPages();
-          const phoneNumber = `${dayName}, ${monthName} ${dayNumber}, ${year}`; // Replace with your phone number
-          const email = "www.ntechagent.com | +251 911 454176 | ntechagent@gmail.com"; // Replace with your email
-    
-          for (let i = 1; i <= totalPages; i++) {
-            pdf.setPage(i);
-            pdf.setFontSize(10);
-            pdf.setTextColor(5);
-    
-            // Set positions
-            const pageYPosition = pdf.internal.pageSize.getHeight() - 10; // Y position for footer
-            const leftXPosition = 3; // X position for left side text
-            const rightXPosition = pdf.internal.pageSize.getWidth() - 22; // Base position for page number
-            const centerXPosition = pdf.internal.pageSize.getWidth() / 2 + 10; // Center position
-    
-            // Add phone number on the left
-            pdf.text(`${phoneNumber}`, leftXPosition, pageYPosition);
-    
-            // Add email in the center
-            pdf.text(` ${email}`, centerXPosition, pageYPosition, { align: 'center' });
-    
-            // Add page number and total pages to the footer on the right
-            pdf.text(`Page ${i} of ${totalPages}`, rightXPosition, pageYPosition);
-            // pdf.text(`${email}`, rightXPosition, pageYPosition);
-          }
+        
+         
         })
         .save();
     };
@@ -214,7 +239,7 @@ const [data, setData] = React.useState('');
           console.log(result, " nnnnnnnnnnnnnnnnnn")
           const sortedData = result.data
             .filter(item => item.createdAt).filter(item => item.finished === true)
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
            
           setRows(sortedData);
@@ -284,7 +309,7 @@ const handleDeleteImages = async (e) => {
   const idArray = selected
 
   if (idArray.length === 0) {
-    setMessage('Please enter valid IDs.');
+    setMessage('Please enter valid IDs.', idArray);
     return;
   }
 
@@ -419,7 +444,7 @@ const handleDeleteImages = async (e) => {
   };
   
 
-  const chunks = chunkArray(selectedRows, 16);
+  const chunks = chunkArray(selectedRows, 10);
 
 // Helper function to split an array into chunks of a given size.
 
@@ -434,6 +459,17 @@ const handleDeleteImages = async (e) => {
             
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
     <Header /> 
+
+
+
+    {/* <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Download LMIS Report</h1>
+      <button onClick={generatePDF} style={{ padding: "10px 20px", fontSize: "16px" }}>
+        Download PDF
+      </button>
+    </div> */}
+
+   
 
       <div style={{ padding: '16px' }}>
               <TextField
@@ -613,11 +649,15 @@ const handleDeleteImages = async (e) => {
       />
 
 
-{isAnyChecked && (
+{/* {isAnyChecked && (
   <button onClick={downloadCV} style={{ marginTop: '20px', marginLeft: "30px", marginBottom: "20px" }}>
     Download summary
   </button>
-)}
+)} */}
+
+{isAnyChecked && <button onClick={generatePDF} style={{ marginTop: '20px', marginLeft: "30px", marginBottom: "20px" }}>
+        Download Report List
+      </button> }
 
 {isAnyChecked && (
   <button onClick={handleDeleteImages} style={{ marginTop: '20px', marginLeft: "30px", marginBottom: "20px", background: "red" }}>
@@ -656,13 +696,13 @@ const handleDeleteImages = async (e) => {
     `}
   </style>
   
-  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+  {/* <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
     <img
       src={embassylistpdftopimage}
       alt="header"
       style={{ maxWidth: '98%' }} // Ensures the image is contained
     />
-  </div>
+  </div> */}
   
   {/*
     Get chunks of 3 applicants each.
@@ -700,7 +740,7 @@ const handleDeleteImages = async (e) => {
           {chunk.map((row, index) => (
             <tr key={row.id}>
               <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>
-                {chunkIndex * 3 + index + 1}
+                {index + 1}
               </td>
               <td style={{ border: '1px solid black', padding: '4px', textAlign: 'center', fontSize: '10px' }}>
                 {row.name} {row.middleName} {row.surname}
