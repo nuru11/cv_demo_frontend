@@ -23,6 +23,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Header from "../screens/header"
 
+
+
 import { FormControlLabel } from '@mui/material';
 
 
@@ -52,6 +54,14 @@ const columns = [
 ];
 
 export default function StickyHeadTable() {
+
+
+ 
+  const [errorOpen, setErrorOpen] = React.useState(false);
+  const [errorField, setErrorField] = React.useState('');
+
+ 
+
 
   const initialPersonalInfo = { name: '', middleName: "", email: '', phone: '', about: '', surname: "", placeOfBirth: "", passportNo: "",passportIssuePlace: "", nationality: "ETHIOPIA", maritalStatus: "", numberOfChildren: "", religion: "", weight: "", height: "", educationAttainment: "", postAppliedFor: "", contractPeriod: "2", arabicDegree: "", englishDegree: "", ownPhoneNumber: "", contactPhoneNumber: "", monthlysalarySaudi: "", monthlysalaryJordan: "", idno: "", sex: "", visaNo: "", passportType: "", placeOfIssue: "", emptyfield: false, dateOfBirth: "", age:"", country: "", position: "", period: ""}
       const initialSponsorInfo = {visaNo: "", sponsorId: "", sponsorAdress: "", nationalId: "", email: "", sponsorName: "", sponsorPhone: "", agent: "", sponsorArabic: '', visaType: "", fileNo: "", wakala: "", signedUp: "", biometricId: "", contract: "", stickerVisa: "", currentNationality: "", laborId: "", sponsorInformationEmptyfield: false}
@@ -631,6 +641,36 @@ const handleDeleteImages = async (e) => {
 
   const handleSubmitfordonebutton = async () => {
 
+    if (!editData.laborId) {
+      setErrorField('Labour ID is empty');
+      setErrorOpen(true);
+      return;
+    }
+    if (!editData.applicationNo) {
+      setErrorField('Application number is empty');
+      setErrorOpen(true);
+      return;
+    }
+    if (!editData.passportnum) {
+      setErrorField('Passport number is empty');
+      setErrorOpen(true);
+      return;
+    }
+    if (!editData.destination) {
+      setErrorField('Destination is empty');
+      setErrorOpen(true);
+      return;
+    }
+
+    // Proceed with the intended operation
+    editData.finished = true; // Example action
+    // Add further logic to handle the submission...
+    
+    handleClose(); // Close the dialog after processing
+  
+
+  
+
     if (editData.applicationNo && !editData.applicationNo.startsWith('E')) {
       editData.applicationNo = 'E' + editData.applicationNo; // Prepend 'E' if it doesn't start with 'E'
     }
@@ -675,6 +715,56 @@ const handleDeleteImages = async (e) => {
     }
   };
 
+
+
+  const handleSubmitfordonebuttonProceedanyway = async () => {
+
+   
+  
+
+    if (editData.applicationNo && !editData.applicationNo.startsWith('E')) {
+      editData.applicationNo = 'E' + editData.applicationNo; // Prepend 'E' if it doesn't start with 'E'
+    }
+
+    if (editData.laborId && !editData.laborId.startsWith('E')) {
+      editData.laborId = 'E' + editData.laborId; // Prepend 'E' if it doesn't start with 'E'
+    }
+
+
+    editData.availablefor =  JSON.stringify({"golden": checkboxState.golden.toString(), "bela": checkboxState.bela.toString(), "skyway": checkboxState.skyway.toString(), "baraka": checkboxState.baraka.toString(), "kaan": checkboxState.kaan.toString(), "qimam": checkboxState.qimam.toString(), "admin": "true"  })
+
+    editData.status = statusCheckedBox ? statusCheckedBox : editData.status
+
+ 
+
+    editData.finished = true
+
+    editData.doneDate = `${dayName}, ${monthName} ${dayNumber}, ${year}`
+
+    
+
+
+    try {
+      const response = await fetch(`https://testcvapi.ntechagent.com/tget-images/${editData.id}?agentname=${agentName}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editData),
+      });
+      const result = await response.json();
+      if (result.status === 'ok') {
+        setRows(rows.map(row => (row.id === editData.id ? result.data : row)));
+
+        setRows(rows.filter(row => row.id !== editData.id));
+
+        handleClose()
+       
+      }
+    } catch (error) {
+      console.error('Update error:', error);
+    }
+  };
 
   const handleRowClick = (id) => {
     navigate(`/list/${id}`);
@@ -863,9 +953,17 @@ const handleDeleteImages = async (e) => {
 
   /////////////////////// Done function
 
-  const handleDone = async (id) => {
-    console.log("kkkk")
-  }
+  
+
+  const handleProceed = () => {
+    // Logic to proceed anyway, such as submitting the form despite empty fields
+    handleSubmitfordonebuttonProceedanyway();
+    setErrorOpen(false);
+  };
+
+  const handleCloseError = () => {
+    setErrorOpen(false);
+  };
 
 
 
@@ -876,6 +974,50 @@ const handleDeleteImages = async (e) => {
 
   return (
     <>
+
+
+        
+        {/* Other components like Table, Filters, etc. */}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Edit Entry</DialogTitle>
+          <DialogContent>
+            <TextField
+              margin="dense"
+              name="laborId"
+              label="Labor Id"
+              fullWidth
+              variant="outlined"
+              value={editData.laborId || ''}
+              onChange={handleInputChange}
+            />
+            <TextField
+              margin="dense"
+              name="destination"
+              label="Destination"
+              fullWidth
+              variant="outlined"
+              value={editData.destination || ''}
+              onChange={handleInputChange}
+            />
+            {/* Add other fields as necessary */}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleSubmitfordonebutton}>Done</Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog open={errorOpen} onClose={handleCloseError}>
+          <DialogTitle>Error</DialogTitle>
+          <DialogContent>
+            <Typography>{errorField}</Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseError}>Back</Button>
+            <Button onClick={handleProceed}>Proceed Anyway</Button>
+          </DialogActions>
+        </Dialog>
+    
     
 
     {/* <div>{statusCheckedBox}</div> */}
@@ -1146,6 +1288,25 @@ const handleDeleteImages = async (e) => {
             value={editData.laborId || ''}
             onChange={handleInputChange}
           />
+
+<TextField
+    select
+    margin="dense"
+    name="destination"
+    label="Destination"
+    fullWidth
+    variant="outlined"
+    value={editData.destination || ''}
+    onChange={handleInputChange}
+>
+    <MenuItem value=""><em>Select Destination</em></MenuItem>
+    <MenuItem value="KSA">KSA</MenuItem>
+    <MenuItem value="Jordan">Jordan</MenuItem>
+    <MenuItem value="UAE">UAE</MenuItem>
+    <MenuItem value="Kuwait">Kuwait</MenuItem>
+    <MenuItem value="Bahrain">Bahrain</MenuItem>
+    <MenuItem value="Qatar">Qatar</MenuItem>
+</TextField>
 
 
 <TextField

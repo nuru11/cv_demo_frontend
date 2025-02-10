@@ -256,6 +256,36 @@ class SponsorInformation extends Component {
                         </div>
 
 
+                        <div className="input-container">
+                        {/* <span className="required">*</span> */}
+                            {/* <Inputs className="input-spacing" placeholder='marital Status' TextVal={this.props.info.maritalStatus} callback={this.props.callback} idVal={'personalInfo-maritalStatus-input'} /> */}
+
+                            <div className="project-form-group">
+    <label htmlFor={`sponsorInformation-destination-input`}>
+    <span className="required"><span style={{color: "black", fontWeight: "normal"}}>Destination</span></span>
+    </label>
+    <select
+    onFocus={onInputFocus} onBlur={onInputBlur}
+        value={this.props.info.destination}
+        onChange={this.props.callback}
+        id={`sponsorInformation-destination-input`}
+        className="project-form-control"
+        style={{ color: this.props.info.destination ? 'black' : '#AFAFAF' }} // Change color based on value
+    >
+        <option value="" style={{ color: '#AFAFAF' }}>{this.props.info.destination}</option>
+        <option value="KSA">KSA</option>
+        <option value="Jordan">Jordan</option>
+        <option value="UAE">UAE</option>
+        <option value="Kuwait">Kuwait</option>
+        <option value="Bahrain">Bahrain</option>
+        <option value="Qatar">Qatar</option>
+        
+    </select>
+</div>
+                            
+                        </div>
+
+
 
                         {/* <Grid item xs={6}>
             <TextField

@@ -31,15 +31,19 @@ const columns = [
   
   
   { id: 'postappliedfor', label: 'Position', minWidth: 170 },
+
+  {id: "destination", label: "Destination", minWidth: 100},
   
   // { id: 'country', label: 'Country', minWidth: 170 },
   { id: 'createdAt', label: 'Created At', minWidth: 170 },
 
   // { id: 'currentNationality', label: 'Nationality', minWidth: 170 },
 
-  {id: "laborId", label: "Labour Id", minWidth: 100},
+  
 
   { id: 'doneDate', label: 'Done Date', minWidth: 100 },
+
+  
   
   { id: 'actions', label: 'Actions', minWidth: 100 },
 ];
@@ -68,12 +72,13 @@ export default function StickyHeadTable() {
     const doc = new jsPDF();
     doc.text(`PENDING LMIS CONTRACTS`, 14, 15);
   
-    const tableColumn = ["NO", "NAME", "EP NUMBER", "LABOUR ID"];
+    const tableColumn = ["NO", "NAME", "EP NUMBER", "LABOUR ID", "Destination"];
     const tableRows = selectedRows.map((row, index) => [
       index + 1,
-      row.name, // Name column
+      `${row.name} ${row.middleName} ${row.surname}`, 
       row.passportnum,
       row.laborId,
+      row.destination, 
     ]);
   
     doc.autoTable({
@@ -84,9 +89,9 @@ export default function StickyHeadTable() {
         fontSize: 10, // Default font size for all cells
       },
       columnStyles: {
-        1: { fontStyle: 'bold', fontSize: 12, color: "black" }, // Apply bold and larger font size to the "NAME" column (index 1)
-        2: { fontStyle: 'bold', fontSize: 12 },
-        3: { fontStyle: 'bold', fontSize: 12 },
+        // 1: { fontStyle: 'bold', fontSize: 12, color: "black" }, // Apply bold and larger font size to the "NAME" column (index 1)
+        // 2: { fontStyle: 'bold', fontSize: 12 },
+        // 3: { fontStyle: 'bold', fontSize: 12 },
       },
     });
   

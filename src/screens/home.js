@@ -117,7 +117,7 @@ const agentName = localStorage.getItem('userdata');
       });
 
       const initialPersonalInfo = {emptyfield: true, name: '', middleName: "", familyName: "", email: '', phone: '', about: '', surname: "", placeOfBirth: "", passportNo: "",passportIssuePlace: "", nationality: "ETHIOPIA", maritalStatus: "", numberOfChildren: "", religion: "", weight: "", height: "", educationAttainment: "", postAppliedFor: "", contractPeriod: "2", arabicDegree: "", englishDegree: "", ownPhoneNumber: "", contactPhoneNumber: "", monthlysalarySaudi: "", monthlysalaryJordan: "", idno: "", sex: "", visaNo: "", passportType: "", placeOfIssue: "", emptyfield: false, dateOfBirth: "", age:"", country: "", position: "", period: "", applicationNo: ""}
-      const initialSponsorInfo = {visaNo: "", sponsorId: "", sponsorAdress: "", sponsorCity: "", nationalId: "", email: "", sponsorName: "", sponsorPhone: "", agent: "", sponsorArabic: '', visaType: "", fileNo: "", wakala: "", signedUp: "", biometricId: "", contract: "2", stickerVisa: "", currentNationality: "Ethiopia", laborId: "", sponsorInformationEmptyfield: false}
+      const initialSponsorInfo = {visaNo: "", sponsorId: "", sponsorAdress: "", sponsorCity: "", nationalId: "", email: "", sponsorName: "", sponsorPhone: "", agent: "", sponsorArabic: '', visaType: "", fileNo: "", wakala: "", signedUp: "", biometricId: "", contract: "2", stickerVisa: "", currentNationality: "Ethiopia", laborId: "", sponsorInformationEmptyfield: false, destination: ""}
     const [personalInfo, setPersonalInfo] = useState(initialPersonalInfo);
     const [sponsorInformation, setSponsorInfo] = useState(initialSponsorInfo);
     const [educationInfo, setEducationInfo] = useState({ institute: [{ school: '', from: '', to: '', grade: '', areaStudy: '', overview: '' }] });
@@ -1106,6 +1106,7 @@ formData.append("contract", sponsorInformation.contract);
 formData.append("stickerVisa", sponsorInformation.stickerVisa);
 formData.append("currentNationality", sponsorInformation.currentNationality);
 formData.append("laborId", sponsorInformation.laborId);
+formData.append("destination", sponsorInformation.destination);
 
 
 // formData.append("cvcount", JSON.stringify(dummyData.newValue));
@@ -1305,6 +1306,7 @@ formData.append("contract", sponsorInformation.contract);
 formData.append("stickerVisa", sponsorInformation.stickerVisa);
 formData.append("currentNationality", sponsorInformation.currentNationality);
 formData.append("laborId", sponsorInformation.laborId);
+formData.append("destination", sponsorInformation.destination);
 
 
 // formData.append("cvcount", JSON.stringify(dummyData.newValue));
