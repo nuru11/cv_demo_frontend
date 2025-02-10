@@ -662,6 +662,12 @@ const handleDeleteImages = async (e) => {
       return;
     }
 
+    if (!editData.agent) {
+      setErrorField('Agent is empty');
+      setErrorOpen(true);
+      return;
+    }
+
     // Proceed with the intended operation
     editData.finished = true; // Example action
     // Add further logic to handle the submission...
@@ -1306,6 +1312,26 @@ const handleDeleteImages = async (e) => {
     <MenuItem value="Kuwait">Kuwait</MenuItem>
     <MenuItem value="Bahrain">Bahrain</MenuItem>
     <MenuItem value="Qatar">Qatar</MenuItem>
+</TextField>
+
+
+<TextField
+    select
+    margin="dense"
+    name="agent"
+    label="Agent Name"
+    fullWidth
+    variant="outlined"
+    value={editData.agent || ''}
+    onChange={handleInputChange}
+>
+    <MenuItem value=""><em>Select Agent</em></MenuItem>
+    <MenuItem value="Golden">Golden</MenuItem>
+    <MenuItem value="Bela Hodod">Bela Hodod</MenuItem>
+    <MenuItem value="Assawsanah">Assawsanah</MenuItem>
+    <MenuItem value="Baraka">Baraka</MenuItem>
+    <MenuItem value="Kan Alriyadf">Kan Alriyadf</MenuItem>
+    <MenuItem value="Qimam Asia">Qimam Asia</MenuItem>
 </TextField>
 
 

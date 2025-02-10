@@ -3933,117 +3933,228 @@
 
 
 	////////////////////////////////////////////////////////////////////////
-
-	import React from "react";
-import { jsPDF } from "jspdf";
-import "jspdf-autotable";
-
-const generatePDF = () => {
-  const doc = new jsPDF();
-
-  doc.text("LMIS REPORT", 14, 15);
-
-  const tableColumn = ["NO", "NAME", "EP NUMBER", "LABOUR ID"];
-  const tableRows = [];
-
-  // Expanded fake data
-  const dummyData = [
-    ["Alex Johnson", "EP1234567", "EF123456"],
-    ["Maria Gonzalez", "EP2345678", "EF234567"],
-    ["James Smith", "EP3456789", "EF345678"],
-    ["Emma Davis", "EP4567890", "EF456789"],
-    ["Liam Brown", "EP5678901", "EF567890"],
-    ["Olivia Wilson", "EP6789012", "EF678901"],
-    ["Noah Martinez", "EP7890123", "EF789012"],
-    ["Ava Anderson", "EP8901234", "EF890123"],
-    ["William Thomas", "EP9012345", "EF901234"],
-    ["Sophia Taylor", "EP0123456", "EF012345"],
-    ["Mason Harris", "EP1123456", "EF112345"],
-    ["Isabella Clark", "EP2123456", "EF212345"],
-    ["Ethan Lewis", "EP3123456", "EF312345"],
-    ["Mia Walker", "EP4123456", "EF412345"],
-    ["Benjamin Hall", "EP5123456", "EF512345"],
-    ["Charlotte Allen", "EP6123456", "EF612345"],
-    ["Lucas Young", "EP7123456", "EF712345"],
-    ["Amelia King", "EP8123456", "EF812345"],
-    ["Henry Wright", "EP9123456", "EF912345"],
-    ["Ella Scott", "EP1012345", "EF101234"],
-    ["David Adams", "EP1112345", "EF111234"],
-    ["Grace Mitchell", "EP1212345", "EF121234"],
-    ["Samuel Carter", "EP1312345", "EF131234"],
-    ["Chloe Perez", "EP1412345", "EF141234"],
-    ["Daniel Roberts", "EP1512345", "EF151234"],
-    ["Lily White", "EP1612345", "EF161234"],
-    ["Michael Clark", "EP1712345", "EF171234"],
-    ["Zoe Harris", "EP1812345", "EF181234"],
-    ["Nathan Thompson", "EP1912345", "EF191234"],
-    ["Ella Martinez", "EP2012345", "EF201234"],
-
-
-	["Alex Johnson", "EP1234567", "EF123456"],
-    ["Maria Gonzalez", "EP2345678", "EF234567"],
-    ["James Smith", "EP3456789", "EF345678"],
-    ["Emma Davis", "EP4567890", "EF456789"],
-    ["Liam Brown", "EP5678901", "EF567890"],
-    ["Olivia Wilson", "EP6789012", "EF678901"],
-    ["Noah Martinez", "EP7890123", "EF789012"],
-    ["Ava Anderson", "EP8901234", "EF890123"],
-    ["William Thomas", "EP9012345", "EF901234"],
-    ["Sophia Taylor", "EP0123456", "EF012345"],
-    ["Mason Harris", "EP1123456", "EF112345"],
-    ["Isabella Clark", "EP2123456", "EF212345"],
-    ["Ethan Lewis", "EP3123456", "EF312345"],
-    ["Mia Walker", "EP4123456", "EF412345"],
-    ["Benjamin Hall", "EP5123456", "EF512345"],
-    ["Charlotte Allen", "EP6123456", "EF612345"],
-    ["Lucas Young", "EP7123456", "EF712345"],
-    ["Amelia King", "EP8123456", "EF812345"],
-    ["Henry Wright", "EP9123456", "EF912345"],
-    ["Ella Scott", "EP1012345", "EF101234"],
-    ["David Adams", "EP1112345", "EF111234"],
-    ["Grace Mitchell", "EP1212345", "EF121234"],
-    ["Samuel Carter", "EP1312345", "EF131234"],
-    ["Chloe Perez", "EP1412345", "EF141234"],
-    ["Daniel Roberts", "EP1512345", "EF151234"],
-    ["Lily White", "EP1612345", "EF161234"],
-    ["Michael Clark", "EP1712345", "EF171234"],
-    ["Zoe Harris", "EP1812345", "EF181234"],
-    ["Nathan Thompson", "EP1912345", "EF191234"],
-    ["Ella Martinez", "EP2012345", "EF201234"],
-    ["Jack Robinson", "EP2112345", "EF211234"],
-    ["Sophia Green", "EP2212345", "EF221234"],
-    ["William Parker", "EP2312345", "EF231234"],
-    ["Emma Carter", "EP2412345", "EF241234"],
-    ["Jacob Foster", "EP2512345", "EF251234"],
-    ["Madison Bell", "EP2612345", "EF261234"],
-    ["Joshua Murphy", "EP2712345", "EF271234"],
-    // ["Avery Turner", "EP2812345", "EF281234"],
-    // ["Logan Reed", "EP2912345", "EF291234"],
-    // ["Scarlett Hughes", "EP3012345", "EF301234"],
-  ];
-
-  dummyData.forEach((item, index) => {
-    tableRows.push([index + 1, ...item]);
-  });
-
-  doc.autoTable({
-    head: [tableColumn],
-    body: tableRows,
-    startY: 25,
-  });
-
-  doc.save("LMIS_REPORT.pdf");
-};
-
-const DownloadPage = () => {
-  return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Download LMIS Report</h1>
-      <button onClick={generatePDF} style={{ padding: "10px 20px", fontSize: "16px" }}>
-        Download PDF
-      </button>
-    </div>
-  );
-};
-
-export default DownloadPage;
+	import React, { useEffect, useState } from 'react';
+	import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Typography, Container, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+	import Header from "../screens/header";
+	import { jsPDF } from "jspdf";
+	
+	const ApplicantsList = () => {
+		const [applicants, setApplicants] = useState([]);
+		const [loading, setLoading] = useState(true);
+		const [error, setError] = useState(null);
+		const [filter, setFilter] = useState('Today');
+	
+		const agentName = localStorage.getItem('userdata');
+	
+		useEffect(() => {
+			const fetchApplicants = async () => {
+				try {
+					const response = await fetch(`https://testcvapi.ntechagent.com/applicantshistory?agentname=${agentName}`);
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					const data = await response.json();
+					setApplicants(data.data);
+				} catch (err) {
+					setError(err.message);
+				} finally {
+					setLoading(false);
+				}
+			};
+	
+			fetchApplicants();
+		}, [agentName]);
+	
+		const filterApplicants = () => {
+			const now = new Date();
+			return applicants.filter(applicant => {
+				const createdAt = new Date(applicant.created_at);
+				switch (filter) {
+					case 'Today':
+						return createdAt.toDateString() === now.toDateString();
+					case 'Last Week':
+						const lastWeek = new Date();
+						lastWeek.setDate(now.getDate() - 7);
+						return createdAt >= lastWeek && createdAt <= now;
+					case 'Last Month':
+						const lastMonth = new Date();
+						lastMonth.setMonth(now.getMonth() - 1);
+						return createdAt >= lastMonth && createdAt <= now;
+					case 'This Year':
+						return createdAt.getFullYear() === now.getFullYear();
+					case 'Quarter':
+						const quarterStart = new Date();
+						quarterStart.setMonth(Math.floor(now.getMonth() / 3) * 3, 1);
+						return createdAt >= quarterStart && createdAt <= now;
+					default:
+						return true;
+				}
+			});
+		};
+	
+		const downloadPDF = () => {
+			const filteredApplicants = filterApplicants();
+			const doc = new jsPDF({
+				orientation: "portrait",
+				unit: "mm",
+				format: [300, 410], // Custom width and height
+				putOnlyUsedFonts: true,
+				floatPrecision: 16
+			});
+		
+			// Set title
+			doc.setFont("helvetica", "bold");
+			doc.setFontSize(12);
+			doc.text("Applicants List", 10, 10);
+			doc.setLineWidth(0.5);
+			doc.line(10, 15, 290, 15); // Title separator line
+		
+			// Set headers
+			const headers = [
+				"S.No", "Name", "Created At", "Application No", "Passport Number", 
+				"Post Applied For", "Visa No", "Agent", "Destination", "Done Date"
+			];
+			const columnWidths = [10, 30, 30, 30, 30, 30, 30, 30, 30, 30];
+			const startX = 10;
+			let startY = 20;
+			const rowHeight = 8;
+		
+			// Add headers with borders
+			headers.forEach((header, index) => {
+				doc.setFont("helvetica", "bold");
+				doc.setFontSize(10);
+				const cellX = startX + columnWidths.slice(0, index).reduce((a, b) => a + b, 0);
+				doc.text(header, cellX + 1, startY + 6); // Center text vertically
+				doc.setLineWidth(0.5);
+				doc.rect(cellX, startY, columnWidths[index], 10); // Draw header box
+			});
+		
+			// Set font for data
+			doc.setFont("helvetica", "normal");
+			doc.setFontSize(8);
+		
+			// Add data with borders
+			filteredApplicants.forEach((applicant, index) => {
+				startY += rowHeight;
+		
+				const data = [
+					index + 1,
+					applicant.applicant_name,
+					applicant.created_at,
+					applicant.applicationNo,
+					applicant.passportnum,
+					applicant.postappliedfor,
+					applicant.visaNo,
+					applicant.agent,
+					applicant.destination,
+					applicant.doneDate
+				];
+		
+				data.forEach((item, idx) => {
+					const cellX = startX + columnWidths.slice(0, idx).reduce((a, b) => a + b, 0);
+					const textLines = doc.splitTextToSize(String(item), columnWidths[idx]);
+		
+					// Draw cell border
+					doc.setLineWidth(0.5);
+					doc.rect(cellX, startY, columnWidths[idx], rowHeight + 5); // Box for each cell
+		
+					// Add text to the cell
+					textLines.forEach((line, lineIndex) => {
+						doc.text(line, cellX + 1, startY + (lineIndex * 8) + 5); // Adjust Y for text
+					});
+				});
+		
+				// Check if we need to add a new page
+				if (startY + rowHeight > doc.internal.pageSize.height - 20) {
+					doc.addPage();
+					startY = 10;
+		
+					headers.forEach((header, index) => {
+						doc.setFont("helvetica", "bold");
+						doc.setFontSize(10);
+						const cellX = startX + columnWidths.slice(0, index).reduce((a, b) => a + b, 0);
+						doc.text(header, cellX + 1, startY + 6); // Center text vertically
+						doc.setLineWidth(0.5);
+						doc.rect(cellX, startY, columnWidths[index], 10); // Draw header box
+					});
+					startY += rowHeight;
+				}
+			});
+		
+			// Add footer
+			doc.setFontSize(10);
+			doc.text("Generated on: " + new Date().toLocaleString(), 10, startY + rowHeight);
+		
+			// Save the PDF
+			doc.save("applicants.pdf");
+		};
+		if (loading) {
+			return <CircularProgress />;
+		}
+	
+		if (error) {
+			return <Typography color="error">Error: {error}</Typography>;
+		}
+	
+		const filteredApplicants = filterApplicants();
+	
+		return (
+			<Container maxWidth={false} style={{ padding: '0' }}>
+				<Header />
+				<Container maxWidth={false} style={{ padding: '30', margin: '50' }}>
+					<FormControl fullWidth style={{ marginBottom: '20px' }}>
+						<InputLabel>Filter by Time</InputLabel>
+						<Select
+							value={filter}
+							onChange={(e) => setFilter(e.target.value)}
+						>
+							<MenuItem value="Today">Today</MenuItem>
+							<MenuItem value="Last Week">Last Week</MenuItem>
+							<MenuItem value="Last Month">Last Month</MenuItem>
+							<MenuItem value="This Year">This Year</MenuItem>
+							<MenuItem value="Quarter">Quarter</MenuItem>
+						</Select>
+					</FormControl>
+					<Button variant="contained" color="primary" onClick={downloadPDF} style={{ marginBottom: '20px' }}>
+						Download PDF
+					</Button>
+					<TableContainer component={Paper} style={{ marginTop: '20px' }}>
+						<Table>
+							<TableHead>
+								<TableRow>
+									<TableCell>S.No</TableCell> 
+									<TableCell>Name</TableCell>
+									<TableCell>Created At</TableCell>
+									<TableCell>Application No</TableCell>
+									<TableCell>Passport Number</TableCell>
+									<TableCell>Post Applied For</TableCell>
+									<TableCell>Visa No</TableCell>
+									<TableCell>Agent</TableCell>
+									<TableCell>Destination</TableCell>
+									<TableCell>Done Date</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{filteredApplicants.map((applicant, index) => (
+									<TableRow key={applicant.id}>
+										<TableCell>{index + 1}</TableCell> 
+										<TableCell>{applicant.applicant_name}</TableCell>
+										<TableCell>{applicant.created_at}</TableCell>  
+										<TableCell>{applicant.applicationNo}</TableCell>
+										<TableCell>{applicant.passportnum}</TableCell>
+										<TableCell>{applicant.postappliedfor}</TableCell>
+										<TableCell>{applicant.visaNo}</TableCell>
+										<TableCell>{applicant.agent}</TableCell>
+										<TableCell>{applicant.destination}</TableCell>
+										<TableCell>{applicant.doneDate}</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</TableContainer>
+				</Container>
+			</Container>
+		);
+	};
+	
+	export default ApplicantsList;

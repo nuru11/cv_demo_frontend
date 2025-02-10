@@ -114,12 +114,12 @@ class SponsorInformation extends Component {
         style={{ color: this.props.info.agent ? 'black' : '#AFAFAF' }} // Change color based on value
     >
         <option value="" style={{ color: '#AFAFAF' }}>{this.props.info.agent}</option>
-        <option value="goldenagent">Golden Agent</option>
-        <option value="belahodod">Bela Hodod</option>
-        <option value="assawsanah">Assawsanah</option>
-        <option value="baraka">Baraka</option>
-        <option value="Kanagent">Kan Alriyadh</option>
-        <option value="qimamasia">Qimam Asia</option>
+        <option value="Golden">Golden Agent</option>
+        <option value="Bela Hodod">Bela Hodod</option>
+        <option value="Assawsanah">Assawsanah</option>
+        <option value="Baraka">Baraka</option>
+        <option value="Kan Alriyadf">Kan Alriyadh</option>
+        <option value="Qimam Asia">Qimam Asia</option>
         
     </select>
 </div>
