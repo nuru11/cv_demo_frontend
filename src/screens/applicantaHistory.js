@@ -382,13 +382,13 @@ const ApplicantsList = () => {
         });
     };
 
-    if (loading) {
-        return <CircularProgress />;
-    }
+    // if (loading) {
+    //     return <CircularProgress />;
+    // }
 
-    if (error) {
-        return <Typography color="error">Error: {error}</Typography>;
-    }
+    // if (error) {
+    //     return <Typography color="error">Error: {error}</Typography>;
+    // }
 
     const filteredApplicants = filterApplicants();
     const currentYear = new Date().getFullYear();
@@ -447,29 +447,29 @@ const ApplicantsList = () => {
 
                     {filteredApplicants.map((applicant, index) => (
                         <div key={applicant.id} style={{ margin: "10px", marginBottom: "20px" }}>
-                            <div style={{ background: "#F8F8F8", padding: "15px", fontWeight: "bold", borderBottom: "2px solid black" }}><span>NO:</span> {index + 1}</div>
-                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "2px solid black" }}>
+                            <div style={{ background: "#F8F8F8", padding: "15px", fontWeight: "bold", borderBottom: "1px solid #bdc2c9" }}><span>NO:</span> {index + 1}</div>
+                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Name:</span> <span>{applicant.applicant_name}</span>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "2px solid black" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Applicant No:</span> <span>{applicant.applicationNo}</span>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "2px solid black" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Passport No:</span> <span>{applicant.passportnum}</span>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "2px solid black" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Post Applied For:</span> <span>{applicant.postappliedfor}</span>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "2px solid black" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Visa No:</span> <span>{applicant.visaNo}</span>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "2px solid black" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Agent:</span> <span>{applicant.agent}</span>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "2px solid black" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Destination:</span> <span>{applicant.destination}</span>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "2px solid black" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Finished Date:</span> <span>{applicant.doneDate || 'N/A'}</span>
                             </div>
                         </div>
