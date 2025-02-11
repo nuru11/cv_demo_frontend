@@ -480,7 +480,7 @@ const ApplicantsList = () => {
                 // Desktop view
                 <Container maxWidth={false} style={{ padding: '0' }}>
                     <Header />
-                    <Container >
+                    <Container maxWidth={false} style={{ padding: '10px' }} >
                         <div style={{ display: "flex", justifyContent: "flex-start" }}>
                             <FormControl fullWidth style={{ marginBottom: '20px', marginTop: "30px" }}>
                                 <InputLabel>Filter by Time</InputLabel>
