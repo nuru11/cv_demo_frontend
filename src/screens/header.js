@@ -62,6 +62,7 @@ const Header = () => {
                             <Button color="inherit" onClick={() => navigate('/requestlist')}>Request List</Button>
                             <Button color="inherit" onClick={() => navigate('/signup')}>Add Agent</Button>
                             <Button color="inherit" onClick={() => navigate('/reportlist')}>Report List</Button>
+                            <Button color="inherit" onClick={() => navigate('/applicanthistory')}>History List</Button>
                             <Button color="inherit" onClick={() => navigate('/setting')}>Settings</Button>
                         </>
                     )}
@@ -100,6 +101,7 @@ const Header = () => {
                                 <MenuItem onClick={() => handleNavigation('/requestlist')}>Request List</MenuItem>
                                 <MenuItem onClick={() => handleNavigation('/signup')}>Add User</MenuItem>
                                 <MenuItem onClick={() => handleNavigation('/reportlist')}>Report List</MenuItem>
+                                <MenuItem onClick={() => handleNavigation('/applicanthistory')}>History List</MenuItem>
                                 <MenuItem onClick={() => handleNavigation('/setting')}>Settings</MenuItem>
                                 
                             </>

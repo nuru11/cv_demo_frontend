@@ -3933,228 +3933,297 @@
 
 
 	////////////////////////////////////////////////////////////////////////
+
 	import React, { useEffect, useState } from 'react';
-	import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Typography, Container, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
-	import Header from "../screens/header";
-	import { jsPDF } from "jspdf";
-	
-	const ApplicantsList = () => {
-		const [applicants, setApplicants] = useState([]);
-		const [loading, setLoading] = useState(true);
-		const [error, setError] = useState(null);
-		const [filter, setFilter] = useState('Today');
-	
-		const agentName = localStorage.getItem('userdata');
-	
-		useEffect(() => {
-			const fetchApplicants = async () => {
-				try {
-					const response = await fetch(`https://testcvapi.ntechagent.com/applicantshistory?agentname=${agentName}`);
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					const data = await response.json();
-					setApplicants(data.data);
-				} catch (err) {
-					setError(err.message);
-				} finally {
-					setLoading(false);
-				}
-			};
-	
-			fetchApplicants();
-		}, [agentName]);
-	
-		const filterApplicants = () => {
-			const now = new Date();
-			return applicants.filter(applicant => {
-				const createdAt = new Date(applicant.created_at);
-				switch (filter) {
-					case 'Today':
-						return createdAt.toDateString() === now.toDateString();
-					case 'Last Week':
-						const lastWeek = new Date();
-						lastWeek.setDate(now.getDate() - 7);
-						return createdAt >= lastWeek && createdAt <= now;
-					case 'Last Month':
-						const lastMonth = new Date();
-						lastMonth.setMonth(now.getMonth() - 1);
-						return createdAt >= lastMonth && createdAt <= now;
-					case 'This Year':
-						return createdAt.getFullYear() === now.getFullYear();
-					case 'Quarter':
-						const quarterStart = new Date();
-						quarterStart.setMonth(Math.floor(now.getMonth() / 3) * 3, 1);
-						return createdAt >= quarterStart && createdAt <= now;
-					default:
-						return true;
-				}
-			});
-		};
-	
-		const downloadPDF = () => {
-			const filteredApplicants = filterApplicants();
-			const doc = new jsPDF({
-				orientation: "portrait",
-				unit: "mm",
-				format: [300, 410], // Custom width and height
-				putOnlyUsedFonts: true,
-				floatPrecision: 16
-			});
-		
-			// Set title
-			doc.setFont("helvetica", "bold");
-			doc.setFontSize(12);
-			doc.text("Applicants List", 10, 10);
-			doc.setLineWidth(0.5);
-			doc.line(10, 15, 290, 15); // Title separator line
-		
-			// Set headers
-			const headers = [
-				"S.No", "Name", "Created At", "Application No", "Passport Number", 
-				"Post Applied For", "Visa No", "Agent", "Destination", "Done Date"
-			];
-			const columnWidths = [10, 30, 30, 30, 30, 30, 30, 30, 30, 30];
-			const startX = 10;
-			let startY = 20;
-			const rowHeight = 8;
-		
-			// Add headers with borders
-			headers.forEach((header, index) => {
-				doc.setFont("helvetica", "bold");
-				doc.setFontSize(10);
-				const cellX = startX + columnWidths.slice(0, index).reduce((a, b) => a + b, 0);
-				doc.text(header, cellX + 1, startY + 6); // Center text vertically
-				doc.setLineWidth(0.5);
-				doc.rect(cellX, startY, columnWidths[index], 10); // Draw header box
-			});
-		
-			// Set font for data
-			doc.setFont("helvetica", "normal");
-			doc.setFontSize(8);
-		
-			// Add data with borders
-			filteredApplicants.forEach((applicant, index) => {
-				startY += rowHeight;
-		
-				const data = [
-					index + 1,
-					applicant.applicant_name,
-					applicant.created_at,
-					applicant.applicationNo,
-					applicant.passportnum,
-					applicant.postappliedfor,
-					applicant.visaNo,
-					applicant.agent,
-					applicant.destination,
-					applicant.doneDate
-				];
-		
-				data.forEach((item, idx) => {
-					const cellX = startX + columnWidths.slice(0, idx).reduce((a, b) => a + b, 0);
-					const textLines = doc.splitTextToSize(String(item), columnWidths[idx]);
-		
-					// Draw cell border
-					doc.setLineWidth(0.5);
-					doc.rect(cellX, startY, columnWidths[idx], rowHeight + 5); // Box for each cell
-		
-					// Add text to the cell
-					textLines.forEach((line, lineIndex) => {
-						doc.text(line, cellX + 1, startY + (lineIndex * 8) + 5); // Adjust Y for text
-					});
-				});
-		
-				// Check if we need to add a new page
-				if (startY + rowHeight > doc.internal.pageSize.height - 20) {
-					doc.addPage();
-					startY = 10;
-		
-					headers.forEach((header, index) => {
-						doc.setFont("helvetica", "bold");
-						doc.setFontSize(10);
-						const cellX = startX + columnWidths.slice(0, index).reduce((a, b) => a + b, 0);
-						doc.text(header, cellX + 1, startY + 6); // Center text vertically
-						doc.setLineWidth(0.5);
-						doc.rect(cellX, startY, columnWidths[index], 10); // Draw header box
-					});
-					startY += rowHeight;
-				}
-			});
-		
-			// Add footer
-			doc.setFontSize(10);
-			doc.text("Generated on: " + new Date().toLocaleString(), 10, startY + rowHeight);
-		
-			// Save the PDF
-			doc.save("applicants.pdf");
-		};
-		if (loading) {
-			return <CircularProgress />;
-		}
-	
-		if (error) {
-			return <Typography color="error">Error: {error}</Typography>;
-		}
-	
-		const filteredApplicants = filterApplicants();
-	
-		return (
-			<Container maxWidth={false} style={{ padding: '0' }}>
-				<Header />
-				<Container maxWidth={false} style={{ padding: '30', margin: '50' }}>
-					<FormControl fullWidth style={{ marginBottom: '20px' }}>
-						<InputLabel>Filter by Time</InputLabel>
-						<Select
-							value={filter}
-							onChange={(e) => setFilter(e.target.value)}
-						>
-							<MenuItem value="Today">Today</MenuItem>
-							<MenuItem value="Last Week">Last Week</MenuItem>
-							<MenuItem value="Last Month">Last Month</MenuItem>
-							<MenuItem value="This Year">This Year</MenuItem>
-							<MenuItem value="Quarter">Quarter</MenuItem>
-						</Select>
-					</FormControl>
-					<Button variant="contained" color="primary" onClick={downloadPDF} style={{ marginBottom: '20px' }}>
-						Download PDF
-					</Button>
-					<TableContainer component={Paper} style={{ marginTop: '20px' }}>
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell>S.No</TableCell> 
-									<TableCell>Name</TableCell>
-									<TableCell>Created At</TableCell>
-									<TableCell>Application No</TableCell>
-									<TableCell>Passport Number</TableCell>
-									<TableCell>Post Applied For</TableCell>
-									<TableCell>Visa No</TableCell>
-									<TableCell>Agent</TableCell>
-									<TableCell>Destination</TableCell>
-									<TableCell>Done Date</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{filteredApplicants.map((applicant, index) => (
-									<TableRow key={applicant.id}>
-										<TableCell>{index + 1}</TableCell> 
-										<TableCell>{applicant.applicant_name}</TableCell>
-										<TableCell>{applicant.created_at}</TableCell>  
-										<TableCell>{applicant.applicationNo}</TableCell>
-										<TableCell>{applicant.passportnum}</TableCell>
-										<TableCell>{applicant.postappliedfor}</TableCell>
-										<TableCell>{applicant.visaNo}</TableCell>
-										<TableCell>{applicant.agent}</TableCell>
-										<TableCell>{applicant.destination}</TableCell>
-										<TableCell>{applicant.doneDate}</TableCell>
-									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				</Container>
-			</Container>
-		);
-	};
-	
-	export default ApplicantsList;
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Typography, Container, Button, MenuItem, Select, InputLabel, FormControl, Grid, Card, CardContent } from '@mui/material';
+import Header from "../screens/header";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
+const ApplicantsList = () => {
+    const [applicants, setApplicants] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [filter, setFilter] = useState('All');
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+
+    const agentName = localStorage.getItem('userdata');
+
+    useEffect(() => {
+        const fetchApplicants = async () => {
+            try {
+                // Dummy data for testing
+                const dummyData = [
+                    {
+                        id: 1,
+                        applicant_name: 'John Doe',
+                        created_at: new Date().toISOString(), // Today
+                        applicationNo: 'APP001',
+                        passportnum: 'P123456789',
+                        postappliedfor: 'Software Engineer',
+                        visaNo: 'V123',
+                        agent: agentName,
+                        destination: 'USA',
+                        doneDate: null
+                    },
+                    {
+                        id: 2,
+                        applicant_name: 'Jane Smith',
+                        created_at: new Date(Date.now() - 86400000).toISOString(), // Yesterday
+                        applicationNo: 'APP002',
+                        passportnum: 'P987654321',
+                        postappliedfor: 'Data Scientist',
+                        visaNo: 'V456',
+                        agent: agentName,
+                        destination: 'Canada',
+                        doneDate: null
+                    },
+                    {
+                        id: 3,
+                        applicant_name: 'Alice Johnson',
+                        created_at: new Date(Date.now() - 604800000).toISOString(), // Last week
+                        applicationNo: 'APP003',
+                        passportnum: 'P159753468',
+                        postappliedfor: 'Product Manager',
+                        visaNo: 'V789',
+                        agent: agentName,
+                        destination: 'UK',
+                        doneDate: null
+                    },
+                    {
+                        id: 4,
+                        applicant_name: 'Bob Brown',
+                        created_at: new Date(Date.now() - 2592000000).toISOString(), // Last month
+                        applicationNo: 'APP004',
+                        passportnum: 'P321654987',
+                        postappliedfor: 'Graphic Designer',
+                        visaNo: 'V012',
+                        agent: agentName,
+                        destination: 'Australia',
+                        doneDate: null
+                    },
+                    {
+                        id: 5,
+                        applicant_name: 'Charlie Green',
+                        created_at: new Date(Date.now() - 7776000000).toISOString(), // 3 months ago
+                        applicationNo: 'APP005',
+                        passportnum: 'P654321789',
+                        postappliedfor: 'Marketing Specialist',
+                        visaNo: 'V345',
+                        agent: agentName,
+                        destination: 'Germany',
+                        doneDate: null
+                    },
+                    {
+                        id: 6,
+                        applicant_name: 'Diana Prince',
+                        created_at: new Date(Date.now() - 15552000000).toISOString(), // 6 months ago
+                        applicationNo: 'APP006',
+                        passportnum: 'P987123456',
+                        postappliedfor: 'UX Designer',
+                        visaNo: 'V678',
+                        agent: agentName,
+                        destination: 'France',
+                        doneDate: null
+                    },
+                    {
+                        id: 7,
+                        applicant_name: 'Ethan Hunt',
+                        created_at: new Date(Date.now() - 31536000000).toISOString(), // 1 year ago
+                        applicationNo: 'APP007',
+                        passportnum: 'P321987654',
+                        postappliedfor: 'Cybersecurity Analyst',
+                        visaNo: 'V901',
+                        agent: agentName,
+                        destination: 'Japan',
+                        doneDate: null
+                    },
+                    {
+                        id: 8,
+                        applicant_name: 'Fiona Gallagher',
+                        created_at: new Date(Date.now() - 15552000000).toISOString(), // 6 months ago
+                        applicationNo: 'APP008',
+                        passportnum: 'P654987321',
+                        postappliedfor: 'Content Writer',
+                        visaNo: 'V234',
+                        agent: agentName,
+                        destination: 'Italy',
+                        doneDate: null
+                    },
+                    {
+                        id: 9,
+                        applicant_name: 'George Michael',
+                        created_at: new Date(Date.now() - 12096000000).toISOString(), // 2 months ago
+                        applicationNo: 'APP009',
+                        passportnum: 'P987654321',
+                        postappliedfor: 'DevOps Engineer',
+                        visaNo: 'V567',
+                        agent: agentName,
+                        destination: 'Spain',
+                        doneDate: null
+                    },
+                    {
+                        id: 10,
+                        applicant_name: 'Hannah Montana',
+                        created_at: new Date(Date.now() - 3456000000).toISOString(), // 4 months ago
+                        applicationNo: 'APP010',
+                        passportnum: 'P321654987',
+                        postappliedfor: 'Web Developer',
+                        visaNo: 'V890',
+                        agent: agentName,
+                        destination: 'Netherlands',
+                        doneDate: null
+                    },
+
+					
+                ];
+                setApplicants(dummyData);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchApplicants();
+    }, [agentName]);
+
+    const filterApplicants = () => {
+        const now = new Date();
+        return applicants.filter(applicant => {
+            const createdAt = new Date(applicant.created_at);
+            switch (filter) {
+                case 'Today':
+                    return createdAt.toDateString() === now.toDateString();
+                case 'Last Week':
+                    const lastWeek = new Date();
+                    lastWeek.setDate(now.getDate() - 7);
+                    return createdAt >= lastWeek && createdAt <= now;
+                case 'Last Month':
+                    const lastMonth = new Date();
+                    lastMonth.setMonth(now.getMonth() - 1);
+                    return createdAt >= lastMonth && createdAt <= now;
+                case 'This Year':
+                    return createdAt.getFullYear() === now.getFullYear() && createdAt.getFullYear() === selectedYear;
+                case 'Quarter':
+                    const quarterStart = new Date();
+                    quarterStart.setMonth(Math.floor(now.getMonth() / 3) * 3, 1);
+                    return createdAt >= quarterStart && createdAt <= now && createdAt.getFullYear() === selectedYear;
+                case 'All':
+                default:
+                    return selectedYear === 'All' || createdAt.getFullYear() === selectedYear;
+            }
+        });
+    };
+
+    const generatePDF = () => {
+        const doc = new jsPDF();
+        doc.text("Applicants List", 20, 10);
+        const tableColumn = ['S.No', 'Name', 'Post Applied For', 'Agent', 'Destination'];
+        const tableRows = [];
+
+        filterApplicants().forEach((applicant, index) => {
+            const applicantData = [
+                index + 1,
+                applicant.applicant_name,
+                applicant.postappliedfor,
+                applicant.agent,
+                applicant.destination,
+            ];
+            tableRows.push(applicantData);
+        });
+
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: 20,
+        });
+        doc.save("Applicants_List.pdf");
+    };
+
+    if (loading) {
+        return <CircularProgress />;
+    }
+
+    if (error) {
+        return <Typography color="error">Error: {error}</Typography>;
+    }
+
+    const filteredApplicants = filterApplicants();
+    const currentYear = new Date().getFullYear();
+    const years = ['All', ...Array.from({ length: 5 }, (_, index) => currentYear - index)];
+
+    return (
+        <Container maxWidth={false} style={{ padding: '0' }}>
+            <Header />
+
+
+
+			<Grid container spacing={2} style={{padding: "10px"}}>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth style={{ marginBottom: '', marginTop: "30px" }}>
+                            <InputLabel>Filter by Time</InputLabel>
+                            <Select
+                                value={filter}
+                                onChange={(e) => {
+                                    setFilter(e.target.value);
+                                    setSelectedYear(currentYear);
+                                }}
+                            >
+                                <MenuItem value="All">All</MenuItem>
+                                <MenuItem value="Today">Today</MenuItem>
+                                <MenuItem value="Last Week">Last Week</MenuItem>
+                                <MenuItem value="Last Month">Last Month</MenuItem>
+                                <MenuItem value="This Year">This Year</MenuItem>
+                                <MenuItem value="Quarter">Quarter</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth style={{ marginTop: "10px", marginBottom: '' }}>
+                            <InputLabel>Year</InputLabel>
+                            <Select
+                                value={selectedYear}
+                                onChange={(e) => {
+                                    setSelectedYear(e.target.value);
+                                    setFilter('All');
+                                }}
+                            >
+                                {years.map(year => (
+                                    <MenuItem key={year} value={year}>{year}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+                <Button variant="contained" color="primary" onClick={generatePDF} style={{ marginBottom: '20px', marginTop: '20px', marginLeft: "10px" }}>
+                    Download PDF
+                </Button>
+
+
+
+			<Typography variant="h6" style={{ marginBottom: '20px', marginTop: "30px", marginLeft: "10px" }}>
+                    Total Applicants: {filteredApplicants.length}
+                </Typography>
+
+			{filteredApplicants.map((applicant, index) => (
+				<div style={{margin: "10px", }}>
+					<div style={{background: "#F8F8F8", padding: "15px", fontWeight: "bold"}}><span style={{fontWeight: "bold"}}>NO:</span> {index + 1}</div>
+					<div style={{display: "flex", justifyContent: "space-between", background: "#F8F8F8", paddingBottom: "10px", paddingTop: "", paddingLeft: "10px", paddingRight: "10px"}}><span style={{fontWeight: "bold"}}>Name</span> <span>{applicant.applicant_name}</span></div>
+					<div style={{display: "flex", justifyContent: "space-between", background: "#F8F8F8", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "10px", paddingRight: "10px"}}><span style={{fontWeight: "bold"}}>Applicant No</span> <span>{applicant.applicationNo}</span></div>
+					<div style={{display: "flex", justifyContent: "space-between", background: "#F8F8F8", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "10px", paddingRight: "10px"}}><span style={{fontWeight: "bold"}}>Passport No</span> <span>{applicant.passportnum}</span></div>
+					<div style={{display: "flex", justifyContent: "space-between", background: "#F8F8F8", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "10px", paddingRight: "10px"}}><span style={{fontWeight: "bold"}}>Post Applied For</span> <span>{applicant.postappliedfor}</span></div>
+					<div style={{display: "flex", justifyContent: "space-between", background: "#F8F8F8", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "10px", paddingRight: "10px"}}><span style={{fontWeight: "bold"}}>Visa No</span> <span>{applicant.visaNo}</span></div>
+					<div style={{display: "flex", justifyContent: "space-between", background: "#F8F8F8", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "10px", paddingRight: "10px"}}><span style={{fontWeight: "bold"}}>Agent</span> <span>{applicant.agent}</span></div>
+					<div style={{display: "flex", justifyContent: "space-between", background: "#F8F8F8", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "10px", paddingRight: "10px"}}><span style={{fontWeight: "bold"}}>Destination</span> <span>{applicant.destination}</span></div>
+					<div style={{display: "flex", justifyContent: "space-between", background: "#F8F8F8", paddingBottom: "10px", paddingTop: "10px", paddingLeft: "10px", paddingRight: "10px"}}><span style={{fontWeight: "bold"}}>finished Date</span> <span>{applicant.doneDate}</span></div>
+
+				</div>
+				)
+			)}
+           
+        </Container>
+    );
+};
+
+export default ApplicantsList;

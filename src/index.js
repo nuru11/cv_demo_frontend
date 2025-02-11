@@ -175,6 +175,7 @@ import RequesList from "./screens/requestList"
 import Agentrequestdetail from "./screens/requestdetail"
 import ApplicantsVideos from "./screens/applicantsvideos"
 import ReportList from "./screens/reportlist"
+import ApplicantsHistory from "./screens/applicantaHistory"
 
 
 import AgeCal from "./screens/ageCal";
@@ -249,10 +250,17 @@ const router = createBrowserRouter([
     errorElement: <div>404 Not Found</div>
   },
 
-  {
-        path: '/age',
-        // element: <ProtectedRoute element={<AgeCal />} />,
-        element: <AgeCal />,
+  // {
+  //       path: '/age',
+  //       // element: <ProtectedRoute element={<AgeCal />} />,
+  //       element: <AgeCal />,
+  //       errorElement: <div>404 Not Found</div>
+  //     },
+
+
+      {
+        path: '/applicanthistory',
+        element: <ProtectedRoute element={<ApplicantsHistory />} adminOnly={true} />,
         errorElement: <div>404 Not Found</div>
       },
 ]);
