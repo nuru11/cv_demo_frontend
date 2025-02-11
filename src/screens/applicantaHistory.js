@@ -327,12 +327,13 @@ const ApplicantsList = () => {
 
     const generatePDF = () => {
         const doc = new jsPDF();
-        doc.text("Applicants List", 20, 10);
-        const tableColumn = ['Name',   'Post Applied For',  'Agent', 'Destination', ];
+        doc.text("Applicants History List", 20, 10);
+        const tableColumn = ['S.No', 'Name',   'Post Applied For',  'Agent', 'Destination', ];
         const tableRows = [];
 
-        filterApplicants().forEach((applicant) => {
+        filterApplicants().forEach((applicant, index) => {
             const applicantData = [
+                index + 1,
                 applicant.applicant_name,
                 // applicant.created_at,
                 // applicant.applicationNo,
@@ -447,7 +448,7 @@ const ApplicantsList = () => {
 
                     {filteredApplicants.map((applicant, index) => (
                         <div key={applicant.id} style={{ margin: "10px", marginBottom: "20px" }}>
-                            <div style={{ background: "#F8F8F8", padding: "15px", fontWeight: "bold", borderBottom: "1px solid #bdc2c9" }}><span>NO:</span> {index + 1}</div>
+                            <div style={{ background: "#e8e8e8", padding: "15px", fontWeight: "bold", borderBottom: "1px solid #bdc2c9" }}><span>NO:</span> {index + 1}</div>
                             <div style={{ display: "flex", justifyContent: "space-between", background: "#F8F8F8", padding: "10px", borderBottom: "1px solid #bdc2c9" }}>
                                 <span style={{ fontWeight: "bold" }}>Name:</span> <span>{applicant.applicant_name}</span>
                             </div>
