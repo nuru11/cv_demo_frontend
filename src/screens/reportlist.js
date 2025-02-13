@@ -526,7 +526,7 @@ const handleDeleteAndMoveIntoHistoryTable = async (e) => {
           <button onClick={handleDeleteAndMoveIntoHistoryTable} style={{ marginTop: '20px', marginLeft: "30px", marginBottom: "20px" }}>
             Move To History
           </button>
-        )}
+        )} 
 
         {isAnyChecked && (
           <button onClick={handleDeleteImages} style={{ marginTop: '20px', marginLeft: "30px", marginBottom: "20px", background: "red" }}>
