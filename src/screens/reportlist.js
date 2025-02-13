@@ -322,22 +322,22 @@ const handleDeleteAndMoveIntoHistoryTable = async (e) => {
     const parsedData = editData.availablefor ? JSON.parse(editData.availablefor) : {};
 
     setCheckboxState({
-      golden: parsedData.golden === "true",
-      bela: parsedData.bela === "true",
-      skyway: parsedData.skyway === "true",
-      baraka: parsedData.baraka === "true",
-      kaan: parsedData.kaan === "true",
-      qimam: parsedData.qimam === "true",
+      Wahat: parsedData.Wahat === "true",
+      Tamkeen: parsedData.Tamkeen === "true",
+      Hulul: parsedData.Hulul === "true",
+      mawahib: parsedData.mawahib === "true",
+      tawziif: parsedData.Tawziif === "true",
+      Najah: parsedData.Najah === "true",
     });
   }, [editData.availablefor]);
 
   const initialCheckboxState = {
-    golden: editData.availablefor && JSON.parse(editData.availablefor).golden === "true",
-    bela: editData.availablefor && JSON.parse(editData.availablefor).bela === "true",
-    skyway: editData.availablefor && JSON.parse(editData.availablefor).skyway === "true",
-    baraka: editData.availablefor && JSON.parse(editData.availablefor).baraka === "true",
-    kaan: editData.availablefor && JSON.parse(editData.availablefor).kaan === "true",
-    qimam: editData.availablefor && JSON.parse(editData.availablefor).qimam === "true",
+    Wahat: editData.availablefor && JSON.parse(editData.availablefor).Wahat === "true",
+    Tamkeen: editData.availablefor && JSON.parse(editData.availablefor).Tamkeen === "true",
+    Hulul: editData.availablefor && JSON.parse(editData.availablefor).Hulul === "true",
+    mawahib: editData.availablefor && JSON.parse(editData.availablefor).mawahib === "true",
+    tawziif: editData.availablefor && JSON.parse(editData.availablefor).Tawziif === "true",
+    Najah: editData.availablefor && JSON.parse(editData.availablefor).Najah === "true",
   };
 
   const [checkboxState, setCheckboxState] = React.useState(initialCheckboxState);

@@ -1316,13 +1316,13 @@
 // import AddressIcon from "../image_placeholder/addressIcon.png"
 // import { Height } from '@mui/icons-material';
 
-// import KaanAlRiyadhHeaderImg from "../image_placeholder/KaanAlRiyadh.png"
+// import tawziifAlRiyadhHeaderImg from "../image_placeholder/tawziifAlRiyadh.png"
 
 
 // const TableToPdf = () => {
 //     const downloadMultipleCVs = async () => {
 //         const pdfElements = [
-//             { elementId: 'KaanAlRiyadhCv', filename: 'KaanAlRiyadh.pdf' },
+//             { elementId: 'tawziifAlRiyadhCv', filename: 'tawziifAlRiyadh.pdf' },
 //             // Add more elements as needed
 //         ];
 
@@ -1345,11 +1345,11 @@
 
 //     return (
 //         <div>
-//             <div id="KaanAlRiyadhCv" style={{ display: '' }}>
+//             <div id="tawziifAlRiyadhCv" style={{ display: '' }}>
 //                 {/* First Table */}
 //                 <div style={{ background: "" }}>
 //     <img
-//         src={KaanAlRiyadhHeaderImg}
+//         src={tawziifAlRiyadhHeaderImg}
 //         alt="header"
 //         style={{ maxWidth: '100%', height: 'auto' }} // Ensures the image is contained
 //     />
@@ -1961,7 +1961,7 @@
 // import AddressIcon from "../image_placeholder/addressIcon.png"
 // import { Height } from '@mui/icons-material';
 
-// import KaanAlRiyadhHeaderImg from "../image_placeholder/KaanAlRiyadh.png"
+// import tawziifAlRiyadhHeaderImg from "../image_placeholder/tawziifAlRiyadh.png"
 
 
 // const TableToPdf = () => {
@@ -1972,7 +1972,7 @@
 
 //     const downloadMultipleCVs = async () => {
 //         const pdfElements = [
-//             { elementId: 'QimamAsiaCv', filename: 'Qimam Asia.pdf' },
+//             { elementId: 'NajahAsiaCv', filename: 'Najah Asia.pdf' },
 //             // Add more elements as needed
 //         ];
 
@@ -1995,7 +1995,7 @@
 
 //     return (
 //         <div>
-//             <div id="QimamAsiaCv" style={{ display: '' }}>
+//             <div id="NajahAsiaCv" style={{ display: '' }}>
                
 
 //             <div dangerouslySetInnerHTML={{ __html: bb }} />
@@ -2430,15 +2430,15 @@
 
 // import React, { useRef, useState } from 'react';
 // import html2pdf from 'html2pdf.js';
-// import goldagent from "../images/goldagent.jpeg" 
-// import hudud from "../image_placeholder/hudud.jpeg"
+// import goldagent from "../images/wahatimg.jpg" 
+// import hudud from "../image_placeholder/Tamkeenimg.png"
 // import skywaylogo from "../image_placeholder/skywaylogo.jpeg"
 // import demoimage from "../image_placeholder/demoimage.jpg"
-// import barakaimg from "../image_placeholder/barakaimg.jpeg"
+// import mawahibimg from "../image_placeholder/mawahibimg.png"
 // import wasitimg from "../image_placeholder/wasitimg.jpeg"
 // import myImage from '../images/two.png'; 
 // import bodyimg from "../images/images.jpeg"
-// import assawsan from "../image_placeholder/assawsan.jpeg"
+// import assawsan from "../image_placeholder/demoimage.jpg"
 // import imagePlaceholder from "../image_placeholder/download.png"
 // import ouragentlogo from "../images/ouragentlogo.jpeg"
 // import Header from "../screens/header"
@@ -2449,7 +2449,7 @@
 // import EmailIcon from "../image_placeholder/emailIcon.png"
 // import AddressIcon from "../image_placeholder/addressIcon.png"
 
-// import KaanAlRiyadhHeaderImg from "../image_placeholder/KaanAlRiyadh.png"
+// import tawziifAlRiyadhHeaderImg from "../image_placeholder/tawziifAlRiyadh.png"
 
 // const App = () => {
 //   const [name, setName] = useState('');

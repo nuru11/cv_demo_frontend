@@ -41,10 +41,10 @@
 // import ReferenceInfo from "../Components/Outputs/ReferenceInfo";
 // import DocumentStyle from "../Components/DocumentStyle";
 // import axios from "axios";
-// import goldagent from "../images/goldagent.jpeg" 
-// import hudud from "../image_placeholder/hudud.jpeg"
+// import goldagent from "../images/wahatimg.jpg" 
+// import hudud from "../image_placeholder/Tamkeenimg.png"
 // import skywayimg from "../image_placeholder/skywayimg.jpeg"
-// import barakaimg from "../image_placeholder/barakaimg.jpeg"
+// import mawahibimg from "../image_placeholder/mawahibimg.png"
 // import wasitimg from "../image_placeholder/wasitimg.jpeg"
 // import myImage from '../images/two.png'; 
 // import bodyimg from "../images/images.jpeg"
@@ -1116,10 +1116,10 @@
 
 //         const pdfElements = [
             
-//              {  elementId: styles.styleOne ? 'cvContent2' : "", filename: 'Golden agen.pdf' },
-//              { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.email} Bela Hodod` || 'Default_Name'}_CV_Style1.pdf` },
-//             { elementId: styles.styleThree ? 'cvContent3' : "", filename: 'Skyway.pdf' },
-//             { elementId: styles.styleFour ? 'cvContent4' : "", filename: 'Baraka.pdf' },
+//              {  elementId: styles.styleOne ? 'cvContent2' : "", filename: 'Wahat agen.pdf' },
+//              { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.email} Tamkeen` || 'Default_Name'}_CV_Style1.pdf` },
+//             { elementId: styles.styleThree ? 'cvContent3' : "", filename: 'Hulul.pdf' },
+//             { elementId: styles.styleFour ? 'cvContent4' : "", filename: 'mawahib.pdf' },
 //             // { elementId: styles.styleFive ? 'cvContent5' : "", filename: 'Al Wasit.pdf' },
 //             // Add more elements as needed
 //         ];
@@ -1149,10 +1149,10 @@
 //         setShowModal(false);
 //         const pdfElements = [
             
-//              {  elementId: styles.styleOne ? 'cvContent2' : "", filename: 'Golden agen.pdf' },
-//              { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.email} Bela Hodod` || 'Default_Name'}_CV_Style1.pdf` },
-//             { elementId: styles.styleThree ? 'cvContent3' : "", filename: 'Skyway.pdf' },
-//             { elementId: styles.styleFour ? 'cvContent4' : "", filename: 'Baraka.pdf' },
+//              {  elementId: styles.styleOne ? 'cvContent2' : "", filename: 'Wahat agen.pdf' },
+//              { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.email} Tamkeen` || 'Default_Name'}_CV_Style1.pdf` },
+//             { elementId: styles.styleThree ? 'cvContent3' : "", filename: 'Hulul.pdf' },
+//             { elementId: styles.styleFour ? 'cvContent4' : "", filename: 'mawahib.pdf' },
 //             // { elementId: styles.styleFive ? 'cvContent5' : "", filename: 'Al Wasit.pdf' },
 //             // Add more elements as needed
 //         ];
@@ -1797,7 +1797,7 @@
 //                         disabled={age < 21}
 //                     />
 //                 }
-//                 label="Golden agent"
+//                 label="Wahat agent"
 //             />
 //             <FormControlLabel
 //                 control={
@@ -1808,7 +1808,7 @@
 //                         disabled={age < 21}
 //                     />
 //                 }
-//                 label="Bela Hodod"
+//                 label="Tamkeen"
 //             />
 //             <FormControlLabel
 //                 control={
@@ -1830,7 +1830,7 @@
 //                         disabled={age < 21}
 //                     />
 //                 }
-//                 label="Baraka"
+//                 label="mawahib"
 //             />
 //             {/* Uncomment if needed
 //             <FormControlLabel
@@ -2552,7 +2552,7 @@
 // <div>No images uploaded yet.</div> // Message if no images are uploaded
 // )}
 // <div className="wider-image-parent">
-// <img src={barakaimg} alt="Wider" className="wider-image" />
+// <img src={mawahibimg} alt="Wider" className="wider-image" />
 // </div>
                         
 //                     </div>

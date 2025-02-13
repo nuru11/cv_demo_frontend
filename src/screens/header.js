@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, IconButton, Box, Menu, MenuItem, Hidden } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Skywaylogo from "../image_placeholder/alwasit.png";
+import skywaylogo from "../image_placeholder/alwasit.png";
+import ntechlogo from "../image_placeholder/ntechlogo.png";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ const Header = () => {
         <AppBar position="static">
             <Toolbar>
                 <IconButton edge="start" color="inherit" aria-label="logo" onClick={() => handleNavigation('/')}>
-                    <img src={Skywaylogo} alt="Client Logo" style={{ height: '40px' }} />
+                    <img src={ntechlogo} alt="Client Logo" style={{ height: '40px' }} />
                 </IconButton>
                 <Typography variant="h6" style={{ flexGrow: 1 }}>
                     My Application

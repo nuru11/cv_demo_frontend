@@ -348,7 +348,7 @@ export default function StickyHeadTable() {
     // Check if there are any accepted entries
     const hasAccepted = acceptedByArray.some(entry => entry.accepted === "true");
   
-    // Show row if no agents have accepted or if the golden agent has accepted
+    // Show row if no agents have accepted or if the Wahat agent has accepted
     const showRow = !hasAccepted || 
                     (acceptedByArray.some(entry => entry.agent === agentName && entry.accepted === "true"));
   

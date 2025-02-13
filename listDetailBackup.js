@@ -373,14 +373,14 @@ import thumbnail from "../image_placeholder/skywayimg.jpeg";
 import html2pdf from 'html2pdf.js';
 
 
-import goldagent from "../images/goldagent.jpeg" 
-import hudud from "../image_placeholder/hudud.jpeg"
+import goldagent from "../images/wahatimg.jpg" 
+import hudud from "../image_placeholder/Tamkeenimg.png"
 import skywayimg from "../image_placeholder/skywayimg.jpeg"
 import skywaylogo from "../image_placeholder/skywaylogo.jpeg"
-import barakaimg from "../image_placeholder/barakaimg.jpeg"
+import mawahibimg from "../image_placeholder/mawahibimg.png"
 import bodyimg from "../images/images.jpeg"
 import ouragentlogo from "../images/ouragentlogo.jpeg"
-import assawsan from "../image_placeholder/assawsan.jpeg"
+import assawsan from "../image_placeholder/demoimage.jpg"
 import Barcode from 'react-barcode';
 
 import smallapplicantimage from "../image_placeholder/smallapplicantimage.jpeg"
@@ -397,7 +397,7 @@ import TextField from '@mui/material/TextField';
 // import Button from '@mui/material/Button';
 
 
-import KaanAlRiyadhHeaderImg from "../image_placeholder/KaanAlRiyadh.png"
+import tawziifAlRiyadhHeaderImg from "../image_placeholder/tawziifAlRiyadh.png"
 
 
 
@@ -533,7 +533,7 @@ const DetailPage = () => {
     styleFour: false,
     styleFive: false,
 
-    styleKaan: false,
+    styletawziif: false,
     // styleFive: false,
     all: false,
   });
@@ -573,7 +573,7 @@ const DetailPage = () => {
         styleFour: checked,
         styleFive: checked,
 
-        styleKaan: checked,
+        styletawziif: checked,
         // styleFive: checked,
         all: checked,
       });
@@ -744,11 +744,11 @@ const downloadCV = () => {
 
 
         const pdfElements = [
-          { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.email} Bela Hodod` || 'Default_Name'}_CV_Style1.pdf` },
-          {  elementId: styles.styleOne ? 'cvContent2' : "", filename: 'Golden agen.pdf' },
-          { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename: 'Baraka.pdf' },
-          { elementId: styles.styleThree ? 'cvBarakaContent' : "", filename: 'Skyway.pdf' },
-          { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename: 'KaanAlRiyadhCv.pdf' },
+          { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.email} Tamkeen` || 'Default_Name'}_CV_Style1.pdf` },
+          {  elementId: styles.styleOne ? 'cvContent2' : "", filename: 'Wahat agen.pdf' },
+          { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename: 'mawahib.pdf' },
+          { elementId: styles.styleThree ? 'cvmawahibContent' : "", filename: 'Skyway.pdf' },
+          { elementId: styles.styleTawziif ? 'tawziifAlRiyadhCv' : "", filename: 'tawziifAlRiyadhCv.pdf' },
           {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf"}
             
             
@@ -1128,7 +1128,7 @@ const downloadCV = () => {
                       // disabled={age < 21}
                   />
               }
-              label="Golden agent"
+              label="Wahat agent"
           />
           <FormControlLabel
               control={
@@ -1139,7 +1139,7 @@ const downloadCV = () => {
                       // disabled={age < 21}
                   />
               }
-              label="Bela Hodod"
+              label="Tamkeen"
           />
           <FormControlLabel
               control={
@@ -1161,20 +1161,20 @@ const downloadCV = () => {
                       // disabled={age < 21}
                   />
               }
-              label="Baraka"
+              label="mawahib"
           />
 
 
 <FormControlLabel
               control={
                   <Checkbox
-                      checked={styles.styleKaan}
+                      checked={styles.styletawziif}
                       onChange={handleStyleChange}
-                      name="styleKaan"
+                      name="styletawziif"
                       // disabled={age < 21}
                   />
               }
-              label="Kaan Al Riyadh"
+              label="Tawziif Al Riyadh"
           />
 
 
@@ -1761,7 +1761,7 @@ src={data.passportImageUrl || imagePlaceholder}
 {/* next content */}
 
 
-<div id="cvBarakaContent">
+<div id="cvmawahibContent">
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -2038,7 +2038,7 @@ src={data.personalImageUrl || imagePlaceholder} // Get the last image
 </div>
 
                       <div className="wider-image-parent">
-                      <img src={barakaimg} alt="Wider" className="wider-image" /></div>  
+                      <img src={mawahibimg} alt="Wider" className="wider-image" /></div>  
                     </div>
                     <div className="title-parent">
                         <div style={{display: "flex", justifyContent: "space-around", border: "none"}}><div style={{ border: "none"}}>Personal Information</div>  <div style={{ border: "none"}}> ممعلومات شخصية </div></div>
@@ -2239,12 +2239,12 @@ src={data.passportImageUrl || imagePlaceholder}
         {/* Kann cv */}
 
 
-        <div id="KaanAlRiyadhCv">
+        <div id="tawziifAlRiyadhCv">
             <div  style={{ pageBreakAfter: 'always' }}>
                 {/* First Table */}
                 <div style={{ background: "" }}>
     <img
-        src={KaanAlRiyadhHeaderImg}
+        src={tawziifAlRiyadhHeaderImg}
         alt="header"
         style={{ maxWidth: '100%', height: 'auto' }} // Ensures the image is contained
     />
@@ -2778,7 +2778,7 @@ src={data.passportImageUrl || imagePlaceholder}
         </div>
 
 
-        {/* Kaan cv end */}
+        {/* Tawziif cv end */}
 
 
 

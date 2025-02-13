@@ -28,7 +28,7 @@ const Signup = () => {
 
  
 
-  const agents = ['golden', 'bela', 'skyway', 'baraka', 'kaan', 'qimam'];
+  const agents = ['Wahat', 'Tamkeen', 'Hulul', 'mawahib', 'Tawziif ', 'Najah'];
 
   const handleAgentChange = (event) => {
     const { value } = event.target;

@@ -44,15 +44,15 @@ import ReferenceInput from "../Components/Inputs/ReferenceInput";
 import ReferenceInfo from "../Components/Outputs/ReferenceInfo";
 import DocumentStyle from "../Components/DocumentStyle";
 import axios from "axios";
-import goldagent from "../images/goldagent.jpeg" 
-import hudud from "../image_placeholder/hudud.jpeg"
+import goldagent from "../images/wahatimg.jpg" 
+import hudud from "../image_placeholder/Tamkeenimg.png"
 import skywaylogo from "../image_placeholder/skywaylogo.jpeg"
 import demoimage from "../image_placeholder/demoimage.jpg"
-import barakaimg from "../image_placeholder/barakaimg.jpeg"
+import mawahibimg from "../image_placeholder/mawahibimg.png"
 import wasitimg from "../image_placeholder/wasitimg.jpeg"
 import myImage from '../images/two.png'; 
 import bodyimg from "../images/images.jpeg"
-import assawsan from "../image_placeholder/assawsan.jpeg"
+import assawsan from "../image_placeholder/demoimage.jpg"
 import imagePlaceholder from "../image_placeholder/download.png"
 import ouragentlogo from "../images/ouragentlogo.jpeg"
 import Header from "../screens/header"
@@ -82,7 +82,7 @@ import phoneIcon from "../image_placeholder/phoneIcon.png"
 import EmailIcon from "../image_placeholder/emailIcon.png"
 import AddressIcon from "../image_placeholder/addressIcon.png"
 
-import KaanAlRiyadhHeaderImg from "../image_placeholder/KaanAlRiyadh.png"
+// import tawziifAlRiyadhHeaderImg from "../image_placeholder/tawziifAlRiyadh.png"
 
 const Home = () => {
 
@@ -237,9 +237,9 @@ const [isInputFocused, setIsInputFocused] = useState(false);
     styleThree: false,
     styleFour: false,
 
-    kaanCvStyle: false,
+    tawziifCvStyle: false,
 
-    QimamCvStyle: false,
+    NajahCvStyle: false,
 
     // styleFive: false,
     all: false,
@@ -502,8 +502,8 @@ useEffect(() => {
            styles.styleOne = false
             styles.styleTwo = false
             styles.styleFour = false
-            styles.kaanCvStyle = false
-            styles.QimamCvStyle = false
+            styles.tawziifCvStyle = false
+            styles.NajahCvStyle = false
       
           } else {
             setErrorMessage(''); // Clear error message if age is valid
@@ -535,8 +535,8 @@ useEffect(() => {
             styleTwo: checked,
             styleThree: checked,
             styleFour: checked,
-            kaanCvStyle: checked,
-            QimamCvStyle: checked,
+            tawziifCvStyle: checked,
+            NajahCvStyle: checked,
             // styleFive: checked,
             all: checked,
           });
@@ -1112,9 +1112,9 @@ formData.append("destination", sponsorInformation.destination);
 // formData.append("cvcount", JSON.stringify(dummyData.newValue));
 formData.append("cvcount", formatCount(count + 1));
 
-formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(), "admin": "true"  }));
+formData.append("availablefor", JSON.stringify({"Wahat": styles.styleOne.toString(), "Tamkeen": styles.styleTwo.toString(), "Hulul": styles.styleThree.toString(), "mawahib": styles.styleFour.toString(), "tawziif": styles.tawziifCvStyle.toString(), "Najah": styles.NajahCvStyle.toString(), "admin": "true"  }));
 
-formData.append("acceptedBy", JSON.stringify([{"agent": "golden", "accepted": "false", "comment": ""}, {"agent": "bela", "accepted": "false", "comment": ""}, {"agent": "skyway", "accepted": "false", "comment": ""}, {"agent": "baraka", "accepted": "false", "comment": ""}, {"agent": "kaan", "accepted": "false", "comment": ""}, {"agent": "qimam", "accepted": "false", "comment": ""}]))
+formData.append("acceptedBy", JSON.stringify([{"agent": "Wahat", "accepted": "false", "comment": ""}, {"agent": "Tamkeen", "accepted": "false", "comment": ""}, {"agent": "Hulul", "accepted": "false", "comment": ""}, {"agent": "mawahib", "accepted": "false", "comment": ""}, {"agent": "tawziif", "accepted": "false", "comment": ""}, {"agent": "Najah", "accepted": "false", "comment": ""}]))
 
 formData.append("status", "Interview Scheduled");
 
@@ -1312,9 +1312,9 @@ formData.append("destination", sponsorInformation.destination);
 // formData.append("cvcount", JSON.stringify(dummyData.newValue));
 formData.append("cvcount", formatCount(count + 1));
 
-formData.append("availablefor", JSON.stringify({"golden": styles.styleOne.toString(), "bela": styles.styleTwo.toString(), "skyway": styles.styleThree.toString(), "baraka": styles.styleFour.toString(), "kaan": styles.kaanCvStyle.toString(), "qimam": styles.QimamCvStyle.toString(), "admin": "true"  }));
+formData.append("availablefor", JSON.stringify({"Wahat": styles.styleOne.toString(), "Tamkeen": styles.styleTwo.toString(), "Hulul": styles.styleThree.toString(), "mawahib": styles.styleFour.toString(), "tawziif": styles.tawziifCvStyle.toString(), "Najah": styles.NajahCvStyle.toString(), "admin": "true"  }));
 
-formData.append("acceptedBy", JSON.stringify([{"agent": "golden", "accepted": "false", "comment": ""}, {"agent": "bela", "accepted": "false", "comment": ""}, {"agent": "skyway", "accepted": "false", "comment": ""}, {"agent": "baraka", "accepted": "false", "comment": ""}, {"agent": "kaan", "accepted": "false", "comment": ""}, {"agent": "qimam", "accepted": "false", "comment": ""}]));
+formData.append("acceptedBy", JSON.stringify([{"agent": "Wahat", "accepted": "false", "comment": ""}, {"agent": "Tamkeen", "accepted": "false", "comment": ""}, {"agent": "Hulul", "accepted": "false", "comment": ""}, {"agent": "mawahib", "accepted": "false", "comment": ""}, {"agent": "tawziif", "accepted": "false", "comment": ""}, {"agent": "Najah", "accepted": "false", "comment": ""}]));
 
 formData.append("status", "Interview Scheduled");
 
@@ -1679,12 +1679,12 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
 
         const pdfElements = [
             
-            {  elementId: styles.styleOne ? 'cvContent2' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Golden`}.pdf`, margin: 0.5, format: "letter"  },
-            { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Bela Hodod`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.styleThree ? 'cvContent3' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.styleFour ? 'cvContent4' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4" },
-            {elementId: styles.QimamCvStyle ? "QimamAsiaCv" : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
+            {  elementId: styles.styleOne ? 'cvContent2' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Wahat`}.pdf`, margin: 0.5, format: "letter"  },
+            { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Tamkeen`}.pdf`, margin: 0.5, format: "letter" },
+            { elementId: styles.styleThree ? 'cvContent3' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Hulul`}.pdf`, margin: 0.5, format: "letter" },
+            { elementId: styles.styleFour ? 'cvContent4' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} mawahib`}.pdf`, margin: 0.5, format: "letter" },
+            { elementId: styles.tawziifCvStyle ? 'tawziifAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Tawziif AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4" },
+            {elementId: styles.NajahCvStyle ? "NajahAsiaCv" : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Najah Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
            // { elementId: styles.styleFive ? 'cvContent5' : "", filename: 'Al Wasit.pdf' },
            // Add more elements as needed
        ];
@@ -1786,12 +1786,12 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
         const isSmallDevice = window.innerWidth < 768;
         const pdfElements = [
             
-            {  elementId: styles.styleOne ? 'cvContent2' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Golden`}.pdf`, margin: 0.5, format: "letter"  },
-            { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Bela Hodod`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.styleThree ? 'cvContent3' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.styleFour ? 'cvContent4' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
-            { elementId: styles.kaanCvStyle ? 'KaanAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} KaanAlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format:isSmallDevice ? [9.5, 12] : "a4" },
-            {elementId: styles.QimamCvStyle ? "QimamAsiaCv" : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
+            {  elementId: styles.styleOne ? 'cvContent2' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Wahat`}.pdf`, margin: 0.5, format: "letter"  },
+            { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Tamkeen`}.pdf`, margin: 0.5, format: "letter" },
+            { elementId: styles.styleThree ? 'cvContent3' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Hulul`}.pdf`, margin: 0.5, format: "letter" },
+            { elementId: styles.styleFour ? 'cvContent4' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} mawahib`}.pdf`, margin: 0.5, format: "letter" },
+            { elementId: styles.tawziifCvStyle ? 'tawziifAlRiyadhCv' : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} tawziifAlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format:isSmallDevice ? [9.5, 12] : "a4" },
+            {elementId: styles.NajahCvStyle ? "NajahAsiaCv" : "", filename: `${`${personalInfo.name} ${personalInfo.middleName} ${personalInfo.surname} ${personalInfo.religion} ${projectInfo.project[0].name ? projectInfo.project[0].name + " Experienced" : "first time"} Najah Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
            // { elementId: styles.styleFive ? 'cvContent5' : "", filename: 'Al Wasit.pdf' },
            // Add more elements as needed
        ];
@@ -2574,7 +2574,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
                         disabled={personalInfo.age < 21}
                     />
                 }
-                label="Golden agent"
+                label="Wahat agent"
             />
             <FormControlLabel
                 control={
@@ -2585,7 +2585,7 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
                         disabled={personalInfo.age < 21}
                     />
                 }
-                label="Bela Hodod"
+                label="Tamkeen"
             />
             <FormControlLabel
                 control={
@@ -2607,32 +2607,32 @@ personalInfo.dateOfBirth = !personalInfo.dateOfBirth ? formattedDate : personalI
                         disabled={personalInfo.age < 21}
                     />
                 }
-                label="Baraka"
+                label="mawahib"
             /> 
 
 
 <FormControlLabel
                 control={
                     <Checkbox
-                        checked={styles.kaanCvStyle}
+                        checked={styles.tawziifCvStyle}
                         onChange={handleStyleChange}
-                        name="kaanCvStyle"
+                        name="tawziifCvStyle"
                         // disabled={personalInfo.age < 21}
                     />
                 }
-                label="kaan"
+                label="tawziif"
             />
 
 <FormControlLabel
                 control={
                     <Checkbox
-                        checked={styles.QimamCvStyle}
+                        checked={styles.NajahCvStyle}
                         onChange={handleStyleChange}
-                        name="QimamCvStyle"
+                        name="NajahCvStyle"
                         // disabled={personalInfo.age < 21}
                     />
                 }
-                label="Qimam"
+                label="Najah"
             />
             {/* Uncomment if needed
             <FormControlLabel
@@ -3432,7 +3432,7 @@ src={applicantpersonalimagePreview !== null
 </div>
 
                       <div className="wider-image-parent">
-                      <img src={barakaimg} alt="Wider" className="wider-image" /></div>  
+                      <img src={mawahibimg} alt="Wider" className="wider-image" /></div>  
                     </div>
                     <div className="title-parent">
                         <div style={{display: "flex", justifyContent: "space-around", border: "none"}}><div style={{ border: "none"}}>Personal Information</div>  <div style={{ border: "none"}}> ممعلومات شخصية </div></div>
@@ -3626,48 +3626,48 @@ src={applicantpassportimagePreview !== null
         </div>
 
 
-        {/* kaan agent cv */}
+        {/* Tawziif agent cv */}
 
-        <div id="KaanAlRiyadhCv" translate='no'>
+        <div id="tawziifAlRiyadhCv" translate='no'>
             <div  style={{ pageBreakAfter: 'always' }}>
                 {/* First Table */}
-                <div style={{ background: "" }}>
+                {/* <div style={{ background: "" }}>
     <img
-        src={KaanAlRiyadhHeaderImg}
+        src={tawziifAlRiyadhHeaderImg}
         alt="header"
         style={{ maxWidth: '100%', height: 'auto' }} // Ensures the image is contained
     />
-</div>
+</div> */}
 
 
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: "10px" }}>
     <thead>
         <tr>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>First Name</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>الاسم الأول</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Middle Name</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>الاسم الأوسط</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Last Name</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>اسم العائلة</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Surname</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>اللقب</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>CV Code</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>رمز السيرة الذاتية</span>
@@ -3691,31 +3691,31 @@ src={applicantpassportimagePreview !== null
                 <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
     <thead>
         <tr>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Position Applied</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>الوظيفة المتقدم لها</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Contract Period</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>مدة العقد</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Monthly Salary</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>الراتب الشهري</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>City</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>المدينة</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Address</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>العنوان</span>
@@ -3739,25 +3739,25 @@ src={applicantpassportimagePreview !== null
                 <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
     <thead>
         <tr>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Passport No</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>رقم الجواز</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Issued Date</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>تاريخ الإصدار</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Expired Date</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>تاريخ الانتهاء</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Issued Place</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>مكان الإصدار</span>
@@ -3785,7 +3785,7 @@ src={applicantpassportimagePreview !== null
                     <table style={{ borderCollapse: 'collapse', minWidth: "100%" }}>
     <thead>
         <tr>
-            <th colSpan="2" style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'black', textAlign: 'left', fontSize: '10px' }}>
+            <th colSpan="2" style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'black', textAlign: 'left', fontSize: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span >Personal Information</span>
                     <span >المعلومات الشخصية</span>
@@ -3847,10 +3847,10 @@ src={applicantpassportimagePreview !== null
 <table style={{ borderCollapse: 'collapse', minWidth: '100%', marginTop: '20px' }}>
     <thead>
         <tr>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', width: '50%', backgroundColor: '#D050C9' }}>Training (التدريب)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Excellent (ممتاز)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Very Good (جيد جداً)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Good (جيد)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', width: '50%', backgroundColor: '#e1e4e8' }}>Training (التدريب)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Excellent (ممتاز)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Very Good (جيد جداً)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Good (جيد)</th>
         </tr>
     </thead>
     <tbody>
@@ -3897,10 +3897,10 @@ src={applicantpassportimagePreview !== null
 <table style={{ borderCollapse: 'collapse', minWidth: '100%', marginTop: '20px' }}>
     <thead>
         <tr>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', width: '50%', backgroundColor: '#D050C9' }}>Skills (المهارات)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Excellent (ممتاز)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Good (جيد)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Poor (ضعيف)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', width: '50%', backgroundColor: '#e1e4e8' }}>Skills (المهارات)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Excellent (ممتاز)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Good (جيد)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Poor (ضعيف)</th>
         </tr>
     </thead>
     <tbody>
@@ -3972,7 +3972,7 @@ src={applicantpassportimagePreview !== null
     <thead>
         <tr>
             <th colSpan="5" style={{ 
-                backgroundColor: '#D050C9', 
+                backgroundColor: '#e1e4e8', 
                 border: '1px solid black', 
                 padding: '4px', 
                 color: 'white', 
@@ -4045,13 +4045,13 @@ src={applicantpassportimagePreview !== null
 
 
 {/* full body box */}
-<div style={{border: "10px solid green", borderRadius: "23px", marginTop: '20px', background: "red", height: '520px'}}>
+<div style={{border: "10px solid #e1e4e8", borderRadius: "23px", marginTop: '20px', background: "#e1e4e8", height: '520px'}}>
     <div style={{
         background: "blue", 
         maxWidth: "300px", 
         minWidth: "300px", 
         height: "100%", 
-        border: "10px solid red", 
+        border: "10px solid #bbbcbd", 
         borderRadius: "10px", 
         overflow: 'hidden' // Ensure anything exceeding the bounds is hidden
     }}>
@@ -4134,7 +4134,7 @@ src={applicantpassportimagePreview !== null
                         </div>
 
                         <div>
-  Prince Saud bin Abdul Aziz Al Saud <br /> Al Kabeer – Riyadh KSA PO
+  Prince Saud bin Abdul Aziz Al Saud <br /> Al ALZHRANI – Riyadh KSA PO
 </div>
                        
 
@@ -4177,10 +4177,10 @@ src={applicantpassportimagePreview !== null
 
 
 
-        {/* qimam cv */}
+        {/* Najah cv */}
 
 
-        <div id="QimamAsiaCv" style={{ display: '' }} translate='no'>
+        <div id="NajahAsiaCv" style={{ display: '' }} translate='no'>
                
 
                <div >
@@ -4524,7 +4524,7 @@ src={applicantpassportimagePreview !== null
             </div>
 
 
-        {/* qimam cv end */}
+        {/* Najah cv end */}
 
 
        
@@ -4613,11 +4613,11 @@ src={applicantpassportimagePreview !== null
     </div>
 
     <div style={{fontFamily: "serif",  fontSize: "12px", background: "none", marginTop: "10px",}} >SKY WAY FOREIGN EMPLOYMENT AGENT</div>
-<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", }}>skywayagencyoffice@gmail.com</div>
+<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", }}>Hululagencyoffice@gmail.com</div>
 </div>
 
 {/* <div style={{fontFamily: "serif",  fontSize: "12px", background: "none", marginTop: "20px", marginLeft: "" }} >SKY WAY FOREIGN EMPLOYMENT AGENT</div>
-<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", marginLeft: "10px", marginRight: ""}}>skywayagencyoffice@gmail.com</div> */}
+<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", marginLeft: "10px", marginRight: ""}}>Hululagencyoffice@gmail.com</div> */}
 </div>
  
     

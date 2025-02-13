@@ -24,18 +24,18 @@ import thumbnail from "../image_placeholder/skywayimg.jpeg";
 import html2pdf from 'html2pdf.js';
 
 
-import goldagent from "../images/goldagent.jpeg" 
-import hudud from "../image_placeholder/hudud.jpeg"
+import goldagent from "../images/wahatimg.jpg" 
+import hudud from "../image_placeholder/Tamkeenimg.png"
 import skywayimg from "../image_placeholder/skywayimg.jpeg"
 import skywaylogo from "../image_placeholder/skywaylogo.jpeg"
 
 import demoimage from "../image_placeholder/demoimage.jpg"
 
 
-import barakaimg from "../image_placeholder/barakaimg.jpeg"
+import mawahibimg from "../image_placeholder/mawahibimg.png"
 import bodyimg from "../images/images.jpeg"
 import ouragentlogo from "../images/ouragentlogo.jpeg"
-import assawsan from "../image_placeholder/assawsan.jpeg"
+import assawsan from "../image_placeholder/demoimage.jpg"
 import Barcode from 'react-barcode';
 
 import smallapplicantimage from "../image_placeholder/smallapplicantimage.jpeg"
@@ -54,7 +54,7 @@ import Snackbar from "@mui/material/Snackbar"
 // import Button from '@mui/material/Button';
 
 
-import KaanAlRiyadhHeaderImg from "../image_placeholder/KaanAlRiyadh.png"
+// import tawziifAlRiyadhHeaderImg from "../image_placeholder/tawziifAlRiyadh.png"
 
 
 
@@ -196,14 +196,14 @@ const DetailPage = () => {
   };
 
   const [styles, setStyles] = useState({
-    styleOne: agentName === "golden" ? true : false,
-    styleTwo: agentName === "bela" ? true : false,
-    styleThree: agentName === "skyway" ? true : false,
-    styleFour: agentName === "baraka" ? true : false,
+    styleOne: agentName === "Wahat" ? true : false,
+    styleTwo: agentName === "Tamkeen" ? true : false,
+    styleThree: agentName === "Hulul" ? true : false,
+    styleFour: agentName === "mawahib" ? true : false,
     styleFive:  false,
 
-    styleKaan: agentName === "kaan" ? true : false,
-    styleQimam: agentName === "qimam" ? true : false,
+    styletawziif: agentName === "tawziif" ? true : false,
+    styleNajah: agentName === "Najah" ? true : false,
 
     // styleFive: false,
     all: false,
@@ -244,8 +244,8 @@ const DetailPage = () => {
         styleFour: checked,
         styleFive: checked,
 
-        styleKaan: checked,
-        styleQimam: checked,
+        styletawziif: checked,
+        styleNajah: checked,
         // styleFive: checked,
         all: checked,
       });
@@ -416,12 +416,12 @@ const downloadCV = () => {
 
 
         const pdfElements = [
-          { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Bela Hodod`}.pdf`, margin: 0.5 , format: "letter" },
-          {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Golden`}.pdf`, margin: 0.5, format: "letter" },
-          { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
-          { elementId: styles.styleThree ? 'cvBarakaContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
-          { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4" },
-          {elementId: styles.styleQimam ? 'QimamAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
+          { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Tamkeen`}.pdf`, margin: 0.5 , format: "letter" },
+          {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Wahat`}.pdf`, margin: 0.5, format: "letter" },
+          { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} mawahib`}.pdf`, margin: 0.5, format: "letter" },
+          { elementId: styles.styleThree ? 'cvmawahibContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Hulul`}.pdf`, margin: 0.5, format: "letter" },
+          { elementId: styles.styleTawziif ? 'tawziifAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Tawziif AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4" },
+          {elementId: styles.styleNajah ? 'NajahAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Najah Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
           // {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf", margin: 0.5, format: "letter"}
             
             
@@ -461,12 +461,12 @@ const downloadCV = () => {
       const isSmallDevice = window.innerWidth < 768;
 
       const pdfElements = [
-        { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Bela Hodod`}.pdf`, margin: 0.5 , format: "letter" },
-        {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Golden`}.pdf`, margin: 0.5, format: "letter" },
-        { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Baraka`}.pdf`, margin: 0.5, format: "letter" },
-        { elementId: styles.styleThree ? 'cvBarakaContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Skyway`}.pdf`, margin: 0.5, format: "letter" },
-        { elementId: styles.styleKaan ? 'KaanAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Kaan AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4"},
-        {elementId: styles.styleQimam ? 'QimamAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Qimam Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
+        { elementId: styles.styleTwo ? 'cvContent1' : "", filename: `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Tamkeen`}.pdf`, margin: 0.5 , format: "letter" },
+        {  elementId: styles.styleOne ? 'cvContent2' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Wahat`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleFour ? 'cvAssawsanahContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} mawahib`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleThree ? 'cvmawahibContent' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Hulul`}.pdf`, margin: 0.5, format: "letter" },
+        { elementId: styles.styleTawziif ? 'tawziifAlRiyadhCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Tawziif AlRiyadh`}.pdf`, margin: [0, 0.2, 0, 0.2], format: isSmallDevice ? [9.5, 12] : "a4"},
+        {elementId: styles.styleNajah ? 'NajahAsiaCv' : "", filename:  `${`${data.name} ${data.middleName} ${data.surname} ${data.religion} ${JSON.parse(data.experience)[0].name ? JSON.parse(data.experience)[0].name + " Experienced"  : "First TIme"} Najah Asia`}.pdf`, margin: [1, 0.9, 1, 1], format: "a4" },
         // {elementId: styles.styleFive ? "embassy" : "", filename: "Embassycv.pdf", margin: 0.5, format: "letter"}
           
           
@@ -648,7 +648,7 @@ const downloadCV = () => {
     console.log("Current acceptedBy data:", acceptedByArray); // Debug log
 
     const updatedAcceptedBy = acceptedByArray.map(entry => {
-      // Update the "golden" agent's accepted status to true
+      // Update the "Wahat" agent's accepted status to true
       if (entry.agent === agentName) {
         if(acceptedby !== "no"){
           return { ...entry, accepted: "true",  }; // Ensure this is the correct structure
@@ -875,9 +875,9 @@ const handleCloseSnackbar = () => {
 
             { label: 'Passport Type', value: "Normal", id: "PASSPORType" },
             { label: 'Isussing Country', value: data.passportIssuePlace, id: "PASSPORT_ISSUE_PLACE" },
-            { label: 'Email', value: "skywayagencyoffice@gmail.com", id: "Personal_Email" },
+            { label: 'Email', value: "Hululagencyoffice@gmail.com", id: "Personal_Email" },
             { label: 'Comming Through', value: "By Air", id: "COMING_THROUGH" },   
-            { label: 'Email', value: "skywayagencyoffice@gmail.com", id: "emailLabel" },    
+            { label: 'Email', value: "Hululagencyoffice@gmail.com", id: "emailLabel" },    
             { label: 'Sponsor Id NO', value: data.visaNo, id: "SPONSER_NUMBER" },  
             { label: 'Sponsor Phone', value: data.sponsorPhone, id: "SPONSER_PHONE" },
             { label: 'porpose', value: data.visaType, id: "porpose", htmlFor: "porpose" },
@@ -956,7 +956,7 @@ const handleCloseSnackbar = () => {
                       // disabled={age < 21}
                   />
               }
-              label="Golden agent"
+              label="Wahat agent"
           />
           <FormControlLabel
               control={
@@ -967,7 +967,7 @@ const handleCloseSnackbar = () => {
                       // disabled={age < 21}
                   />
               }
-              label="Bela Hodod"
+              label="Tamkeen"
           />
           <FormControlLabel
               control={
@@ -978,7 +978,7 @@ const handleCloseSnackbar = () => {
                       // disabled={age < 18} // Disable if age is less than 18
                   />
               }
-              label="Skyway"
+              label="Hulul"
           />
           <FormControlLabel
               control={
@@ -989,32 +989,32 @@ const handleCloseSnackbar = () => {
                       // disabled={age < 21}
                   />
               }
-              label="Baraka"
+              label="mawahib"
           />
 
 
 <FormControlLabel
               control={
                   <Checkbox
-                      checked={styles.styleKaan}
+                      checked={styles.styletawziif}
                       onChange={handleStyleChange}
-                      name="styleKaan"
+                      name="styletawziif"
                       // disabled={age < 21}
                   />
               }
-              label="Kaan Al Riyadh"
+              label="Tawziif Al Riyadh"
           />
 
 <FormControlLabel
               control={
                   <Checkbox
-                      checked={styles.styleQimam}
+                      checked={styles.styleNajah}
                       onChange={handleStyleChange}
-                      name="styleQimam"
+                      name="styleNajah"
                       // disabled={age < 21}
                   />
               }
-              label="Qimam"
+              label="Najah"
           />
 
 
@@ -1772,7 +1772,7 @@ src={data.passportImageUrl || imagePlaceholder}
 {/* next content */}
 
 
-<div id="cvBarakaContent" translate='no'>
+<div id="cvmawahibContent" translate='no'>
         <div className="container">
                 {/* Page 1 */}
                 {/* <div>
@@ -2049,7 +2049,7 @@ src={data.personalImageUrl || imagePlaceholder} // Get the last image
 </div>
 
                       <div className="wider-image-parent">
-                      <img src={barakaimg} alt="Wider" className="wider-image" /></div>  
+                      <img src={mawahibimg} alt="Wider" className="wider-image" /></div>  
                     </div>
                     <div className="title-parent">
                         <div style={{display: "flex", justifyContent: "space-around", border: "none"}}><div style={{ border: "none"}}>Personal Information</div>  <div style={{ border: "none"}}> ممعلومات شخصية </div></div>
@@ -2250,46 +2250,46 @@ src={data.passportImageUrl || imagePlaceholder}
         {/* Kann cv */}
 
 
-        <div id="KaanAlRiyadhCv"  translate='no'>
+        <div id="tawziifAlRiyadhCv"  translate='no'>
             <div  style={{ pageBreakAfter: 'always' }}>
                 {/* First Table */}
-                <div style={{ background: "" }}>
+                {/* <div style={{ background: "" }}>
     <img
-        src={KaanAlRiyadhHeaderImg}
+        src={tawziifAlRiyadhHeaderImg}
         alt="header"
         style={{ maxWidth: '100%', height: 'auto' }} // Ensures the image is contained
     />
-</div>
+</div> */}
 
 
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: "10px" }}>
     <thead>
         <tr>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>First Name</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>الاسم الأول</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Middle Name</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>الاسم الأوسط</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Last Name</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>اسم العائلة</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Surname</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>اللقب</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>CV Code</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>رمز السيرة الذاتية</span>
@@ -2313,31 +2313,31 @@ src={data.passportImageUrl || imagePlaceholder}
                 <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
     <thead>
         <tr>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Position Applied</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>الوظيفة المتقدم لها</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Contract Period</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>مدة العقد</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Monthly Salary</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>الراتب الشهري</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>City</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>المدينة</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Address</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>العنوان</span>
@@ -2361,25 +2361,25 @@ src={data.passportImageUrl || imagePlaceholder}
                 <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
     <thead>
         <tr>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Passport No</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>رقم الجواز</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Issued Date</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>تاريخ الإصدار</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Expired Date</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>تاريخ الانتهاء</span>
                 </div>
             </th>
-            <th style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
+            <th style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'white', textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span style={{ fontSize: '10px', color: 'black' }}>Issued Place</span>
                     <span style={{ fontSize: '10px', color: 'black' }}>مكان الإصدار</span>
@@ -2407,7 +2407,7 @@ src={data.passportImageUrl || imagePlaceholder}
                     <table style={{ borderCollapse: 'collapse', minWidth: "100%" }}>
     <thead>
         <tr>
-            <th colSpan="2" style={{ backgroundColor: '#D050C9', border: '1px solid black', padding: '4px', color: 'black', textAlign: 'left', fontSize: '10px' }}>
+            <th colSpan="2" style={{ backgroundColor: '#e1e4e8', border: '1px solid black', padding: '4px', color: 'black', textAlign: 'left', fontSize: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <span >Personal Information</span>
                     <span >المعلومات الشخصية</span>
@@ -2469,10 +2469,10 @@ src={data.passportImageUrl || imagePlaceholder}
 <table style={{ borderCollapse: 'collapse', minWidth: '100%', marginTop: '20px' }}>
     <thead>
         <tr>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', width: '50%', backgroundColor: '#D050C9' }}>Training (التدريب)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Excellent (ممتاز)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Very Good (جيد جداً)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Good (جيد)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', width: '50%', backgroundColor: '#e1e4e8' }}>Training (التدريب)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Excellent (ممتاز)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Very Good (جيد جداً)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Good (جيد)</th>
         </tr>
     </thead>
     <tbody>
@@ -2519,10 +2519,10 @@ src={data.passportImageUrl || imagePlaceholder}
 <table style={{ borderCollapse: 'collapse', minWidth: '100%', marginTop: '20px' }}>
     <thead>
         <tr>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', width: '50%', backgroundColor: '#D050C9' }}>Skills (المهارات)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Excellent (ممتاز)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Good (جيد)</th>
-            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#D050C9' }}>Poor (ضعيف)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', width: '50%', backgroundColor: '#e1e4e8' }}>Skills (المهارات)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Excellent (ممتاز)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Good (جيد)</th>
+            <th style={{ border: '1px solid black', padding: '4px', fontSize: '10px', backgroundColor: '#e1e4e8' }}>Poor (ضعيف)</th>
         </tr>
     </thead>
     <tbody>
@@ -2594,7 +2594,7 @@ src={data.passportImageUrl || imagePlaceholder}
     <thead>
         <tr>
             <th colSpan="5" style={{ 
-                backgroundColor: '#D050C9', 
+                backgroundColor: '#e1e4e8', 
                 border: '1px solid black', 
                 padding: '4px', 
                 color: 'white', 
@@ -2667,13 +2667,13 @@ src={data.passportImageUrl || imagePlaceholder}
 
 
 {/* full body box */}
-<div style={{border: "10px solid green", borderRadius: "23px", marginTop: '20px', background: "red", height: '520px'}}>
+<div style={{border: "10px solid #e1e4e8", borderRadius: "23px", marginTop: '20px', background: "#e1e4e8", height: '520px'}}>
     <div style={{
         background: "blue", 
         maxWidth: "300px", 
         minWidth: "300px", 
         height: "100%", 
-        border: "10px solid red", 
+        border: "10px solid #bbbcbd", 
         borderRadius: "10px", 
         overflow: 'hidden' // Ensure anything exceeding the bounds is hidden
     }}>
@@ -2754,7 +2754,7 @@ src={data.passportImageUrl || imagePlaceholder}
                         </div>
 
                         <div>
-  Prince Saud bin Abdul Aziz Al Saud <br /> Al Kabeer – Riyadh KSA PO
+                        Prince Saud bin Abdul Aziz Al Saud <br /> Al ALZHRANI – Riyadh KSA PO
 </div>
                        
 
@@ -2789,13 +2789,13 @@ src={data.passportImageUrl || imagePlaceholder}
         </div>
 
 
-        {/* Kaan cv end */}
+        {/* Tawziif cv end */}
 
 
-        {/* Qimam cv  */}
+        {/* Najah cv  */}
 
 
-        <div id="QimamAsiaCv" style={{ display: '' }} translate='no'>
+        <div id="NajahAsiaCv" style={{ display: '' }} translate='no'>
                
 
                <div >
@@ -3133,7 +3133,7 @@ src={data.passportImageUrl || imagePlaceholder}
 
             </div>
 
-        {/* Qimam cv end */}
+        {/* Najah cv end */}
 
 
 
@@ -3223,14 +3223,14 @@ src={data.passportImageUrl || imagePlaceholder}
     </div>
 
     <div style={{fontFamily: "serif",  fontSize: "12px", background: "none", marginTop: "10px",}} >SKY WAY FOREIGN EMPLOYMENT AGENT</div>
-<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", }}>skywayagencyoffice@gmail.com</div>
+<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", }}>Hululagencyoffice@gmail.com</div>
 </div>
 
 {/* <div style={{fontFamily: "serif",  fontSize: "12px", background: "none", marginTop: "20px", marginLeft: "-18px" }} >SKY WAY FOREIGN EMPLOYMENT AGENT</div>
-<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", marginLeft: "-10px"}}>skywayagencyoffice@gmail.com</div> */}
+<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", marginLeft: "-10px"}}>Hululagencyoffice@gmail.com</div> */}
 
 {/* <div style={{fontFamily: "serif",  fontSize: "12px", background: "none", marginTop: "20px", marginLeft: "" }} >SKY WAY FOREIGN EMPLOYMENT AGENT</div>
-<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", marginLeft: "10px", marginRight: ""}}>skywayagencyoffice@gmail.com</div> */}
+<div style={{fontFamily: "serif", marginTop: "10px", fontWeight: "bold", marginLeft: "10px", marginRight: ""}}>Hululagencyoffice@gmail.com</div> */}
 </div>
  
     
