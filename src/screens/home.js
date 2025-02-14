@@ -1114,7 +1114,7 @@ formData.append("cvcount", formatCount(count + 1));
 
 formData.append("availablefor", JSON.stringify({"Wahat": styles.styleOne.toString(), "Tamkeen": styles.styleTwo.toString(), "Hulul": styles.styleThree.toString(), "mawahib": styles.styleFour.toString(), "tawziif": styles.tawziifCvStyle.toString(), "Najah": styles.NajahCvStyle.toString(), "admin": "true"  }));
 
-formData.append("acceptedBy", JSON.stringify([{"agent": "Wahat", "accepted": "false", "comment": ""}, {"agent": "Tamkeen", "accepted": "false", "comment": ""}, {"agent": "Hulul", "accepted": "false", "comment": ""}, {"agent": "mawahib", "accepted": "false", "comment": ""}, {"agent": "tawziif", "accepted": "false", "comment": ""}, {"agent": "Najah", "accepted": "false", "comment": ""}]))
+formData.append("acceptedBy", JSON.stringify([{"agent": "Wahat", "accepted": "false", "comment": ""}, {"agent": "Tamkeen", "accepted": "false", "comment": ""}, {"agent": "Hulul", "accepted": "false", "comment": ""}, {"agent": "mawahib", "accepted": "false", "comment": ""}, {"agent": "Tawziif", "accepted": "false", "comment": ""}, {"agent": "Najah", "accepted": "false", "comment": ""}]))
 
 formData.append("status", "Interview Scheduled");
 
@@ -1314,7 +1314,7 @@ formData.append("cvcount", formatCount(count + 1));
 
 formData.append("availablefor", JSON.stringify({"Wahat": styles.styleOne.toString(), "Tamkeen": styles.styleTwo.toString(), "Hulul": styles.styleThree.toString(), "mawahib": styles.styleFour.toString(), "tawziif": styles.tawziifCvStyle.toString(), "Najah": styles.NajahCvStyle.toString(), "admin": "true"  }));
 
-formData.append("acceptedBy", JSON.stringify([{"agent": "Wahat", "accepted": "false", "comment": ""}, {"agent": "Tamkeen", "accepted": "false", "comment": ""}, {"agent": "Hulul", "accepted": "false", "comment": ""}, {"agent": "mawahib", "accepted": "false", "comment": ""}, {"agent": "tawziif", "accepted": "false", "comment": ""}, {"agent": "Najah", "accepted": "false", "comment": ""}]));
+formData.append("acceptedBy", JSON.stringify([{"agent": "Wahat", "accepted": "false", "comment": ""}, {"agent": "Tamkeen", "accepted": "false", "comment": ""}, {"agent": "Hulul", "accepted": "false", "comment": ""}, {"agent": "mawahib", "accepted": "false", "comment": ""}, {"agent": "Tawziif", "accepted": "false", "comment": ""}, {"agent": "Najah", "accepted": "false", "comment": ""}]));
 
 formData.append("status", "Interview Scheduled");
 
